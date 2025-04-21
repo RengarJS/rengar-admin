@@ -1,9 +1,30 @@
+<!--  此文件用于解决部署github pages刷新404问题，实际开发中可直接删除 -->
 <!doctype html>
-<html>
+<html lang="">
   <head>
-    <meta http-equiv="refresh" content="0;url=/rengar-admin/" />
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/rengar-admin/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rengar-Admin</title>
+
+    <script>
+      const segment = 2 // 如果部署在子路径（如 /repo/），此处填 2
+      const path = location.pathname.split('/').filter(Boolean)
+      const redirect = path
+        .slice(0, segment)
+        .concat(path.slice(segment + 1))
+        .join('/')
+      location.replace(
+        location.origin + (segment > 1 ? '/' + path.slice(0, segment).join('/') : '') + '/?p=/' + redirect,
+      )
+    </script>
+    <script type="module" crossorigin src="/rengar-admin/assets/vue-DI2LXsg1.js"></script>
+    <script type="module" crossorigin src="/rengar-admin/assets/naive-ui-C1U0z9Qv.js"></script>
+    <script type="module" crossorigin src="/rengar-admin/assets/main-By1bT52D.js"></script>
+    <link rel="stylesheet" crossorigin href="/rengar-admin/assets/main-C7MfO-4x.css">
   </head>
   <body>
-    <p>If you are not redirected automatically, follow this <a href="/rengar-admin/">link</a>.</p>
+    <div id="app-loading"></div>
+    <div id="app"></div>
   </body>
 </html>
