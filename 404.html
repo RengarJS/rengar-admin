@@ -6,18 +6,6 @@
     <link rel="icon" href="/rengar-admin/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rengar-Admin</title>
-
-    <script>
-      const segment = 2 // 如果部署在子路径（如 /repo/），此处填 2
-      const path = location.pathname.split('/').filter(Boolean)
-      const redirect = path
-        .slice(0, segment)
-        .concat(path.slice(segment + 1))
-        .join('/')
-      location.replace(
-        location.origin + (segment > 1 ? '/' + path.slice(0, segment).join('/') : '') + '/?p=/' + redirect,
-      )
-    </script>
     <script type="module" crossorigin src="/rengar-admin/assets/vue-DI2LXsg1.js"></script>
     <script type="module" crossorigin src="/rengar-admin/assets/naive-ui-C1U0z9Qv.js"></script>
     <script type="module" crossorigin src="/rengar-admin/assets/main-By1bT52D.js"></script>
