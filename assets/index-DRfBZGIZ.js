@@ -1,0 +1,1 @@
+import{k as o,V as n,$ as t,Y as a,X as r}from"./vue-DI2LXsg1.js";import{K as c}from"./naive-ui-C1U0z9Qv.js";const _=o({name:"docs-vue",__name:"index",setup(i){return(u,e)=>{const s=c;return r(),n(s,{class:"h-full"},{default:t(()=>e[0]||(e[0]=[a("iframe",{src:"https://ashuicoder.github.io/naive-ui-components/",class:"size-full"},null,-1)])),_:1})}}});export{_ as default};
