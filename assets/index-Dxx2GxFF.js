@@ -1,1 +1,0 @@
-import{k as n,V as o,$ as t,Y as a,X as p}from"./vue-DI2LXsg1.js";import{K as r}from"./naive-ui-C1U0z9Qv.js";const i=n({name:"docs-pnpm",__name:"index",setup(l){return(m,e)=>{const s=r;return p(),o(s,{class:"h-full"},{default:t(()=>e[0]||(e[0]=[a("iframe",{src:"https://pnpm.io/",class:"size-full"},null,-1)])),_:1})}}});export{i as default};

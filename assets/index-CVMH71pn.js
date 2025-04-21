@@ -1,1 +1,0 @@
-import{k as n,V as o,$ as t,Y as a,X as r}from"./vue-DI2LXsg1.js";import{K as c}from"./naive-ui-C1U0z9Qv.js";const m=n({name:"docs-unocss",__name:"index",setup(l){return(_,s)=>{const e=c;return r(),o(e,{class:"h-full"},{default:t(()=>s[0]||(s[0]=[a("iframe",{src:"https://unocss.dev/",class:"size-full"},null,-1)])),_:1})}}});export{m as default};
