@@ -1,0 +1,1 @@
+import{k as a,W as n,a1 as o,Z as t,Y as r}from"./vue-wKwVChXD.js";import{K as p}from"./naive-ui-Ds25TmnZ.js";const m=a({name:"docs-pinia",__name:"index",setup(i){return(l,e)=>{const s=p;return r(),n(s,{class:"h-full"},{default:o(()=>e[0]||(e[0]=[t("iframe",{src:"https://pinia.vuejs.org/",class:"size-full"},null,-1)])),_:1})}}});export{m as default};

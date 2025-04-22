@@ -1,1 +1,0 @@
-import{k as o,W as t,a0 as a,Z as n,Y as r}from"./vue-CWhuolRD.js";import{K as u}from"./naive-ui-Bi6pBzpc.js";const m=o({name:"docs-vueuse",__name:"index",setup(l){return(_,e)=>{const s=u;return r(),t(s,{class:"h-full"},{default:a(()=>e[0]||(e[0]=[n("iframe",{src:"https://vueuse.org/",class:"size-full"},null,-1)])),_:1})}}});export{m as default};
