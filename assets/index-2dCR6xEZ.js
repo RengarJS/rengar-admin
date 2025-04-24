@@ -1,0 +1,1 @@
+import{J as t}from"./naive-ui-Ds0VUWV_.js";import{k as o,W as a,a1 as n,Z as l,Y as r}from"./vue-wKwVChXD.js";const m=o({name:"docs-es-toolkit",__name:"index",setup(p){return(_,s)=>{const e=t;return r(),a(e,{class:"h-full"},{default:n(()=>s[0]||(s[0]=[l("iframe",{src:"https://es-toolkit.slash.page/",class:"size-full"},null,-1)])),_:1})}}});export{m as default};

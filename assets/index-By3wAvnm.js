@@ -1,0 +1,1 @@
+import{k as t,W as a,a1 as n,Z as o,Y as r}from"./vue-wKwVChXD.js";import{J as l}from"./naive-ui-Ds0VUWV_.js";const m=t({name:"docs-vite",__name:"index",setup(_){return(c,e)=>{const s=l;return r(),a(s,{class:"h-full"},{default:n(()=>e[0]||(e[0]=[o("iframe",{src:"https://vite.dev/",class:"size-full"},null,-1)])),_:1})}}});export{m as default};
