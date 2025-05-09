@@ -1,1 +1,0 @@
-import{k as a,W as n,a1 as o,Z as t,Y as r}from"./vue-wKwVChXD.js";import{J as c}from"./naive-ui-Ds0VUWV_.js";const p=a({name:"docs-naive-ui",__name:"index",setup(i){return(l,e)=>{const s=c;return r(),n(s,{class:"h-full"},{default:o(()=>e[0]||(e[0]=[t("iframe",{src:"https://www.naiveui.com/",class:"size-full"},null,-1)])),_:1})}}});export{p as default};

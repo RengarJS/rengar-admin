@@ -1,1 +1,0 @@
-import{k as n,W as s,a1 as o,Z as r,Y as t}from"./vue-wKwVChXD.js";import{J as c}from"./naive-ui-Ds0VUWV_.js";const p=n({name:"docs-rengar-admin",__name:"index",setup(i){return(l,e)=>{const a=c;return t(),s(a,{class:"h-full"},{default:o(()=>e[0]||(e[0]=[r("iframe",{src:"https://rengarjs.github.io/rengar-admin-doc/",class:"size-full"},null,-1)])),_:1})}}});export{p as default};
