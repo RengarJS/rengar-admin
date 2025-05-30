@@ -1,6 +1,6 @@
 <template>
   <NDrawer v-model:show="show" :width="400" :native-scrollbar="true" :auto-focus="false">
-    <NDrawerContent title="主题配置" :native-scrollbar="false" closable>
+    <NDrawerContent title="系统配置" :native-scrollbar="false" closable>
       <div>
         <NDivider>布局模式</NDivider>
 
@@ -139,28 +139,28 @@ const { copy } = useClipboard()
 
 function handleCopy() {
   const copyStr = `
-  const appConfig = {
-    layout: {
-      layoutMode: '${appStore.layoutMode}',
-      asideWidth: ${appStore.config.asideWidth},
-      headerHeight: ${appStore.config.headerHeight},
-      footerHeight: ${appStore.config.footerHeight},
-      tabHeight: ${appStore.config.tabHeight},
-      gap: ${appStore.config.gap},
-      showTabs: ${appStore.config.showTabs},
-      showBreadcrumb: ${appStore.config.showBreadcrumb},
-      showFooter: ${appStore.config.showFooter},
-    },
-    theme: {
-      primaryColor: '${appStore.themeOverrides.common!.primaryColor!}',
-    }
+const appConfig: App.BaseConfig = {
+  layout: {
+    layoutMode: '${appStore.layoutMode}',
+    asideWidth: ${appStore.config.asideWidth},
+    headerHeight: ${appStore.config.headerHeight},
+    footerHeight: ${appStore.config.footerHeight},
+    tabHeight: ${appStore.config.tabHeight},
+    gap: ${appStore.config.gap},
+    showTabs: ${appStore.config.showTabs},
+    showBreadcrumb: ${appStore.config.showBreadcrumb},
+    showFooter: ${appStore.config.showFooter},
+  },
+  theme: {
+    primaryColor: '${appStore.themeOverrides.common!.primaryColor!}',
   }
+}
   `
   copy(copyStr.trim())
 
   window.$dialog.success({
     title: '复制成功',
-    content: '请手动粘贴到 src/config/modules/app.ts 中',
+    content: '请手动粘贴到 src/config/modules/app.ts 中，覆盖appConfig',
     positiveText: '我知道了',
   })
 }

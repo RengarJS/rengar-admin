@@ -9,6 +9,7 @@
           <NLoadingBarProvider>
             <GlobalNaiveTool> </GlobalNaiveTool>
             <App></App>
+            <NGlobalStyle></NGlobalStyle>
           </NLoadingBarProvider>
         </NDialogProvider>
       </NNotificationProvider>

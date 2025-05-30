@@ -1,7 +1,7 @@
 <template>
   <div class="h-full flex-center gap-4 text-xl text-primary">
     <SvgIcon local-icon="i-local-logo" class="text-4xl"></SvgIcon>
-    <div v-if="showTitle" class="text-center">{{ title }}</div>
+    <div v-if="showTitle" class="whitespace-nowrap text-center">{{ title }}</div>
   </div>
 </template>
 
