@@ -1,58 +1,60 @@
 <template>
   <div class="h-full flex items-center gap-3">
-    <div class="min-w-0 flex-1">
-      <NScrollbar x-scrollable>
-        <VueDraggable v-model="tabsList" target=".sort-target" handle=".handle">
-          <TransitionGroup
-            type="transition"
-            tag="div"
-            name="fade"
-            class="sort-target h-full flex select-none gap-4 px-4 pt-2 text-sm"
+    <VueDraggable
+      v-model="tabsList"
+      target=".sort-target"
+      handle=".handle"
+      class="scrollbar-hide min-w-0 flex-1 overflow-x-auto"
+      v-dragscroll
+    >
+      <TransitionGroup
+        type="transition"
+        tag="div"
+        name="fade"
+        class="sort-target h-full w-max flex select-none gap-4 px-4 pt-2 text-sm"
+      >
+        <div
+          v-for="(item, index) in tabsList"
+          :key="item.name"
+          class="tab-item px-3 py-1.5"
+          :class="[
+            item.name === activeRouteName ? 'text-primary dark:text-white bg-primary-100 dark:bg-primary-700' : '',
+          ]"
+          :ref="(el) => setItemRef(el as HTMLElement, item.name)"
+          @click="handleJump(item.name)"
+          @contextmenu.prevent="handleRightClick(item.name)"
+        >
+          <NDropdown
+            trigger="manual"
+            :options="renderOptions(item, index)"
+            :show="dropdownVisible[item.name]"
+            :on-clickoutside="handleCloseDropdown"
+            @select="(key) => handleSelect(key, item)"
           >
             <div
-              v-for="(item, index) in tabsList"
-              :key="item.name"
-              class="tab-item px-3 py-1.5"
-              :class="[
-                item.name === activeRouteName ? 'text-primary dark:text-white bg-primary-100 dark:bg-primary-700' : '',
-              ]"
-              :ref="(el) => setItemRef(el as HTMLElement, item.name)"
-              @click="handleJump(item.name)"
-              @contextmenu.prevent="handleRightClick(item.name)"
+              class="flex items-center gap-2 rounded-lg px-3 py-1"
+              :class="[item.name === activeRouteName ? '' : 'hover:bg-zinc-100 dark:hover:bg-zinc-700']"
             >
-              <NDropdown
-                trigger="manual"
-                :options="renderOptions(item, index)"
-                :show="dropdownVisible[item.name]"
-                :on-clickoutside="handleCloseDropdown"
-                @select="(key) => handleSelect(key, item)"
-              >
-                <div
-                  class="flex items-center gap-2 rounded-lg px-3 py-1"
-                  :class="[item.name === activeRouteName ? '' : 'hover:bg-zinc-100 dark:hover:bg-zinc-700']"
-                >
-                  <SvgIcon
-                    class="handle cursor-move"
-                    v-if="item.icon || item.localIcon"
-                    :icon="item.icon"
-                    :local-icon="item.localIcon"
-                  />
-                  <SvgIcon class="handle cursor-move" v-else icon="ic:baseline-menu" />
-                  <div class="w-max-[60px] overflow-hidden whitespace-nowrap">{{ item.title }}</div>
-                  <div
-                    v-if="!item.fixedInTab"
-                    class="i-material-symbols:close-rounded hover:i-material-symbols:cancel-rounded cursor-pointer text-lg"
-                    @click.stop="tabStore.removeTabsAction(item)"
-                  ></div>
-                </div>
-              </NDropdown>
+              <SvgIcon
+                class="handle cursor-move"
+                v-if="item.icon || item.localIcon"
+                :icon="item.icon"
+                :local-icon="item.localIcon"
+              />
+              <SvgIcon class="handle cursor-move" v-else icon="ic:baseline-menu" />
+              <div class="w-max-[60px] overflow-hidden whitespace-nowrap">{{ item.title }}</div>
+              <div
+                v-if="!item.fixedInTab"
+                class="i-material-symbols:close-rounded hover:i-material-symbols:cancel-rounded cursor-pointer text-lg"
+                @click.stop="tabStore.removeTabsAction(item)"
+              ></div>
             </div>
-          </TransitionGroup>
-        </VueDraggable>
-      </NScrollbar>
-    </div>
+          </NDropdown>
+        </div>
+      </TransitionGroup>
+    </VueDraggable>
 
-    <div class="flex items-center gap-4 px-4 text-lg">
+    <div class="flex items-center gap-4 pr-4 text-lg">
       <NTooltip placement="bottom">
         <template #trigger>
           <div
@@ -83,9 +85,9 @@
 <script setup lang="tsx">
 import { useTabStore, useAppStore } from '@/stores'
 import { useWindowSize, useDebounceFn, useFullscreen } from '@vueuse/core'
-import { ref, reactive, watch, nextTick } from 'vue'
 import { VueDraggable } from 'vue-draggable-plus'
 import SvgIcon from '@/components/SvgIcon/index.vue'
+import { vDragscroll } from './directive'
 
 import type { DropdownOption } from 'naive-ui'
 
@@ -236,5 +238,14 @@ const { isFullscreen, toggle } = useFullscreen(layoutContentRef)
 
 .fade-leave-active {
   position: absolute;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 </style>
