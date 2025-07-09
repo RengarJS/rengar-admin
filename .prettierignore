@@ -6,3 +6,8 @@
 *.yaml
 
 auto-imports.d.ts
+
+# 忽略packages下的所有层级的js文件
+packages/**/*.js
+
+
