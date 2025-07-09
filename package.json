@@ -16,7 +16,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,vue}": [
+    "*.{ts,tsx,vue}": [
       "prettier --write",
       "eslint --fix"
     ]
@@ -41,6 +41,9 @@
     "@iconify/vue": "^4.3.0",
     "@rengar-admin/color": "workspace:^",
     "@rengar-admin/unocss": "workspace:^",
+    "@rengar-admin/vite-plugin-version": "workspace:^",
+    "@rengar-admin/vite-plugin-vue-inject-name": "workspace:^",
+    "@rengar-admin/vite-plugin-vue-routes": "workspace:^",
     "@rollup/pluginutils": "^5.1.4",
     "@tsconfig/node22": "^22.0.0",
     "@types/node": "^22.13.4",

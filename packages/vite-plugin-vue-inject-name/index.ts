@@ -2,7 +2,7 @@ import { parse } from 'vue/compiler-sfc'
 import { createFilter } from '@rollup/pluginutils'
 import type { Plugin } from 'vite'
 
-import * as path from 'path'
+import path from 'node:path'
 
 export function injectFolderNamePlugin(entry = 'src/views'): Plugin {
   const entryPath = path.resolve(process.cwd(), entry).replace(/\\/g, '/')

@@ -1,15 +1,23 @@
 {
   "name": "@rengar-admin/vite-plugin-vue-routes",
   "version": "1.0.0",
-  "description": "",
+  "description": "auto generate routes",
   "exports": {
-    ".": "./index.ts"
+    ".": {
+      "import": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    }
   },
+  "type": "module",
   "scripts": {
+    "build": "vite build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.4.1"
+  "packageManager": "pnpm@10.4.1",
+  "devDependencies": {
+    "vite-plugin-dts": "^4.5.4"
+  }
 }

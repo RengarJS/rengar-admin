@@ -1,5 +1,5 @@
 // vite-plugin-git-version.ts
-import { writeFileSync } from 'fs'
+import { writeFileSync } from 'node:fs'
 import type { PluginOption, ResolvedConfig } from 'vite'
 
 export interface GitVersionPluginOptions {
@@ -41,7 +41,7 @@ export function timestampVersionPlugin(options?: GitVersionPluginOptions): Plugi
 
         const outputPath = `${process.cwd()}/${viteConfig?.build.outDir}/${fileName}`
         writeFileSync(outputPath, JSON.stringify(versionInfo, null, 2))
-        console.log(`Version file generated: ${outputPath}`)
+        console.log(`\x1b[32mVersion file generated: ${outputPath}\x1b[0m`)
       } catch (error) {
         console.error('Failed to generate and commit version file:', error)
       }

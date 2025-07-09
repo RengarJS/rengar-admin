@@ -1,4 +1,4 @@
-import { timestampVersionPlugin } from '../../packages/vite-plugin-version'
+import { timestampVersionPlugin } from '@rengar-admin/vite-plugin-version'
 
 export function setupVersion() {
   return timestampVersionPlugin({
