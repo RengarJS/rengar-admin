@@ -6,7 +6,7 @@
 import BasicLayout from '@/layouts/base/index.vue'
 import BlankLayout from '@/layouts/blank/index.vue'
 
-import { useUpdateChecker } from '@/hooks/update'
+// import { useUpdateChecker } from '@/hooks/update'
 
 defineOptions({
   name: 'App',
@@ -19,7 +19,12 @@ const layoutComponent = computed(() => {
   return BlankLayout
 })
 
-useUpdateChecker()
+// 开发环境不引入自动更新
+if (!import.meta.env.DEV) {
+  import('@/hooks/update').then((module) => {
+    module.useUpdateChecker()
+  })
+}
 </script>
 
 <style scoped></style>
