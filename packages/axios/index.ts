@@ -29,7 +29,7 @@ abstract class BaseHttpClient {
     this.abortController = new AbortController()
   }
 
-  public async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+  public async get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
     this.createAbortController()
     return this.instance.get<T>(url, {
       ...config,
@@ -37,7 +37,7 @@ abstract class BaseHttpClient {
     }) as Promise<T>
   }
 
-  public async post<T>(url: string, data?: Recordable, config?: AxiosRequestConfig): Promise<T> {
+  public async post<T = any>(url: string, data?: Recordable, config?: AxiosRequestConfig): Promise<T> {
     this.createAbortController()
     return this.instance.post<T>(url, data, {
       ...config,
@@ -45,7 +45,7 @@ abstract class BaseHttpClient {
     }) as Promise<T>
   }
 
-  public async request<T>(config: AxiosRequestConfig): Promise<T> {
+  public async request<T = any>(config: AxiosRequestConfig): Promise<T> {
     this.createAbortController()
     return this.instance.request<T>({
       ...config,
@@ -53,7 +53,7 @@ abstract class BaseHttpClient {
     }) as Promise<T>
   }
 
-  public async upload<T>(
+  public async upload<T = any>(
     url: string,
     file: File,
     extraData?: Record<string, any>,
