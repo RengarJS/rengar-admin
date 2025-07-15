@@ -160,7 +160,6 @@ export const useAppStore = defineStore(
 
     function resetLayoutAndTheme() {
       layoutMode.value = appConfig.layout.layoutMode
-      themeOverrides.common!.primaryColor = appConfig.theme.primaryColor
       Object.assign(config, omit(appConfig.layout, ['layoutMode']))
       injectTailwindCssVarToGlobal(appConfig.theme.primaryColor, 'primary')
     }
