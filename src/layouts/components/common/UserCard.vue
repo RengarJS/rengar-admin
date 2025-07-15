@@ -4,7 +4,7 @@
       class="flex cursor-pointer items-center gap-2 rounded-2xl bg-primary-100 px-2 py-1 dark:bg-primary-800 hover:text-primary"
     >
       <SvgIcon icon="line-md:account" class="text-xl"></SvgIcon>
-      <span class="text-base">{{ authStore.user?.username }}</span>
+      <span class="max-w-20 truncate text-base">{{ authStore.user?.username }}</span>
     </div>
   </NDropdown>
 
