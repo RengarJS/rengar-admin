@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full flex-center flex-y gap-8">
+  <div class="h-screen flex-center flex-y gap-8">
     <img :src="Icon" alt="" class="w-[280px]" />
     <span class="text-2xl text-gray">页面找不到了</span>
     <NSpace :size="40">

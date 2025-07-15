@@ -10,6 +10,8 @@ export const routes: RouteRecordRaw[] = [
       title: '404',
       hideInMenu: true,
       hideInTab: true,
+      constant: true,
+      layout: 'blank',
     },
   },
   {

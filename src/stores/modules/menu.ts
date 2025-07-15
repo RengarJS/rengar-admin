@@ -29,9 +29,12 @@ export const useMenuStore = defineStore('menu', () => {
     const roleMap = authStore.roleMap
     const filterMenus = filterRoutes(routes, (route) => {
       if (route.meta?.hideInMenu) return false
-      const roles = route.meta?.role
+      const roles = route.meta?.roles
       if (Array.isArray(roles) && roles.length > 0) {
         return roles.some((role) => roleMap.has(role))
+      }
+      if (typeof roles === 'string') {
+        return roleMap.has(roles)
       }
       return true
     })
