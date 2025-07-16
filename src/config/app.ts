@@ -15,4 +15,6 @@ const appConfig: App.BaseConfig = {
   },
 }
 
+export const bgColor = '#f8fafc'
+
 export { appConfig }
