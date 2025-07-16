@@ -95,7 +95,6 @@ async function handleSubmit() {
   }
   window.$message.success('登录成功')
   router.replace(redirect || '/')
-  endLoading()
 }
 </script>
 
