@@ -7,7 +7,7 @@
           <SvgIcon icon="mdi:hand-wave" class="text-4xl text-yellow-500" />
           <div>
             <h2 class="text-xl font-bold">欢迎回来，{{ username || '管理员' }}！</h2>
-            <p class="text-sm text-gray-600">今天是 {{ currentDate }}，祝您工作愉快！</p>
+            <p class="mt-2 text-sm text-gray-600">今天是 {{ currentDate }} {{ getWeekDay() }}，祝您工作愉快！</p>
           </div>
         </div>
         <NButton type="primary" size="small" @click="refreshData">
@@ -65,7 +65,7 @@
                 @click="removeTodo(index)"
               >
                 <template #icon>
-                  <SvgIcon name="mdi:delete" />
+                  <SvgIcon icon="mdi:delete" />
                 </template>
               </NButton>
             </div>
@@ -207,6 +207,14 @@ import { NCard, NButton, NGrid, NGridItem, NCheckbox, NModal, NInput } from 'nai
 
 // 导入用户认证存储
 import { useAuthStore } from '@/stores'
+
+// 定义函数返回今天是星期几
+function getWeekDay() {
+  const weekDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+  const date = new Date()
+  const weekDay = date.getDay()
+  return weekDays[weekDay]
+}
 
 // 技术栈数据
 const techStacks = [
