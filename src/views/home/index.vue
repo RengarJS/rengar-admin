@@ -154,11 +154,11 @@
       </NGridItem>
     </NGrid>
 
-    <NGrid cols="1 600:2" :x-gap="16" :y-gap="16" class="mt-4">
+    <NGrid responsive="screen" cols="1 s:2" :x-gap="16" :y-gap="16" class="mt-4">
       <!-- 图表区域 -->
       <NGridItem class="col-span-24 lg:col-span-16 md:col-span-24">
         <NCard title="访问量趋势" class="h-full">
-          <VChart class="h-80 w-full" :option="visitOption" autoresize />
+          <VChart class="h-80 w-full" animate :option="visitOption" autoresize />
         </NCard>
       </NGridItem>
 
@@ -169,12 +169,7 @@
       </NGridItem>
     </NGrid>
 
-    <NGrid>
-      <!-- 项目依赖卡片 -->
-      <NGridItem :span="24" :offset="0" class="col-span-24"> </NGridItem>
-    </NGrid>
-
-    <NCard title="技术栈" class="h-full">
+    <NCard title="技术栈" class="mt-4">
       <NGrid cols="1 600:2  1000:4" :x-gap="16" :y-gap="16" class="mt-4">
         <NGridItem v-for="(tech, index) in techStacks" :key="index">
           <NCard class="h-full cursor-pointer transition-all duration-300 hover:shadow-lg" @click="openLink(tech.url)">
@@ -207,6 +202,9 @@ import { NCard, NButton, NGrid, NGridItem, NCheckbox, NModal, NInput } from 'nai
 
 // 导入用户认证存储
 import { useAuthStore } from '@/stores'
+
+// 注册ECharts组件
+use([SVGRenderer, LineChart, PieChart, TitleComponent, TooltipComponent, LegendComponent, GridComponent])
 
 // 定义函数返回今天是星期几
 function getWeekDay() {
@@ -307,9 +305,6 @@ const techStacks = [
     color: 'text-blue-500',
   },
 ]
-
-// 注册ECharts组件
-use([SVGRenderer, LineChart, PieChart, TitleComponent, TooltipComponent, LegendComponent, GridComponent])
 
 // 获取用户信息
 const authStore = useAuthStore()
