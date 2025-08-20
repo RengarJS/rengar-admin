@@ -158,6 +158,10 @@ export const useAppStore = defineStore(
 
     // 切换主题时触发过渡动画
     function triggerThemeTransition(event?: MouseEvent) {
+      if (!document.startViewTransition) {
+        setDetaultTheme()
+        return
+      }
       const transition = document.startViewTransition(() => {
         setDetaultTheme()
       })
