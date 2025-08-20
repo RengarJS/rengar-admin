@@ -109,13 +109,18 @@ export const useAppStore = defineStore(
     }
 
     const osTheme = useOsTheme()
-    const themoMode = ref<App.ThemeMode>('light')
+
+    // 切换主题按钮的模式
+    const themoMode = ref<App.ThemeMode>('auto')
+
+    // 应用当前主题
     const theme = computed(() => {
       if (themoMode.value === 'light') return 'light'
       if (themoMode.value === 'dark') return 'dark'
       return osTheme.value || 'light'
     })
 
+    // naive-ui主题颜色覆盖
     const themeOverrides = reactive<GlobalThemeOverrides>({
       Layout: {
         colorEmbedded: theme.value === 'light' ? bgColor : 'transparent',
@@ -129,25 +134,60 @@ export const useAppStore = defineStore(
       },
     })
 
-    watch(
-      theme,
-      (val) => {
-        if (val === 'dark') {
-          document.documentElement.classList.add('dark')
-          themeOverrides.Layout!.colorEmbedded = 'transparent'
-          themeOverrides.Layout!.footerColor = 'transparent'
-        } else {
-          document.documentElement.classList.remove('dark')
-          themeOverrides.Layout!.colorEmbedded = bgColor
-          themeOverrides.Layout!.footerColor = bgColor
-        }
-      },
-      {
-        immediate: true,
-      },
-    )
+    onMounted(() => setDetaultTheme())
 
-    function toggleTheme() {
+    // 监听系统主题变化，当处于auto模式时触发过渡动画
+    watch(osTheme, () => {
+      if (themoMode.value === 'auto') {
+        triggerThemeTransition()
+      }
+    })
+
+    // 设置默认主题，根据当前主题切换类名和颜色
+    function setDetaultTheme() {
+      if (theme.value === 'dark') {
+        document.documentElement.classList.add('dark')
+        themeOverrides.Layout!.colorEmbedded = 'transparent'
+        themeOverrides.Layout!.footerColor = 'transparent'
+      } else {
+        document.documentElement.classList.remove('dark')
+        themeOverrides.Layout!.colorEmbedded = bgColor
+        themeOverrides.Layout!.footerColor = bgColor
+      }
+    }
+
+    // 切换主题时触发过渡动画
+    function triggerThemeTransition(event?: MouseEvent) {
+      const transition = document.startViewTransition(() => {
+        setDetaultTheme()
+      })
+
+      transition.ready.then(() => {
+        const { clientX, clientY } = event || { clientX: innerWidth / 2, clientY: innerHeight / 2 }
+
+        const radius = Math.hypot(Math.max(clientX, innerWidth - clientX), Math.max(clientY, innerHeight - clientY))
+
+        const clipPath = [
+          `circle(0px at ${clientX}px ${clientY}px)`,
+          `circle(${radius}px at ${clientX}px ${clientY}px)`,
+        ]
+
+        const isDark = document.documentElement.classList.contains('dark')
+
+        document.documentElement.animate(
+          {
+            clipPath: isDark ? clipPath.reverse() : clipPath,
+          },
+          {
+            duration: 450,
+            easing: 'ease-in',
+            pseudoElement: isDark ? '::view-transition-old(root)' : '::view-transition-new(root)',
+          },
+        )
+      })
+    }
+
+    function toggleTheme(event: MouseEvent) {
       if (themoMode.value === 'auto') {
         themoMode.value = 'light'
       } else if (themoMode.value === 'light') {
@@ -155,6 +195,8 @@ export const useAppStore = defineStore(
       } else {
         themoMode.value = 'auto'
       }
+
+      triggerThemeTransition(event)
     }
 
     function resetLayoutAndTheme() {

@@ -7,3 +7,29 @@
     box-shadow 0.3s var(--n-bezier),
     border-color 0.3s var(--n-bezier);
 }
+
+/* ---------- 主题切换动画 ---------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* 2. 亮色主题时的层级控制 */
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2147483646;
+}
+
+/* 3. 暗色主题时的层级反转 */
+html.dark::view-transition-old(root) {
+  z-index: 2147483646;
+}
+
+html.dark::view-transition-new(root) {
+  z-index: 1;
+}
+/* ---------- 主题切换动画结束 ---------- */
