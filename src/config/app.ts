@@ -1,3 +1,5 @@
+import type {} from '../../typings/app/app'
+
 const appConfig: App.BaseConfig = {
   layout: {
     layoutMode: 'aside',
