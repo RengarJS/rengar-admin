@@ -15,5 +15,5 @@ export default defineConfig({
     },
     outDir: 'lib',
   },
-  plugins: [dts()],
+  plugins: [dts({ rollupTypes: true })],
 })
