@@ -1,6 +1,6 @@
 // vite-plugin-git-version.ts
 import { writeFileSync } from 'node:fs'
-import type { PluginOption, ResolvedConfig } from 'vite'
+import type { Plugin, ResolvedConfig } from 'vite'
 
 export interface GitVersionPluginOptions {
   fileName?: string
@@ -9,7 +9,7 @@ export interface GitVersionPluginOptions {
   useShortTimestamp?: boolean
 }
 
-export function timestampVersionPlugin(options?: GitVersionPluginOptions): PluginOption {
+export function timestampVersionPlugin(options?: GitVersionPluginOptions): Plugin {
   const {
     fileName = 'version.json',
     versionPrefix = 'v',

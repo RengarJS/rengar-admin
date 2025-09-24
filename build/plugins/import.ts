@@ -2,9 +2,9 @@ import path from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
-import type { Plugin } from 'vite'
-export function setupAutoImportPlugin(): Plugin[] {
-  const plugins: Plugin[] = [
+import type { PluginOption } from 'vite'
+export function setupAutoImportPlugin(): PluginOption[] {
+  const plugins: PluginOption[] = [
     AutoImport({
       imports: [
         'vue',
