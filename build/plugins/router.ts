@@ -4,6 +4,6 @@ export function setupRouter() {
   return vitePluginRoutes({
     entry: 'src/views',
     output: 'src/router/routes.ts',
-    typeDir: 'typings/common/vite-plugin-routes.d.ts',
+    typeDir: 'typings/app/vite-plugin-routes.d.ts',
   })
 }
