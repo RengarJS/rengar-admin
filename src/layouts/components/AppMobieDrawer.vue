@@ -8,13 +8,13 @@
     style="width: 80%"
   >
     <NDrawerContent title="系统菜单" :native-scrollbar="false" closable>
-      <AppMenu v-model:active="menuStore.activeMenu" :data="menuStore.menuRoutes" @change="handleMenuChange" />
+      <SysMenu v-model:active="menuStore.activeMenu" :data="menuStore.menuRoutes" @change="handleMenuChange" />
     </NDrawerContent>
   </NDrawer>
 </template>
 
 <script setup lang="ts">
-import AppMenu from './AppMenu.vue'
+import SysMenu from './common/SysMenu.vue'
 import { useMenuStore, useAppStore } from '@/stores'
 const show = defineModel<boolean>('show', {
   required: true,

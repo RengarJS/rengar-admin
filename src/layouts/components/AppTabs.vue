@@ -87,9 +87,80 @@ import { useTabStore, useAppStore } from '@/stores'
 import { useWindowSize, useDebounceFn, useFullscreen } from '@vueuse/core'
 import { VueDraggable } from 'vue-draggable-plus'
 import SvgIcon from '@/components/SvgIcon/index.vue'
-import { vDragscroll } from './directive'
 
 import type { DropdownOption } from 'naive-ui'
+import type { Directive } from 'vue'
+
+interface DragScrollHTMLElement extends HTMLElement {
+  _dragscroll?: {
+    isDown: boolean
+    startX: number
+    scrollLeft: number
+    handleMouseDown: (e: MouseEvent) => void
+    handleMouseLeave: () => void
+    handleMouseUp: () => void
+    handleMouseMove: (e: MouseEvent) => void
+  }
+}
+
+const vDragscroll: Directive<DragScrollHTMLElement> = {
+  mounted(el) {
+    let isDown = false
+    let startX: number
+    let scrollLeft: number
+
+    const handleMouseDown = (e: MouseEvent) => {
+      isDown = true
+      startX = e.pageX - el.offsetLeft
+      scrollLeft = el.scrollLeft
+      el.style.cursor = 'grabbing'
+    }
+
+    const handleMouseLeave = () => {
+      isDown = false
+      el.style.cursor = 'grab'
+    }
+
+    const handleMouseUp = () => {
+      isDown = false
+      el.style.cursor = 'grab'
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDown) return
+      e.preventDefault()
+      const x = e.pageX - el.offsetLeft
+      const walk = (x - startX) * 2
+      el.scrollLeft = scrollLeft - walk
+    }
+
+    el.addEventListener('mousedown', handleMouseDown)
+    el.addEventListener('mouseleave', handleMouseLeave)
+    el.addEventListener('mouseup', handleMouseUp)
+    el.addEventListener('mousemove', handleMouseMove)
+
+    // 保存引用以便卸载时使用
+    el._dragscroll = {
+      isDown,
+      startX: 0,
+      scrollLeft: 0,
+      handleMouseDown,
+      handleMouseLeave,
+      handleMouseUp,
+      handleMouseMove,
+    }
+  },
+  unmounted(el) {
+    // 清理事件监听
+    const handlers = el._dragscroll
+    if (handlers) {
+      el.removeEventListener('mousedown', handlers.handleMouseDown)
+      el.removeEventListener('mouseleave', handlers.handleMouseLeave)
+      el.removeEventListener('mouseup', handlers.handleMouseUp)
+      el.removeEventListener('mousemove', handlers.handleMouseMove)
+    }
+  },
+}
 
 const tabStore = useTabStore()
 const { tabsList, activeRouteName } = storeToRefs(tabStore)
@@ -100,30 +171,30 @@ function renderOptions(tab: App.Tab, index: number): DropdownOption[] {
     {
       label: '关闭',
       key: 'closeCurrent',
-      icon: () => <SvgIcon icon="ant-design:close-outlined"></SvgIcon>,
+      icon: () => <SvgIcon icon="ant-design:close-outlined"> </SvgIcon>,
       disabled: Boolean(tab.fixedInTab),
     },
     {
       label: '关闭其它',
       key: 'closeOther',
-      icon: () => <SvgIcon icon="ant-design:column-width-outlined"></SvgIcon>,
+      icon: () => <SvgIcon icon="ant-design:column-width-outlined"> </SvgIcon>,
     },
     {
       label: '关闭左侧',
       key: 'closeLeft',
-      icon: () => <SvgIcon icon="mdi:format-horizontal-align-left"></SvgIcon>,
+      icon: () => <SvgIcon icon="mdi:format-horizontal-align-left"> </SvgIcon>,
       disabled: index === 0,
     },
     {
       label: '关闭右侧',
       key: 'closeRight',
-      icon: () => <SvgIcon icon="mdi:format-horizontal-align-right"></SvgIcon>,
+      icon: () => <SvgIcon icon="mdi:format-horizontal-align-right"> </SvgIcon>,
       disabled: index === tabsList.value.length - 1,
     },
     {
       label: '关闭所有',
       key: 'closeAll',
-      icon: () => <SvgIcon icon="ant-design:line-outlined"></SvgIcon>,
+      icon: () => <SvgIcon icon="ant-design:line-outlined"> </SvgIcon>,
     },
   ]
 }
@@ -220,6 +291,7 @@ const { isFullscreen, toggle } = useFullscreen(layoutContentRef)
     center top;
   -webkit-mask-repeat: no-repeat;
 }
+
 .tab-item.active {
   background: var(--color-primary-100);
 }
@@ -241,11 +313,14 @@ const { isFullscreen, toggle } = useFullscreen(layoutContentRef)
 }
 
 .scrollbar-hide {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
+  display: none;
+  /* Chrome, Safari and Opera */
 }
 </style>

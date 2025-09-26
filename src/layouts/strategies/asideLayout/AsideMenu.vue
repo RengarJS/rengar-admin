@@ -5,7 +5,7 @@
         height: numberToPx(config.headerHeight),
       }"
     >
-      <AppLogo :show-title="!config.asideCollapse" />
+      <SysLogo :show-title="!config.asideCollapse" />
     </NLayoutHeader>
     <NLayoutContent
       :native-scrollbar="false"
@@ -15,11 +15,7 @@
         bottom: 0,
       }"
     >
-      <AppMenu
-        v-model:active="menuStore.activeMenu"
-        :data="showAsideMode ? menuStore.menuRoutes : menuStore.subMenuRoutes"
-        :collapsed="config.asideCollapse"
-      />
+      <SysMenu v-model:active="menuStore.activeMenu" :data="menuStore.menuRoutes" :collapsed="config.asideCollapse" />
     </NLayoutContent>
   </NLayout>
 </template>
@@ -27,10 +23,10 @@
 <script setup lang="ts">
 import { useAppStore, useMenuStore } from '@/stores'
 import { numberToPx } from '@/utils/tools'
-import AppLogo from '../common/AppLogo.vue'
-import AppMenu from '../common/AppMenu.vue'
+import SysLogo from '@/layouts/components/common/SysLogo.vue'
+import SysMenu from '@/layouts/components/common/SysMenu.vue'
 const appStore = useAppStore()
-const { config, showAsideMode } = storeToRefs(appStore)
+const { config } = storeToRefs(appStore)
 
 const menuStore = useMenuStore()
 </script>
