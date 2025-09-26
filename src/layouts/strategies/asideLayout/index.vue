@@ -9,7 +9,30 @@
       :collapsed="config.asideCollapse"
       :collapsed-width="config.asideCollapseWidth"
     >
-      <AsideMenu />
+      <NLayout position="absolute">
+        <NLayoutHeader
+          :style="{
+            height: numberToPx(config.headerHeight),
+          }"
+        >
+          <SysLogo :show-title="!config.asideCollapse" />
+        </NLayoutHeader>
+        <NLayoutContent
+          inverted
+          :native-scrollbar="false"
+          position="absolute"
+          :style="{
+            top: numberToPx(config.headerHeight),
+            bottom: 0,
+          }"
+        >
+          <SysMenu
+            v-model:active="menuStore.activeMenu"
+            :data="menuStore.menuRoutes"
+            :collapsed="config.asideCollapse"
+          />
+        </NLayoutContent>
+      </NLayout>
     </NLayoutSider>
     <NLayout>
       <NLayoutHeader
@@ -31,7 +54,6 @@
       >
         <AppTabs />
       </NLayoutHeader>
-
       <NLayoutContent
         embedded
         :native-scrollbar="false"
@@ -62,16 +84,19 @@
 </template>
 
 <script setup lang="ts">
-import { useAppStore } from '@/stores'
+import { useAppStore, useMenuStore } from '@/stores'
 import { numberToPx } from '@/utils/tools'
 import AppFooter from '@/layouts/components/AppFooter.vue'
 import AppTabs from '@/layouts/components/AppTabs.vue'
 import AppHeader from '@/layouts/components/AppHeader.vue'
 import AppMain from '@/layouts/components/AppMain.vue'
-import AsideMenu from './AsideMenu.vue'
 import AppConfigDrawer from '@/layouts/components/AppConfigDrawer.vue'
 import AppMobieDrawer from '@/layouts/components/AppMobieDrawer.vue'
 import AppBreadcrumb from '@/layouts/components/AppBreadcrumb.vue'
+import SysLogo from '@/layouts/components/common/SysLogo.vue'
+import SysMenu from '@/layouts/components/common/SysMenu.vue'
+
+const menuStore = useMenuStore()
 
 const appStore = useAppStore()
 const { config, showConfigDrawer, isMobile, showMenuDrawer, showRouterView, isPc } = storeToRefs(appStore)

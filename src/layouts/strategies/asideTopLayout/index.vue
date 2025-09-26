@@ -4,7 +4,7 @@
     <NLayoutHeader
       bordered
       :style="{
-        height: numberToPx(layoutConfig.headerHeight),
+        height: numberToPx(config.headerHeight),
       }"
     >
       <AppHeader :show-logo="true" :show-aside-control="showAsideControl">
@@ -22,27 +22,40 @@
       has-sider
       position="absolute"
       :style="{
-        top: numberToPx(layoutConfig.headerHeight),
+        top: numberToPx(config.headerHeight),
       }"
     >
       <NLayoutSider
         v-if="showAppAside"
         bordered
         :style="{
-          width: numberToPx(layoutConfig.asideWidth),
+          width: numberToPx(config.asideWidth),
         }"
-        :collapsed="layoutConfig.asideCollapse"
-        :collapsed-width="layoutConfig.asideCollapseWidth"
+        :collapsed="config.asideCollapse"
+        :collapsed-width="config.asideCollapseWidth"
       >
-        <AsideMenu />
+        <NLayoutContent
+          :native-scrollbar="false"
+          position="absolute"
+          :style="{
+            top: 0,
+            bottom: 0,
+          }"
+        >
+          <SysMenu
+            v-model:active="menuStore.activeMenu"
+            :data="menuStore.subMenuRoutes"
+            :collapsed="config.asideCollapse"
+          />
+        </NLayoutContent>
       </NLayoutSider>
 
       <NLayout>
         <NLayoutHeader
-          v-if="layoutConfig.showTabs"
+          v-if="config.showTabs"
           bordered
           :style="{
-            height: numberToPx(layoutConfig.tabHeight),
+            height: numberToPx(config.tabHeight),
           }"
         >
           <AppTabs />
@@ -62,11 +75,11 @@
         </NLayoutContent>
 
         <NLayoutFooter
-          v-if="layoutConfig.showFooter"
+          v-if="config.showFooter"
           bordered
           position="absolute"
           :style="{
-            height: numberToPx(layoutConfig.footerHeight),
+            height: numberToPx(config.footerHeight),
           }"
         >
           <AppFooter />
@@ -88,17 +101,16 @@ import AppHeader from '@/layouts/components/AppHeader.vue'
 import AppMain from '@/layouts/components/AppMain.vue'
 import AppConfigDrawer from '@/layouts/components/AppConfigDrawer.vue'
 import AppMobieDrawer from '@/layouts/components/AppMobieDrawer.vue'
-import AsideMenu from './AsideMenu.vue'
 import SysMenu from '@/layouts/components/common/SysMenu.vue'
 
 const appStore = useAppStore()
-const { config: layoutConfig, showConfigDrawer, showMenuDrawer, showRouterView, isPc } = storeToRefs(appStore)
+const { config, showConfigDrawer, showMenuDrawer, showRouterView, isPc } = storeToRefs(appStore)
 
 const layoutContentStyle = computed(() => {
   const style = {
-    top: layoutConfig.value.showTabs ? numberToPx(layoutConfig.value.tabHeight) : '0px',
-    bottom: layoutConfig.value.showFooter ? numberToPx(layoutConfig.value.footerHeight) : '0px',
-    padding: numberToPx(layoutConfig.value.gap),
+    top: config.value.showTabs ? numberToPx(config.value.tabHeight) : '0px',
+    bottom: config.value.showFooter ? numberToPx(config.value.footerHeight) : '0px',
+    padding: numberToPx(config.value.gap),
   }
   return style
 })
