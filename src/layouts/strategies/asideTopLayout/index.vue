@@ -3,6 +3,7 @@
   <NLayout style="height: 100vh">
     <NLayoutHeader
       bordered
+      :inverted="config.invertedHeader"
       :style="{
         height: numberToPx(config.headerHeight),
       }"
@@ -10,6 +11,7 @@
       <AppHeader :show-logo="true" :show-aside-control="showAsideControl">
         <SysMenu
           v-if="isPc"
+          :inverted="config.invertedHeader"
           mode="horizontal"
           :data="menuStore.menuRoutes"
           children-field="list"
@@ -28,26 +30,23 @@
       <NLayoutSider
         v-if="showAppAside"
         bordered
+        :inverted="config.invertedAside"
+        :native-scrollbar="false"
+        :width="config.asideWidth"
+        position="absolute"
         :style="{
-          width: numberToPx(config.asideWidth),
+          left: 0,
+          bottom: 0,
         }"
         :collapsed="config.asideCollapse"
         :collapsed-width="config.asideCollapseWidth"
       >
-        <NLayoutContent
-          :native-scrollbar="false"
-          position="absolute"
-          :style="{
-            top: 0,
-            bottom: 0,
-          }"
-        >
-          <SysMenu
-            v-model:active="menuStore.activeMenu"
-            :data="menuStore.subMenuRoutes"
-            :collapsed="config.asideCollapse"
-          />
-        </NLayoutContent>
+        <SysMenu
+          :inverted="config.invertedAside"
+          v-model:active="menuStore.activeMenu"
+          :data="menuStore.subMenuRoutes"
+          :collapsed="config.asideCollapse"
+        />
       </NLayoutSider>
 
       <NLayout>

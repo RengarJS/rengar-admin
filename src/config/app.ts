@@ -2,7 +2,7 @@ import type {} from '../../typings/app/app'
 
 const appConfig: App.BaseConfig = {
   layout: {
-    layoutMode: 'aside',
+    layoutMode: 'top-aside',
     asideWidth: 220,
     headerHeight: 56,
     footerHeight: 46,
@@ -11,9 +11,11 @@ const appConfig: App.BaseConfig = {
     showTabs: true,
     showBreadcrumb: true,
     showFooter: true,
+    invertedHeader: false,
+    invertedAside: false,
   },
   theme: {
-    primaryColor: '#8b5cf6',
+    primaryColor: '#8B5CF6',
   },
 }
 

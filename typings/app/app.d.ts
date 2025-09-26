@@ -16,6 +16,8 @@ declare global {
       showTabs: boolean
       showBreadcrumb: boolean
       showFooter: boolean
+      invertedHeader: boolean
+      invertedAside: boolean
     }
 
     interface BaseLayoutConfig extends Omit<LayoutConfig, 'asideCollapse' | 'asideCollapseWidth'> {

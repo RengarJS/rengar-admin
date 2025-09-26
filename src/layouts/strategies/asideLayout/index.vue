@@ -2,23 +2,28 @@
   <NLayout embedded has-sider style="height: 100vh">
     <NLayoutSider
       v-if="isPc"
+      :inverted="config.invertedAside"
+      :width="config.asideWidth"
       bordered
       :style="{
-        width: numberToPx(config.asideWidth),
+        zIndex: 2,
       }"
       :collapsed="config.asideCollapse"
       :collapsed-width="config.asideCollapseWidth"
     >
-      <NLayout position="absolute">
+      <NLayout inverted position="absolute">
         <NLayoutHeader
+          :inverted="config.invertedAside"
           :style="{
             height: numberToPx(config.headerHeight),
           }"
         >
           <SysLogo :show-title="!config.asideCollapse" />
         </NLayoutHeader>
-        <NLayoutContent
-          inverted
+        <NLayoutSider
+          bordered
+          :inverted="config.invertedAside"
+          width="100%"
           :native-scrollbar="false"
           position="absolute"
           :style="{
@@ -27,15 +32,17 @@
           }"
         >
           <SysMenu
+            :inverted="config.invertedAside"
             v-model:active="menuStore.activeMenu"
             :data="menuStore.menuRoutes"
             :collapsed="config.asideCollapse"
           />
-        </NLayoutContent>
+        </NLayoutSider>
       </NLayout>
     </NLayoutSider>
     <NLayout>
       <NLayoutHeader
+        :inverted="config.invertedHeader"
         bordered
         :style="{
           height: numberToPx(config.headerHeight),

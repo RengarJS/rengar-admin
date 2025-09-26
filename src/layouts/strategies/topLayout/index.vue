@@ -2,21 +2,28 @@
   <NLayout embedded has-sider style="height: 100vh">
     <NLayout>
       <NLayoutHeader
+        :inverted="config.invertedHeader"
         bordered
         :style="{
-          height: numberToPx(layoutConfig.headerHeight),
+          height: numberToPx(config.headerHeight),
         }"
       >
         <AppHeader :show-logo="true" :show-aside-control="showAsideControl">
-          <SysMenu v-if="isPc" mode="horizontal" :data="menuStore.menuRoutes" v-model:active="menuStore.activeMenu">
+          <SysMenu
+            v-if="isPc"
+            :inverted="config.invertedHeader"
+            mode="horizontal"
+            :data="menuStore.menuRoutes"
+            v-model:active="menuStore.activeMenu"
+          >
           </SysMenu>
         </AppHeader>
       </NLayoutHeader>
       <NLayoutHeader
-        v-if="layoutConfig.showTabs"
+        v-if="config.showTabs"
         bordered
         :style="{
-          height: numberToPx(layoutConfig.tabHeight),
+          height: numberToPx(config.tabHeight),
         }"
       >
         <AppTabs />
@@ -35,11 +42,11 @@
         <AppMain v-if="showRouterView" />
       </NLayoutContent>
       <NLayoutFooter
-        v-if="layoutConfig.showFooter"
+        v-if="config.showFooter"
         bordered
         position="absolute"
         :style="{
-          height: numberToPx(layoutConfig.footerHeight),
+          height: numberToPx(config.footerHeight),
         }"
       >
         <AppFooter />
@@ -64,13 +71,13 @@ import SysMenu from '@/layouts/components/common/SysMenu.vue'
 
 const appStore = useAppStore()
 
-const { config: layoutConfig, showConfigDrawer, showMenuDrawer, showRouterView, isPc } = storeToRefs(appStore)
+const { config: config, showConfigDrawer, showMenuDrawer, showRouterView, isPc } = storeToRefs(appStore)
 
 const layoutContentStyle = computed(() => {
   const style = {
-    top: `calc(${numberToPx(layoutConfig.value.headerHeight)} + ${layoutConfig.value.showTabs ? numberToPx(layoutConfig.value.tabHeight) : '0px'})`,
-    bottom: layoutConfig.value.showFooter ? numberToPx(layoutConfig.value.footerHeight) : '0px',
-    padding: numberToPx(layoutConfig.value.gap),
+    top: `calc(${numberToPx(config.value.headerHeight)} + ${config.value.showTabs ? numberToPx(config.value.tabHeight) : '0px'})`,
+    bottom: config.value.showFooter ? numberToPx(config.value.footerHeight) : '0px',
+    padding: numberToPx(config.value.gap),
   }
   return style
 })

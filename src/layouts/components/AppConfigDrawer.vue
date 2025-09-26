@@ -103,6 +103,15 @@
             <div>显示底部</div>
             <NSwitch v-model:value="appStore.config.showFooter" />
           </div>
+
+          <div class="flex items-center justify-between">
+            <div>头部反转</div>
+            <NSwitch v-model:value="appStore.config.invertedHeader" />
+          </div>
+          <div class="flex items-center justify-between">
+            <div>侧边栏反转</div>
+            <NSwitch v-model:value="appStore.config.invertedAside" />
+          </div>
         </NSpace>
       </div>
 
@@ -150,6 +159,9 @@ const appConfig: App.BaseConfig = {
     showTabs: ${appStore.config.showTabs},
     showBreadcrumb: ${appStore.config.showBreadcrumb},
     showFooter: ${appStore.config.showFooter},
+    invertedHeader: ${appStore.config.invertedHeader},
+    invertedAside: ${appStore.config.invertedAside}
+
   },
   theme: {
     primaryColor: '${appStore.themeOverrides.common!.primaryColor!}',
