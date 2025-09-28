@@ -2,7 +2,7 @@ import type {} from '../../typings/app/app'
 
 const appConfig: App.BaseConfig = {
   layout: {
-    layoutMode: 'top-aside',
+    layoutMode: 'aside',
     asideWidth: 220,
     headerHeight: 56,
     footerHeight: 46,
