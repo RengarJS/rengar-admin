@@ -11,7 +11,7 @@
       :collapsed="config.asideCollapse"
       :collapsed-width="config.asideCollapseWidth"
     >
-      <NLayout inverted position="absolute">
+      <NLayout has-sider inverted position="absolute">
         <NLayoutHeader
           :inverted="config.invertedAside"
           :style="{

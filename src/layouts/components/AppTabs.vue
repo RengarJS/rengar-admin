@@ -57,10 +57,7 @@
     <div class="flex items-center gap-4 pr-4 text-lg">
       <NTooltip placement="bottom">
         <template #trigger>
-          <div
-            class="flex-center cursor-pointer rounded-sm p-1 hover:bg-zinc-100 dark:hover:bg-zinc-700"
-            @click="appStore.refreshRouterView"
-          >
+          <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="appStore.refreshRouterView">
             <SvgIcon icon="ooui:reload"></SvgIcon>
           </div>
         </template>
@@ -69,10 +66,7 @@
 
       <NTooltip placement="bottom">
         <template #trigger>
-          <div
-            class="flex-center cursor-pointer rounded-sm p-1 hover:bg-zinc-100 dark:hover:bg-zinc-700"
-            @click="toggle"
-          >
+          <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="toggle">
             <SvgIcon :icon="isFullscreen ? 'ooui:exit-fullscreen' : 'ooui:full-screen'"></SvgIcon>
           </div>
         </template>
