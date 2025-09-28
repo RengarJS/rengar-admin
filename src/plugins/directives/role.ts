@@ -16,8 +16,7 @@ const RoleDirective: Directive<HTMLElement, string | string[]> = {
 
     const hasPermission = useAuth(value)
     if (!hasPermission) {
-      el.style.display = 'none'
-      // 或者 el.remove()
+      el.remove()
     }
   },
 }
