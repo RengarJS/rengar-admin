@@ -23,7 +23,7 @@ export default defineConfigWithVueTs(
     // 配置名称
     name: 'app/files-to-ignore',
     // 需要忽略的文件或目录
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
+    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/lib/**'],
   },
 
   // 使用 Vue 的基本配置
