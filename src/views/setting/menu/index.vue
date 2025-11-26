@@ -105,12 +105,17 @@
     </NGrid>
 
     <MenuAddModal v-model:show="showMemuModal" :type="addType" :parent="currentMenu" @success="getMenuTree" />
-    <ButtonAddModal v-model:show="showButtonModal" :parent="currentMenu" @success="getButtonList" />
+    <ButtonAddModal
+      v-model:show="showButtonModal"
+      :parent="currentMenu"
+      :current-button="currentButton"
+      @success="getButtonList"
+    />
   </div>
 </template>
 
 <script setup lang="tsx">
-import { menuTreeApi, menuEditApi, menuDeleteApi, buttonListApi, buttonDeleteApi } from '@/api/setting/menu'
+import { menuTreeApi, menuEditApi, menuDeleteApi, buttonListApi } from '@/api/setting/menu'
 import { type TreeOption, type FormRules, type FormInst, type DataTableColumns } from 'naive-ui'
 import { withModifiers } from 'vue'
 import { useClipboard } from '@vueuse/core'
@@ -227,10 +232,10 @@ function handleRemoveMenu() {
 }
 
 const showButtonModal = ref(false)
-const currentButton = ref<Api.Setting.Button>()
-const buttonList = ref<Api.Setting.Button[]>([])
+const currentButton = ref<Api.Setting.Menu>()
+const buttonList = ref<Api.Setting.Menu[]>([])
 
-const columns: DataTableColumns<Api.Setting.Button> = [
+const columns: DataTableColumns<Api.Setting.Menu> = [
   {
     title: '按钮名称',
     key: 'name',
@@ -305,12 +310,12 @@ watch(currentMenu, (val) => {
   getButtonList()
 })
 
-function handleButtonEdit(data: Api.Setting.Button) {
+function handleButtonEdit(data: Api.Setting.Menu) {
   currentButton.value = data
   showButtonModal.value = true
 }
 
-function handleButtonDelete(data: Api.Setting.Button) {
+function handleButtonDelete(data: Api.Setting.Menu) {
   const dialogInstance = window.$dialog.warning({
     title: '温馨提示',
     content: `确定要删除“${data.name}”吗？`,
@@ -318,7 +323,7 @@ function handleButtonDelete(data: Api.Setting.Button) {
     negativeText: '取消',
     onPositiveClick: async () => {
       dialogInstance.loading = true
-      const [err] = await to(buttonDeleteApi(data.id))
+      const [err] = await to(menuDeleteApi(data.id))
       dialogInstance.loading = false
       if (err) return false
       window.$message.success('删除成功')

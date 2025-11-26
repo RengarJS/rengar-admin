@@ -50,11 +50,19 @@ declare global {
     }
 
     namespace Setting {
+      interface Permission {
+        id: number
+        name: string
+        path: string
+        status: Commom.EnableStatus
+      }
+
       interface Menu {
         id: number
         parentId: number
         code: string
         name: string
+        type: 1 | 2
         status: Commom.EnableStatus
         sort: number
       }

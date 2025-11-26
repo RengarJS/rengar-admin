@@ -37,33 +37,18 @@ export function menuDeleteApi(id: number) {
   })
 }
 
-export function buttonListApi(parentId: number) {
-  return baseHttp.request<Api.Setting.Button[]>({
-    url: '/button/list',
-    method: 'post',
-    data: { parentId },
-  })
-}
-
-export function buttonAddApi(data: Api.Setting.Button) {
-  return baseHttp.request<Api.Setting.Button>({
-    url: '/button/add',
-    method: 'post',
-    data,
-  })
-}
-
-export function buttonEditApi(data: Api.Setting.Button) {
-  return baseHttp.request<Api.Setting.Button>({
-    url: '/button/edit',
-    method: 'post',
-    data,
-  })
-}
-export function buttonDeleteApi(id: number) {
-  return baseHttp.request<Api.Setting.Button>({
-    url: '/button/delete',
+export function menuDetailApi(id: number) {
+  return baseHttp.request<Api.Setting.Menu>({
+    url: '/menu/detail',
     method: 'post',
     data: { id },
+  })
+}
+
+export function buttonListApi(parentId: number) {
+  return baseHttp.request<Api.Setting.Menu[]>({
+    url: '/menu/button/list',
+    method: 'post',
+    data: { parentId },
   })
 }

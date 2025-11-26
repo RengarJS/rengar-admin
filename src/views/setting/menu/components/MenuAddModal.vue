@@ -6,6 +6,7 @@
     positive-text="确定"
     negative-text="取消"
     :loading
+    @after-leave="handleClose"
     @positive-click="handleSubmit"
   >
     <NForm ref="formRef" :model="formData" :rules class="my-8" size="small" label-placement="left" label-width="auto">
@@ -49,7 +50,9 @@ const emit = defineEmits<{
   success: []
 }>()
 
-const formData = ref<Api.Setting.Menu | Recordable>({})
+const formData = ref<Recordable>({
+  type: 1,
+})
 
 const formRef = useTemplateRef<FormInst>('formRef')
 const rules: FormRules = {
@@ -70,10 +73,17 @@ async function handleSubmit() {
     }),
   )
   loading.value = false
-  if (err) return
+  if (err) return false
   window.$message?.success('新增成功')
   emit('success')
   return true
+}
+
+function handleClose() {
+  for (const key in formData.value) {
+    formData.value[key] = null
+  }
+  formData.value.type = 1
 }
 </script>
 
