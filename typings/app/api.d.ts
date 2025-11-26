@@ -85,10 +85,14 @@ declare global {
         name: string
       }
 
+      interface RoleConfigMenuItem {
+        id: number
+        isHalf: boolean
+      }
+
       interface RoleConfigReq {
         id: number
-        codes: string[]
-        halfCodes: string[]
+        menuList: RoleConfigMenuItem[]
       }
 
       interface User {

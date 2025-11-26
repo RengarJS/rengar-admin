@@ -7,9 +7,9 @@ export function menuTreeApi() {
   })
 }
 
-export function menuButtonTreeApi() {
+export function menuButtonEnabledTreeApi() {
   return baseHttp.request<Api.Setting.MenuTree[]>({
-    url: '/menu/tree/all',
+    url: '/menu/button/tree/enabled',
     method: 'post',
   })
 }

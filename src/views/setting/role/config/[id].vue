@@ -16,10 +16,10 @@
           ref="treeRef"
           :pattern
           label-field="name"
-          key-field="code"
-          
-          
-           checkable cascade block-line 
+          key-field="id"
+          checkable
+          cascade
+          block-line
           :show-irrelevant-nodes="true"
         ></NTree>
       </NCard>
@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="tsx">
-import { menuButtonTreeApi } from '@/api/setting/menu'
+import { menuButtonEnabledTreeApi } from '@/api/setting/menu'
 import { roleConfigApi, roleConfigDetailApi } from '@/api/setting/role'
 
 import { to } from 'await-to-js'
@@ -37,19 +37,20 @@ import type { TreeInst } from 'naive-ui'
 
 const route = useRoute()
 const id = Number(route.params.id)
-const checkedKeys = ref<string[]>([])
+const checkedKeys = ref<number[]>([])
 const menuTree = ref<Api.Setting.MenuTree[]>([])
 const menuLoading = ref(false)
 
 async function getMenuTree() {
   menuLoading.value = true
-  const [err, tree] = await to(menuButtonTreeApi())
-  const [detailErr, detail] = await to(roleConfigDetailApi(id))
+  const [err, tree] = await to(menuButtonEnabledTreeApi())
+  const [detailErr, menuList] = await to(roleConfigDetailApi(id))
   menuLoading.value = false
 
   if (err || detailErr) return
   menuTree.value = tree
-  checkedKeys.value = detail.codes
+
+  checkedKeys.value = menuList.filter((item) => !item.isHalf).map((item) => item.id)
 }
 getMenuTree()
 
@@ -60,14 +61,16 @@ const saveLoading = ref(false)
 const treeRef = useTemplateRef<TreeInst>('treeRef')
 async function handleSave() {
   saveLoading.value = true
-  const { keys: codes } = treeRef.value!.getCheckedData()
-  const { keys: halfCodes } = treeRef.value!.getIndeterminateData()
+  const { keys: menuIds } = treeRef.value!.getCheckedData() as { keys: number[] }
+  const { keys: halfMenuIds } = treeRef.value!.getIndeterminateData() as { keys: number[] }
 
   const [err] = await to(
     roleConfigApi({
       id,
-      codes: codes.filter((item) => !halfCodes.includes(item)) as string[],
-      halfCodes: halfCodes as string[],
+      menuList: [
+        ...menuIds.map((item) => ({ id: item, isHalf: false })),
+        ...halfMenuIds.map((item) => ({ id: item, isHalf: true })),
+      ],
     }),
   )
   saveLoading.value = false

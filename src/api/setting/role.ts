@@ -2,7 +2,7 @@ import { baseHttp } from '@/api/request'
 
 export function rolePageListApi(data: Api.Commom.PageRequest) {
   return baseHttp.request<Api.Commom.PageResponse<Api.Setting.Role>>({
-    url: '/role/pageList',
+    url: '/role/list/page',
     method: 'post',
     data,
   })
@@ -47,7 +47,7 @@ export function roleConfigApi(data: Api.Setting.RoleConfigReq) {
 }
 
 export function roleConfigDetailApi(id: number) {
-  return baseHttp.request<Api.Setting.RoleConfigReq>({
+  return baseHttp.request<Api.Setting.RoleConfigMenuItem[]>({
     url: '/role/config/detail',
     method: 'post',
     data: { id },
