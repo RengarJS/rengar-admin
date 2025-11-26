@@ -21,8 +21,8 @@ export const useAuthStore = defineStore('auth', () => {
   async function authLoginAction(params: Api.Auth.LoginParams) {
     const [err, data] = await to(authLoginApi(params))
     if (err) return Promise.reject(err)
-    user.value.token = data
-    saveToken(data)
+    user.value.token = data.token
+    saveToken(data.token)
     return true
   }
 

@@ -1,7 +1,7 @@
 import { baseHttp } from '@/api/request'
 
 export function authLoginApi(data: Api.Auth.LoginParams) {
-  return baseHttp.request<string>({
+  return baseHttp.request<Api.Auth.LoginResponse>({
     url: '/auth/login',
     method: 'POST',
     data,
@@ -17,7 +17,7 @@ export function authDetailApi() {
 
 export function authLoginOutApi() {
   return baseHttp.request<boolean>({
-    url: '/auth/loginOut',
+    url: '/auth/logout',
     method: 'post',
   })
 }

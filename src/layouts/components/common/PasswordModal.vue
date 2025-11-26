@@ -60,7 +60,7 @@ const rules: FormRules = {
   },
 }
 
-const formValue = reactive<Api.Auth.PasswordParams>({
+const formValue = reactive({
   oldPassword: '',
   newPassword: '',
   confirmPassword: '',

@@ -36,6 +36,25 @@
             }"
           />
         </NFormItem>
+
+        <NFormItem path="captchaCode">
+          <div class="h-full w-full flex gap-4">
+            <NInput
+              class="flex-1"
+              v-model:value="formData.captchaCode"
+              placeholder="请输入验证码"
+              clearable
+              show-password-on="mousedown"
+              :theme-overrides="{
+                borderRadius: '6px',
+              }"
+            />
+
+            <NSpin :show="captchaLoading">
+              <img class="h-full w-[120px] cursor-pointer" :src="captchaImage" @click="getChapter" />
+            </NSpin>
+          </div>
+        </NFormItem>
         <NFormItem>
           <NButton type="primary" :loading attr-type="submit" round block @click="handleSubmit">登录</NButton>
         </NFormItem>
@@ -50,7 +69,7 @@
 import { to } from 'await-to-js'
 import { useAuthStore } from '@/stores'
 import { useLoading } from '@/hooks/loading'
-
+import { generateCaptchaApi } from '@/api/common/capcha'
 import type { FormInst, FormRules } from 'naive-ui'
 import BottomWave from './components/BottomWave.vue'
 import TopWave from './components/TopWave.vue'
@@ -58,7 +77,9 @@ const title = import.meta.env.VITE_APP_TITLE
 
 const formData = reactive({
   username: 'admin',
-  password: '123456',
+  password: 'szy521521',
+  captchaId: 0,
+  captchaCode: '',
 })
 const formRef = useTemplateRef<FormInst>('formRef')
 const rules: FormRules = {
@@ -72,7 +93,30 @@ const rules: FormRules = {
     trigger: ['input', 'blur'],
     message: '请输入密码',
   },
+  captchaCode: {
+    required: true,
+    trigger: ['input', 'blur'],
+    message: '请输入验证码',
+  },
 }
+
+const captchaLoading = ref(false)
+const captchaImage = ref('')
+
+async function getChapter() {
+  captchaLoading.value = true
+  formData.captchaCode = ''
+  const [err, res] = await to(generateCaptchaApi())
+  captchaLoading.value = false
+  if (err) {
+    formData.captchaCode = ''
+    return
+  }
+  captchaImage.value = res.image
+  formData.captchaId = res.captchaId
+}
+
+getChapter()
 
 const authStore = useAuthStore()
 
@@ -90,6 +134,7 @@ async function handleSubmit() {
   }
   const [loginErr] = await to(authStore.authLoginAction(formData))
   if (loginErr) {
+    getChapter()
     endLoading()
     return
   }

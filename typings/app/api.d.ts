@@ -18,10 +18,23 @@ declare global {
       }
     }
 
+    namespace Captcha {
+      interface GenerateResponse {
+        captchaId: number
+        image: string
+      }
+    }
+
     namespace Auth {
       interface LoginParams {
         username: string
         password: string
+        captchaId: number
+        captchaCode: string
+      }
+
+      interface LoginResponse {
+        token: string
       }
 
       interface DetailResponse {
@@ -33,7 +46,6 @@ declare global {
       interface PasswordParams {
         oldPassword: string
         newPassword: string
-        confirmPassword: string
       }
     }
 

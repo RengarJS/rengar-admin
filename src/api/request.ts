@@ -20,6 +20,7 @@ class HttpClient extends BaseHttpClient {
         if (authStore.user.token) {
           config.headers.Authorization = `Bearer ${authStore.user.token}`
         }
+
         return config
       },
       (error) => {
@@ -46,15 +47,15 @@ class HttpClient extends BaseHttpClient {
         } else if (response.data.code === '401') {
           return this.handleUnauthorized()
         } else {
-          showErrorMessage(response.data.msg || '请求失败')
-          return Promise.reject(new Error(response.data.msg || '请求失败'))
+          showErrorMessage(response.data.message || '请求失败')
+          return Promise.reject(new Error(response.data.message || '请求失败'))
         }
       },
       (error) => {
         if (error.response?.status === 401) {
           return this.handleUnauthorized()
         }
-        showErrorMessage('请求失败')
+        showErrorMessage(error?.response?.data?.message || '请求失败')
         return Promise.reject(error)
       },
     )
