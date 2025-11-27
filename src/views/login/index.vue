@@ -77,7 +77,7 @@ const title = import.meta.env.VITE_APP_TITLE
 
 const formData = reactive({
   username: 'admin',
-  password: '123456',
+  password: 'admin2025',
   captchaId: 0,
   captchaCode: '',
 })

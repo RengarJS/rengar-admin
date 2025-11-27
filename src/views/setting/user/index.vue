@@ -1,6 +1,6 @@
 <template>
   <NCard>
-    <NButton type="primary" @click="handleAdd"> 新增用户</NButton>
+    <NButton v-role="'btn0016'" type="primary" @click="handleAdd"> 新增用户</NButton>
     <NDataTable class="mt-4" :columns :data="tableData" :loading remote :pagination :scroll-x="620"></NDataTable>
     <AddOrEditModal v-model:show="showModal" :record @success="getPageList" />
     <PasswordModal v-model:show="showPasswordModal" :record />
@@ -42,13 +42,13 @@ const columns: DataTableColumns<Api.Setting.User> = [
     render(row) {
       return (
         <NSpace>
-          <NButton type="primary" onClick={() => handleEdit(row)}>
+          <NButton v-role={'btn0017'} type="primary" onClick={() => handleEdit(row)}>
             编辑
           </NButton>
-          <NButton type="primary" onClick={() => handlePassword(row)}>
+          <NButton v-role={'btn0019'} type="primary" onClick={() => handlePassword(row)}>
             修改密码
           </NButton>
-          <NButton type="error" onClick={() => handleDelete(row)}>
+          <NButton v-role={'btn0018'} type="error" onClick={() => handleDelete(row)}>
             删除
           </NButton>
         </NSpace>

@@ -5,7 +5,7 @@
         <NSpin :show="menuLoading">
           <NCard title="菜单管理" size="small">
             <template #header-extra>
-              <NButton type="primary" size="small" @click="handleAddMenu(1)">添加顶级菜单</NButton>
+              <NButton v-role="'btn0001'" type="primary" size="small" @click="handleAddMenu(1)">添加顶级菜单</NButton>
             </template>
 
             <div class="my-4">
@@ -22,7 +22,8 @@
               :render-suffix="renderSuffix"
               :show-irrelevant-nodes="true"
               :node-props="nodeProps"
-            ></NTree>
+            >
+            </NTree>
           </NCard>
         </NSpin>
       </NGridItem>
@@ -32,8 +33,10 @@
           <NAlert title="温馨提示" type="info">点击菜单开始</NAlert>
           <template v-if="currentMenu" #header-extra>
             <NSpace>
-              <NButton type="primary" ghost size="small" @click="handleAddMenu(2)">添加子菜单</NButton>
-              <NButton type="error" ghost size="small" @click="handleRemoveMenu">删除</NButton>
+              <NButton v-role="'btn0002'" type="primary" ghost size="small" @click="handleAddMenu(2)"
+                >添加子菜单</NButton
+              >
+              <NButton v-role="'btn0003'" type="error" ghost size="small" @click="handleRemoveMenu">删除</NButton>
             </NSpace>
           </template>
 
@@ -74,9 +77,15 @@
 
             <NFormItem>
               <div class="w-full flex-center">
-                <NButton :loading="menuEditLoading" type="primary" attr-type="submit" size="small" @click="handleSubmit"
-                  >保存</NButton
-                >
+                <NButton
+                  v-role="'btn0004'"
+                  :loading="menuEditLoading"
+                  type="primary"
+                  attr-type="submit"
+                  size="small"
+                  @click="handleSubmit"
+                  >保存
+                </NButton>
               </div>
             </NFormItem>
           </NForm>
@@ -88,18 +97,12 @@
           <NAlert v-if="!currentMenu" title="温馨提示" type="info">点击菜单开始</NAlert>
           <template v-if="currentMenu" #header-extra>
             <NSpace>
-              <NButton type="primary" ghost size="small" @click="handleButtonAdd">添加按钮</NButton>
+              <NButton v-role="'btn0006'" type="primary" ghost size="small" @click="handleButtonAdd">添加按钮</NButton>
             </NSpace>
           </template>
 
-          <NDataTable
-            v-if="currentMenu"
-            size="small"
-            class="mt-4"
-            :columns
-            :data="buttonList"
-            :loading="buttonLoading"
-          ></NDataTable>
+          <NDataTable v-if="currentMenu" size="small" class="mt-4" :columns :data="buttonList" :loading="buttonLoading">
+          </NDataTable>
         </NCard>
       </NGridItem>
     </NGrid>
@@ -277,10 +280,10 @@ const columns: DataTableColumns<Api.Setting.Menu> = [
     render(row) {
       return (
         <n-space>
-          <n-button type="info" size="small" text onClick={() => handleButtonEdit(row)}>
+          <n-button v-role={'btn0007'} type="info" size="small" text onClick={() => handleButtonEdit(row)}>
             编辑
           </n-button>
-          <n-button type="error" size="small" text onClick={() => handleButtonDelete(row)}>
+          <n-button v-role={'btn0008'} type="error" size="small" text onClick={() => handleButtonDelete(row)}>
             删除
           </n-button>
         </n-space>

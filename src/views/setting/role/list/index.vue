@@ -1,6 +1,6 @@
 <template>
   <NCard>
-    <NButton type="primary" @click="handleAdd"> 新增角色 </NButton>
+    <NButton v-role="'btn0011'" type="primary" @click="handleAdd"> 新增角色 </NButton>
     <NDataTable class="mt-4" :columns :data="tableData" :loading remote :pagination :scroll-x="620"></NDataTable>
     <AddOrEditModal v-model:show="showModal" :record @success="getPageList" />
   </NCard>
@@ -41,13 +41,13 @@ const columns: DataTableColumns<Api.Setting.Role> = [
     render(row) {
       return (
         <NSpace>
-          <NButton type="primary" onClick={() => handleEdit(row)}>
+          <NButton v-role={'btn0012'} type="primary" onClick={() => handleEdit(row)}>
             编辑
           </NButton>
-          <NButton type="primary" onClick={() => handleConfigPermmsion(row)}>
+          <NButton v-role={'btn0014'} type="primary" onClick={() => handleConfigPermmsion(row)}>
             权限配置
           </NButton>
-          <NButton type="error" onClick={() => handleDelete(row)}>
+          <NButton v-role={'btn0013'} type="error" onClick={() => handleDelete(row)}>
             删除
           </NButton>
         </NSpace>

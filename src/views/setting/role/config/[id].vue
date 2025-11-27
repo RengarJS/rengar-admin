@@ -3,7 +3,7 @@
     <NSpin :show="menuLoading">
       <NCard title="菜单管理" size="small">
         <template #header-extra>
-          <NButton type="primary" :loading="saveLoading" @click="handleSave">保存</NButton>
+          <NButton v-role="'btn0014'" type="primary" :loading="saveLoading" @click="handleSave">保存</NButton>
         </template>
 
         <div class="my-4">
@@ -19,7 +19,7 @@
           key-field="id"
           
           
-           checkable cascade block-line 
+           block-line checkable cascade 
           :show-irrelevant-nodes="true"
         ></NTree>
       </NCard>
