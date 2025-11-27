@@ -75,7 +75,7 @@ async function handleSubmit() {
   loading.value = true
   const [err] = await to(record ? roleEditApi(unref(formData)) : roleAddApi(unref(formData)))
   loading.value = false
-  if (err) return
+  if (err) return false
   window.$message?.success(`${record ? '编辑' : '新增'}成功`)
   emit('success')
   return true
