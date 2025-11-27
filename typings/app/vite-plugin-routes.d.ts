@@ -20,6 +20,8 @@ type RouteRecordName =
   | 'login'
   | 'setting'
   | 'setting-menu'
+  | 'setting-permission'
+  | 'setting-permission-list'
   | 'setting-role'
   | 'setting-role-config'
   | 'setting-role-list'

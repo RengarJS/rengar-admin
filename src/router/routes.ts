@@ -185,6 +185,26 @@ export const routes: RouteRecordRaw[] = [
         },
       },
       {
+        name: 'setting-permission',
+        path: 'permission',
+        redirect: '/setting/permission/list',
+        meta: {
+          title: '权限管理',
+          order: 4,
+        },
+        children: [
+          {
+            name: 'setting-permission-list',
+            path: 'list',
+            component: () => import('@/views/setting/permission/list/index.vue'),
+            meta: {
+              title: 'setting_permission_list',
+              hideInMenu: true,
+            },
+          },
+        ],
+      },
+      {
         name: 'setting-role',
         path: 'role',
         redirect: '/setting/role/list',
