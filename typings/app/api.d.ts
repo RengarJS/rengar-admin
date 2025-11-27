@@ -99,7 +99,7 @@ declare global {
         id: number
         username: string
         status: Commom.EnableStatus
-        roleIds: string[]
+        roleIds: number[]
       }
 
       interface UserBindRoleReq {

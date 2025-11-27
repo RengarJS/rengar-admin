@@ -8,9 +8,9 @@ export function rolePageListApi(data: Api.Commom.PageRequest) {
   })
 }
 
-export function roleListApi() {
+export function roleListEnabledApi() {
   return baseHttp.request<Api.Setting.Role[]>({
-    url: '/role/list',
+    url: '/role/list/enabled',
     method: 'post',
   })
 }

@@ -3,7 +3,7 @@
     <NButton type="primary" @click="handleAdd"> 新增用户</NButton>
     <NDataTable class="mt-4" :columns :data="tableData" :loading remote :pagination :scroll-x="620"></NDataTable>
     <AddOrEditModal v-model:show="showModal" :record @success="getPageList" />
-    <PasswordModal v-model:show="showPasswordModal" :record @success="getPageList" />
+    <PasswordModal v-model:show="showPasswordModal" :record />
   </NCard>
 </template>
 

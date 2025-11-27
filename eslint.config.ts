@@ -17,7 +17,6 @@ export default defineConfigWithVueTs(
     name: 'app/files-to-lint',
     // 需要检查的文件类型
     files: ['**/*.{ts,tsx,vue}'],
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/lib/**'],
   },
 
   {

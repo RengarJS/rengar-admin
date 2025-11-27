@@ -14,6 +14,12 @@
       <NFormItem label="账户名" path="username">
         <NInput v-model:value="formData.username" placeholder="账户名" />
       </NFormItem>
+      <NFormItem v-if="!record" label="密码" path="password">
+        <NInput v-model:value="formData.password" placeholder="密码" />
+      </NFormItem>
+      <NFormItem v-if="!record" label="确认密码" path="confirmPassword">
+        <NInput v-model:value="formData.confirmPassword" placeholder="确认密码" />
+      </NFormItem>
       <NFormItem label="角色绑定" path="roleIds">
         <NSelect
           v-model:value="formData.roleIds"
@@ -35,8 +41,8 @@
 </template>
 
 <script setup lang="tsx">
-import { userAddApi, userEditApi } from '@/api/setting/user'
-import { roleListApi } from '@/api/setting/role'
+import { userAddApi, userEditApi, userDetailApi } from '@/api/setting/user'
+import { roleListEnabledApi } from '@/api/setting/role'
 
 import { type FormRules, type FormInst } from 'naive-ui'
 import { to } from 'await-to-js'
@@ -53,8 +59,7 @@ const emit = defineEmits<{
   success: []
 }>()
 
-const formData = ref<Api.Setting.User>({
-  id: 0,
+const formData = ref<Recordable>({
   username: '',
   status: 1,
   roleIds: [],
@@ -63,6 +68,8 @@ const formData = ref<Api.Setting.User>({
 const formRef = useTemplateRef<FormInst>('formRef')
 const rules: FormRules = {
   username: [{ required: true, message: '请输入账户名', trigger: ['blur', 'input'] }],
+  password: [{ required: true, message: '请输入密码', trigger: ['blur', 'input'] }],
+  confirmPassword: [{ required: true, message: '请输入确认密码', trigger: ['blur', 'input'] }],
   roleIds: [{ required: true, type: 'array', message: '请绑定角色', trigger: ['blur', 'change'] }],
   status: [{ required: true, message: '请选择状态', type: 'number', trigger: ['blur', 'change'] }],
 }
@@ -70,7 +77,7 @@ const rules: FormRules = {
 const roleList = ref<Api.Setting.Role[]>([])
 
 async function getRoleList() {
-  const [err, data] = await to(roleListApi())
+  const [err, data] = await to(roleListEnabledApi())
   if (err) {
     roleList.value = []
     return
@@ -78,19 +85,23 @@ async function getRoleList() {
   roleList.value = data
 }
 
+getRoleList()
+
 function handleOpen() {
-  getRoleList()
   if (record) {
-    formData.value = record
+    getDetail()
   }
 }
 
+async function getDetail() {
+  const [err, res] = await to(userDetailApi(record!.id))
+  if (err) return
+  formData.value = res
+}
+
 function handleClose() {
-  formData.value = {
-    id: 0,
-    username: '',
-    status: 1,
-    roleIds: [],
+  for (const key in formData.value) {
+    formData.value[key] = null
   }
 }
 
@@ -99,7 +110,9 @@ async function handleSubmit() {
   const [validErr] = await to(formRef.value!.validate())
   if (validErr) return false
   loading.value = true
-  const [err] = await to(record ? userEditApi(unref(formData)) : userAddApi(unref(formData)))
+  const [err] = await to(
+    record ? userEditApi(unref(formData) as Api.Setting.User) : userAddApi(unref(formData) as Api.Setting.User),
+  )
   loading.value = false
   if (err) return
   window.$message?.success(`${record ? '编辑' : '新增'}成功`)

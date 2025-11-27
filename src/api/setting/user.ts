@@ -2,7 +2,7 @@ import { baseHttp } from '@/api/request'
 
 export function userPageListApi(data: Api.Commom.PageRequest) {
   return baseHttp.request<Api.Commom.PageResponse<Api.Setting.User>>({
-    url: '/user/pageList',
+    url: '/user/list/page',
     method: 'post',
     data,
   })
@@ -20,6 +20,14 @@ export function userEditApi(data: Api.Setting.User) {
     url: '/user/edit',
     method: 'post',
     data,
+  })
+}
+
+export function userDetailApi(id: number) {
+  return baseHttp.request<Api.Setting.User>({
+    url: '/user/detail',
+    method: 'post',
+    data: { id },
   })
 }
 
