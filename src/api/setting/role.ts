@@ -47,7 +47,7 @@ export function roleConfigApi(data: Api.Setting.RoleConfigReq) {
 }
 
 export function roleConfigDetailApi(id: number) {
-  return baseHttp.request<Api.Setting.RoleConfigMenuItem[]>({
+  return baseHttp.request<number[]>({
     url: '/role/config/detail',
     method: 'post',
     data: { id },
