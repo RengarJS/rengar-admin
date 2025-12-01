@@ -13,9 +13,7 @@
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write .",
-    "prepare": "husky install",
-    "postversion": "git push && git push --tags",
-    "release": "node scripts/release.js"
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.{ts,tsx,vue}": [
