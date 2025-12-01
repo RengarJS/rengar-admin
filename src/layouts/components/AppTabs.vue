@@ -21,7 +21,7 @@
             item.name === activeRouteName ? 'text-primary dark:text-white bg-primary-100 dark:bg-primary-700' : '',
           ]"
           :ref="(el) => setItemRef(el as HTMLElement, item.name)"
-          @click="handleJump(item.name)"
+          @click="handleJump(item.path)"
           @contextmenu.prevent="handleRightClick(item.name)"
         >
           <NDropdown
@@ -255,10 +255,8 @@ watch(activeRouteName, () => debouncedScrollIntoView(), {
 })
 
 const { width } = useWindowSize()
-function handleJump(name: string) {
-  router.push({
-    name,
-  })
+function handleJump(path: string) {
+  router.push(path)
 }
 watch(width, () => scrollIntoView())
 

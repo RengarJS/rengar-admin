@@ -27,6 +27,7 @@ export const useTabStore = defineStore(
         addTabsAction({
           title: meta.title,
           name: val.name as string,
+          path: val.path,
           icon: meta.icon,
           localIcon: meta.localIcon,
         })
@@ -53,9 +54,9 @@ export const useTabStore = defineStore(
 
       if (activeRouteName.value === tab.name) {
         if (isLast) {
-          router.push({ name: tabsList.value[index - 1].name })
+          router.push(tabsList.value[index - 1]!.path)
         } else {
-          router.push({ name: tabsList.value[index].name })
+          router.push(tabsList.value[index - 1]!.path)
         }
       }
     }
@@ -100,6 +101,7 @@ export const useTabStore = defineStore(
         list.push({
           title: route.meta.title,
           name: route.name as string,
+          path: route.path,
           icon: route.meta.icon,
           localIcon: route.meta.localIcon,
           fixedInTab: true,
