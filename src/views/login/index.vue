@@ -51,7 +51,7 @@
             />
 
             <NSpin :show="captchaLoading">
-              <img class="h-full w-[120px] cursor-pointer" :src="captchaImage" @click="getChapter" />
+              <img class="h-10 w-[120px] cursor-pointer" :src="captchaImage" @click="getChapter" />
             </NSpin>
           </div>
         </NFormItem>
