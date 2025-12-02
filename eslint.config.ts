@@ -1,4 +1,5 @@
 // 导入 Vue 的 ESLint 插件
+import { globalIgnores } from 'eslint/config'
 import pluginVue from 'eslint-plugin-vue'
 
 // 导入 Vue 和 TypeScript 的 ESLint 配置
@@ -18,13 +19,7 @@ export default defineConfigWithVueTs(
     // 需要检查的文件类型
     files: ['**/*.{ts,tsx,vue}'],
   },
-
-  {
-    // 配置名称
-    name: 'app/files-to-ignore',
-    // 需要忽略的文件或目录
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/lib/**'],
-  },
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/lib/**']),
 
   // 使用 Vue 的基本配置
   pluginVue.configs['flat/essential'],
