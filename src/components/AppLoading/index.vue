@@ -9,7 +9,7 @@
       <SvgIcon local-icon="i-local-loading" class="text-[60px]"></SvgIcon>
     </div>
 
-    <div class="h-10 w-10 absolute-center">
+    <div class="absolute-center h-10 w-10">
       <SvgIcon local-icon="i-local-logo" class="text-[40px]"></SvgIcon>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="relative size-screen overflow-hidden bg-primary-100">
-    <NCard class="z-1 w-400px absolute-center" size="large" :bordered="false" round hoverable>
+    <NCard class="absolute-center z-1 w-400px" size="large" :bordered="false" round hoverable>
       <div class="flex-center gap-4 text-primary">
         <SvgIcon local-icon="i-local-logo" class="text-6xl text-primary"></SvgIcon>
         <div class="text-3xl">{{ title }}</div>
