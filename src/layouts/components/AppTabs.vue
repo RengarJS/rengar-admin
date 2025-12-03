@@ -1,5 +1,14 @@
 <template>
   <div class="h-full flex items-center gap-3">
+    <div
+      v-if="showBack"
+      class="h-full flex-center-x cursor-pointer gap-2 px-3 hover:bg-gray-100"
+      style="border-right: solid 1px var(--n-border-color)"
+      @click="handleBack"
+    >
+      <SvgIcon icon="material-symbols:arrow-back-ios-new"></SvgIcon>
+      <div>返回</div>
+    </div>
     <VueDraggable
       v-model="tabsList"
       target=".sort-target"
@@ -54,7 +63,7 @@
       </TransitionGroup>
     </VueDraggable>
 
-    <div class="flex items-center gap-4 pr-4 text-lg">
+    <div class="h-full flex items-center gap-4 px-4 text-lg" style="border-left: solid 1px var(--n-border-color)">
       <NTooltip placement="bottom">
         <template #trigger>
           <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="appStore.refreshRouterView">
@@ -84,6 +93,13 @@ import SvgIcon from '@/components/SvgIcon/index.vue'
 
 import type { DropdownOption } from 'naive-ui'
 import type { Directive } from 'vue'
+
+const route = useRoute()
+const router = useRouter()
+const showBack = computed(() => Boolean(route.meta.showBack))
+function handleBack() {
+  router.back()
+}
 
 interface DragScrollHTMLElement extends HTMLElement {
   _dragscroll?: {
@@ -158,7 +174,6 @@ const vDragscroll: Directive<DragScrollHTMLElement> = {
 
 const tabStore = useTabStore()
 const { tabsList, activeRouteName } = storeToRefs(tabStore)
-const router = useRouter()
 
 function renderOptions(tab: App.Tab, index: number): DropdownOption[] {
   return [
