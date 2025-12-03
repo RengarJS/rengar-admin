@@ -1,13 +1,3 @@
-.theme {
-  background-color: var(--n-color);
-  color: var(--n-text-color);
-  transition:
-    color 0.3s var(--n-bezier),
-    background-color 0.3s var(--n-bezier),
-    box-shadow 0.3s var(--n-bezier),
-    border-color 0.3s var(--n-bezier);
-}
-
 /* ---------- 主题切换动画 ---------- */
 ::view-transition-old(root),
 ::view-transition-new(root) {
