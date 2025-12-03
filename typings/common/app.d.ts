@@ -5,6 +5,7 @@ declare global {
     type Theme = 'light' | 'dark' | 'auto'
     type LayoutMode = 'aside' | 'top' | 'top-aside'
     interface UserConfig {
+      version: number
       asideWidth: number
       headerHeight: number
       footerHeight: number

@@ -27,6 +27,7 @@ export const useAppStore = defineStore(
     }
 
     function compareLayoutConfig() {
+      if (userConfig.version === customConfig.version) return
       for (const key in customConfig) {
         if ((userConfig as Recordable)[key] !== (customConfig as Recordable)[key]) {
           ;(userConfig as Recordable)[key] = (customConfig as Recordable)[key]

@@ -1,5 +1,6 @@
 const userConfig: App.UserConfig = {
-  layoutMode: 'top',
+  version: 1,
+  layoutMode: 'aside',
   asideWidth: 220,
   headerHeight: 56,
   footerHeight: 46,

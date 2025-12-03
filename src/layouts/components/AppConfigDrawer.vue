@@ -151,6 +151,7 @@ const { copy } = useClipboard()
 function handleCopy() {
   const copyStr = `
 const userConfig: App.UserConfig = {
+  version: ${userConfig.value.version + 1},
   layoutMode: '${userConfig.value.layoutMode}',
   asideWidth: ${userConfig.value.asideWidth},
   headerHeight: ${userConfig.value.headerHeight},
