@@ -3,7 +3,7 @@
     <template #trigger>
       <div class="flex-center p-1 hover:bg-primary-100">
         <SvgIcon
-          v-if="!appStore.config.asideCollapse"
+          v-if="!appStore.systemConfig.asideCollapse"
           icon="i-line-md:menu-unfold-left"
           class="cursor-pointer text-xl text-primary"
           @click="appStore.toggleAsideCollapse"
@@ -16,7 +16,7 @@
         ></SvgIcon>
       </div>
     </template>
-    <span>{{ appStore.config.asideCollapse ? '展开菜单' : '收起菜单' }}</span>
+    <span>{{ appStore.systemConfig.asideCollapse ? '展开菜单' : '收起菜单' }}</span>
   </NTooltip>
 </template>
 

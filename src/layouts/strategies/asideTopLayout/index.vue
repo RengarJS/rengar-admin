@@ -3,15 +3,15 @@
   <NLayout style="height: 100vh">
     <NLayoutHeader
       bordered
-      :inverted="config.invertedHeader"
+      :inverted="userConfig.invertedHeader"
       :style="{
-        height: numberToPx(config.headerHeight),
+        height: numberToPx(userConfig.headerHeight),
       }"
     >
       <AppHeader :show-logo="true" :show-aside-control="showAsideControl">
         <SysMenu
           v-if="isPc"
-          :inverted="config.invertedHeader"
+          :inverted="userConfig.invertedHeader"
           mode="horizontal"
           :data="menuStore.menuRoutes"
           children-field="list"
@@ -24,37 +24,37 @@
       has-sider
       position="absolute"
       :style="{
-        top: numberToPx(config.headerHeight),
+        top: numberToPx(userConfig.headerHeight),
       }"
     >
       <NLayoutSider
         v-if="showAppAside"
         bordered
-        :inverted="config.invertedAside"
+        :inverted="userConfig.invertedAside"
         :native-scrollbar="false"
-        :width="config.asideWidth"
+        :width="userConfig.asideWidth"
         position="absolute"
         :style="{
           left: 0,
           bottom: 0,
         }"
-        :collapsed="config.asideCollapse"
-        :collapsed-width="config.asideCollapseWidth"
+        :collapsed="systemConfig.asideCollapse"
+        :collapsed-width="systemConfig.asideCollapseWidth"
       >
         <SysMenu
-          :inverted="config.invertedAside"
+          :inverted="userConfig.invertedAside"
           v-model:active="menuStore.activeMenu"
           :data="menuStore.subMenuRoutes"
-          :collapsed="config.asideCollapse"
+          :collapsed="systemConfig.asideCollapse"
         />
       </NLayoutSider>
 
       <NLayout>
         <NLayoutHeader
-          v-if="config.showTabs"
+          v-if="userConfig.showTabs"
           bordered
           :style="{
-            height: numberToPx(config.tabHeight),
+            height: numberToPx(userConfig.tabHeight),
           }"
         >
           <AppTabs />
@@ -74,11 +74,11 @@
         </NLayoutContent>
 
         <NLayoutFooter
-          v-if="config.showFooter"
+          v-if="userConfig.showFooter"
           bordered
           position="absolute"
           :style="{
-            height: numberToPx(config.footerHeight),
+            height: numberToPx(userConfig.footerHeight),
           }"
         >
           <AppFooter />
@@ -103,13 +103,13 @@ import AppMobieDrawer from '@/layouts/components/AppMobieDrawer.vue'
 import SysMenu from '@/layouts/components/common/SysMenu.vue'
 
 const appStore = useAppStore()
-const { config, showConfigDrawer, showMenuDrawer, showRouterView, isPc } = storeToRefs(appStore)
+const { userConfig, systemConfig, showConfigDrawer, showMenuDrawer, showRouterView, isPc } = storeToRefs(appStore)
 
 const layoutContentStyle = computed(() => {
   const style = {
-    top: config.value.showTabs ? numberToPx(config.value.tabHeight) : '0px',
-    bottom: config.value.showFooter ? numberToPx(config.value.footerHeight) : '0px',
-    padding: numberToPx(config.value.gap),
+    top: userConfig.value.showTabs ? numberToPx(userConfig.value.tabHeight) : '0px',
+    bottom: userConfig.value.showFooter ? numberToPx(userConfig.value.footerHeight) : '0px',
+    padding: numberToPx(userConfig.value.gap),
   }
   return style
 })

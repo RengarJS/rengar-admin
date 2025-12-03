@@ -1,5 +1,5 @@
 <template>
-  <component :is="layout[appStroe.layoutMode]" />
+  <component :is="layout[appStroe.userConfig.layoutMode]" />
 </template>
 
 <script setup lang="ts">

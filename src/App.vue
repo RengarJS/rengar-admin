@@ -6,11 +6,14 @@
 import BasicLayout from '@/layouts/base/index.vue'
 import BlankLayout from '@/layouts/blank/index.vue'
 
-// import { useUpdateChecker } from '@/hooks/update'
+import { useAppStore } from '@/stores'
 
 defineOptions({
   name: 'App',
 })
+
+const appStore = useAppStore()
+appStore.compareLayoutConfig()
 
 const route = useRoute()
 const layoutComponent = computed(() => {

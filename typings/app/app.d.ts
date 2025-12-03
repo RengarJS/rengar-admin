@@ -2,33 +2,30 @@ export {}
 
 declare global {
   namespace App {
-    type ThemeMode = 'light' | 'dark' | 'auto'
-
+    type Theme = 'light' | 'dark' | 'auto'
     type LayoutMode = 'aside' | 'top' | 'top-aside'
-    interface LayoutConfig {
+    interface UserConfig {
       asideWidth: number
       headerHeight: number
       footerHeight: number
       tabHeight: number
       gap: number
-      asideCollapse: boolean
-      asideCollapseWidth: number
       showTabs: boolean
       showBreadcrumb: boolean
       showFooter: boolean
       invertedHeader: boolean
       invertedAside: boolean
+      layoutMode: LayoutMode
+      primaryColor: string
+    }
+
+    interface Config {
+      asideCollapse: boolean
+      asideCollapseWidth: number
     }
 
     interface BaseLayoutConfig extends Omit<LayoutConfig, 'asideCollapse' | 'asideCollapseWidth'> {
       layoutMode: LayoutMode
-    }
-
-    interface BaseConfig {
-      layout: BaseLayoutConfig
-      theme: {
-        primaryColor: string
-      }
     }
 
     interface Tab {

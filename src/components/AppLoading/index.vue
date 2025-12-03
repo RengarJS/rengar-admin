@@ -16,14 +16,14 @@
 </template>
 
 <script setup lang="ts">
-import { appConfig } from '@/config/app'
+import { userConfig } from '@/config/app'
 let primaryColor = ''
 const appStr = localStorage.getItem('app')
 if (appStr) {
   const app = JSON.parse(appStr)
   primaryColor = app.themeOverrides.common.primaryColor
 } else {
-  primaryColor = appConfig.theme.primaryColor
+  primaryColor = userConfig.primaryColor
 }
 </script>
 
