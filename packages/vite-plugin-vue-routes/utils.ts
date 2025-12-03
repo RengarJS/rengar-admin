@@ -12,7 +12,7 @@ export function parseExitsRouteFile(filePath: string) {
 
   if (match) {
     // 替换动态导入函数为字符串
-    const routesString = match[1].replace(/\(\)\s*=>\s*import\(('[^']+'|"[^"]+")\)/g, '$1')
+    const routesString = match[1]!.replace(/\(\)\s*=>\s*import\(('[^']+'|"[^"]+")\)/g, '$1')
     // 清理字符串中的换行符和多余空格
     const cleanedString = routesString.replace(/\n/g, '').replace(/\s+/g, ' ')
 
