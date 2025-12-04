@@ -1,31 +1,36 @@
 <template>
-  <div class="h-full flex items-center gap-3">
-    <div
-      v-if="showBack"
-      class="h-full flex-center-x cursor-pointer gap-2 px-3 hover:bg-gray-100"
-      style="border-right: solid 1px var(--n-border-color)"
-      @click="handleBack"
-    >
-      <SvgIcon icon="material-symbols:arrow-back-ios-new"></SvgIcon>
-      <div>返回</div>
+  <div class="h-full flex items-center">
+    <div class="back-wrapper h-full" :class="{ 'back-show': showBack, 'back-hide': !showBack }">
+      <div
+        v-if="showBack"
+        class="back-container h-full flex-center-x cursor-pointer gap-2 px-3 hover:bg-gray-100"
+        style="border-right: solid 1px var(--n-border-color)"
+        @click="handleBack"
+      >
+        <SvgIcon icon="material-symbols:arrow-back-ios-new"></SvgIcon>
+        <div>返回</div>
+      </div>
     </div>
     <VueDraggable
       v-model="tabsList"
       target=".sort-target"
       handle=".handle"
       class="scrollbar-hide min-w-0 flex-1 overflow-x-auto"
+      :class="{
+        'ml-3': showBack,
+      }"
       v-dragscroll
     >
       <TransitionGroup
         type="transition"
         tag="div"
         name="fade"
-        class="sort-target h-full w-max flex select-none gap-4 px-4 pt-2 text-sm"
+        class="sort-target h-full w-max flex select-none gap-4 px-4 pt-1 text-sm"
       >
         <div
           v-for="(item, index) in tabsList"
           :key="item.name"
-          class="tab-item px-3 py-1.5"
+          class="tab-item px-3 py-1"
           :class="[
             item.name === activeRouteName ? 'text-primary dark:text-white bg-primary-100 dark:bg-primary-700' : '',
           ]"
@@ -63,7 +68,7 @@
       </TransitionGroup>
     </VueDraggable>
 
-    <div class="h-full flex items-center gap-4 px-4 text-lg" style="border-left: solid 1px var(--n-border-color)">
+    <div class="ml-3 h-full flex items-center gap-4 px-4 text-lg" style="border-left: solid 1px var(--n-border-color)">
       <NTooltip placement="bottom">
         <template #trigger>
           <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="appStore.refreshRouterView">
@@ -329,5 +334,24 @@ const { isFullscreen, toggle } = useFullscreen(layoutContentRef)
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari and Opera */
+}
+
+.back-wrapper {
+  width: 0;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.back-show {
+  width: 75px;
+}
+
+.back-hide {
+  width: 0;
+}
+
+.back-container {
+  width: 75px;
 }
 </style>

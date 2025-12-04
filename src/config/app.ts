@@ -1,10 +1,10 @@
 const userConfig: App.UserConfig = {
-  version: 1,
+  version: 2,
   layoutMode: 'aside',
   asideWidth: 220,
   headerHeight: 56,
   footerHeight: 46,
-  tabHeight: 44,
+  tabHeight: 40,
   gap: 12,
   showTabs: true,
   showBreadcrumb: true,
