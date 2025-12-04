@@ -3,7 +3,7 @@
     <div class="back-wrapper h-full" :class="{ 'back-show': showBack, 'back-hide': !showBack }">
       <div
         v-if="showBack"
-        class="back-container h-full flex-center-x cursor-pointer gap-2 px-3 hover:bg-gray-100"
+        class="back-container h-full flex-center-x cursor-pointer gap-2 px-3 hover:bg-gray-100 dark:hover:bg-gray-800"
         style="border-right: solid 1px var(--n-border-color)"
         @click="handleBack"
       >
