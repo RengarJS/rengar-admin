@@ -11,13 +11,12 @@
     "build:test": "vite build --mode test",
     "preview": "vite preview",
     "type-check": "vue-tsc --build",
-    "lint": "eslint . --fix",
-    "format": "prettier --write .",
+    "lint": "eslint --cache . --fix",
+    "format": "prettier --write --cache .",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*.{ts,tsx,vue}": [
-      "prettier --write",
       "eslint --fix"
     ]
   },
