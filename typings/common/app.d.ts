@@ -32,7 +32,7 @@ declare global {
     interface Tab {
       title: string
       name: string
-      path: string
+      fullPath: string
       icon?: string
       localIcon?: string
       fixedInTab?: boolean

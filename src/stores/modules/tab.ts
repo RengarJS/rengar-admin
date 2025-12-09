@@ -10,79 +10,87 @@ export const useTabStore = defineStore(
     const authStore = useAuthStore()
     const tabsList = ref<App.Tab[]>([])
     let fixedTabList: App.Tab[] = []
-    const activeRouteName = ref('')
     const router = useRouter()
     const { routerReplaceToHome } = useRouterHook()
-
     watch(
       () => router.currentRoute.value,
       (val) => {
         const meta = val.matched.find((item) => item.name === val.name)?.meta
         if (!meta) return
         if (meta.layout && meta.layout !== 'base') return
-        if (meta.hideInTab) {
-          activeRouteName.value = ''
-          return
-        }
-        addTabsAction({
+        if (meta.hideInTab) return
+
+        const tab: App.Tab = {
           title: meta.title,
           name: val.name as string,
-          path: val.path,
+          fullPath: val.fullPath,
           icon: meta.icon,
           localIcon: meta.localIcon,
-        })
-        activeRouteName.value = val.name as string
+        }
+
+        if (!meta.multipleTab) {
+          const index = tabsList.value.findIndex((item) => item.name === tab.name)
+          if (index !== -1) {
+            tabsList.value[index]!.fullPath = tab.fullPath
+            return
+          }
+          tabsList.value.push(tab)
+        } else {
+          const index = tabsList.value.findIndex((item) => item.fullPath === tab.fullPath)
+          if (index === -1) {
+            tabsList.value.push(tab)
+          }
+        }
       },
       {
         immediate: true,
       },
     )
 
-    function addTabsAction(tab: App.Tab) {
-      const index = tabsList.value.findIndex((item) => item.name === tab.name)
-      if (index !== -1) {
-        return
-      }
-      tabsList.value.push(tab)
-    }
-
     function removeTabsAction(tab: App.Tab) {
-      const index = tabsList.value.findIndex((item) => item.name === tab.name)
+      // 统一使用fullPath进行匹配
+      const index = tabsList.value.findIndex((item) => item.fullPath === tab.fullPath)
       const isLast = tabsList.value.length === index + 1
       if (index === -1) return
       tabsList.value.splice(index, 1)
 
-      if (activeRouteName.value === tab.name) {
+      if (router.currentRoute.value.fullPath === tab.fullPath) {
         if (isLast) {
-          router.push(tabsList.value[index - 1]!.path)
+          router.push(tabsList.value[index - 1]!.fullPath)
         } else {
-          router.push(tabsList.value[index - 1]!.path)
+          router.push(tabsList.value[index - 1]!.fullPath)
         }
       }
     }
 
     function closeOtherTabsAction(tab: App.Tab) {
-      tabsList.value = tabsList.value.filter((item) => item.fixedInTab || item.name === tab.name)
-      router.replace({ name: tab.name })
+      // 统一使用fullPath进行匹配
+      tabsList.value = tabsList.value.filter((item) => item.fixedInTab || item.fullPath === tab.fullPath)
+      router.replace(tab.fullPath)
     }
+
     function closeLeftTabsAction(tab: App.Tab) {
-      const index = tabsList.value.findIndex((item) => item.name === tab.name)
-      const activeIndex = tabsList.value.findIndex((item) => item.name === activeRouteName.value)
+      // 统一使用fullPath进行匹配
+      const index = tabsList.value.findIndex((item) => item.fullPath === tab.fullPath)
+      const activeIndex = tabsList.value.findIndex((item) => item.fullPath === router.currentRoute.value.fullPath)
       if (index === -1) return
       tabsList.value = tabsList.value.filter((item, i) => item.fixedInTab || i >= index)
       if (index > activeIndex) {
-        router.replace({ name: tab.name })
+        router.replace(tab.fullPath)
       }
     }
+
     function closeRightTabsAction(tab: App.Tab) {
-      const index = tabsList.value.findIndex((item) => item.name === tab.name)
-      const activeIndex = tabsList.value.findIndex((item) => item.name === activeRouteName.value)
+      // 统一使用fullPath进行匹配
+      const index = tabsList.value.findIndex((item) => item.fullPath === tab.fullPath)
+      const activeIndex = tabsList.value.findIndex((item) => item.fullPath === router.currentRoute.value.fullPath)
       if (index === -1) return
       tabsList.value = tabsList.value.filter((item, i) => item.fixedInTab || i <= index)
       if (index < activeIndex) {
-        router.replace({ name: tab.name })
+        router.replace(tab.fullPath)
       }
     }
+
     function closeAllTabsAction() {
       tabsList.value = fixedTabList
       routerReplaceToHome()
@@ -101,7 +109,7 @@ export const useTabStore = defineStore(
         list.push({
           title: route.meta.title,
           name: route.name as string,
-          path: route.path,
+          fullPath: route.path,
           icon: route.meta.icon,
           localIcon: route.meta.localIcon,
           fixedInTab: true,
@@ -114,7 +122,6 @@ export const useTabStore = defineStore(
 
     return {
       tabsList,
-      activeRouteName,
       removeTabsAction,
       initTabs,
       closeOtherTabsAction,

@@ -15,10 +15,7 @@
       v-model="tabsList"
       target=".sort-target"
       handle=".handle"
-      class="scrollbar-hide min-w-0 flex-1 overflow-x-auto"
-      :class="{
-        'ml-3': showBack,
-      }"
+      class="scrollbar-hide mx-3 min-w-0 flex-1 overflow-x-auto"
       v-dragscroll
     >
       <TransitionGroup
@@ -29,25 +26,25 @@
       >
         <div
           v-for="(item, index) in tabsList"
-          :key="item.name"
+          :key="item.fullPath"
           class="tab-item px-3 py-1"
           :class="[
-            item.name === activeRouteName ? 'text-primary dark:text-white bg-primary-100 dark:bg-primary-700' : '',
+            item.fullPath === route.fullPath ? 'text-primary dark:text-white bg-primary-100 dark:bg-primary-700' : '',
           ]"
-          :ref="(el) => setItemRef(el as HTMLElement, item.name)"
-          @click="handleJump(item.path)"
-          @contextmenu.prevent="handleRightClick(item.name)"
+          :ref="(el) => setItemRef(el as HTMLElement, item.fullPath)"
+          @click="handleJump(item.fullPath)"
+          @contextmenu.prevent="handleRightClick(item.fullPath)"
         >
           <NDropdown
             trigger="manual"
             :options="renderOptions(item, index)"
-            :show="dropdownVisible[item.name]"
+            :show="dropdownVisible[item.fullPath]"
             :on-clickoutside="handleCloseDropdown"
             @select="(key) => handleSelect(key, item)"
           >
             <div
               class="flex items-center gap-2 rounded-lg px-3 py-1"
-              :class="[item.name === activeRouteName ? '' : 'hover:bg-zinc-100 dark:hover:bg-zinc-700']"
+              :class="[item.fullPath === route.fullPath ? '' : 'hover:bg-zinc-100 dark:hover:bg-zinc-700']"
             >
               <SvgIcon
                 class="handle cursor-move"
@@ -68,7 +65,7 @@
       </TransitionGroup>
     </VueDraggable>
 
-    <div class="ml-3 h-full flex items-center gap-4 px-4 text-lg" style="border-left: solid 1px var(--n-border-color)">
+    <div class="h-full flex items-center gap-4 px-4 text-lg" style="border-left: solid 1px var(--n-border-color)">
       <NTooltip placement="bottom">
         <template #trigger>
           <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="appStore.refreshRouterView">
@@ -178,7 +175,7 @@ const vDragscroll: Directive<DragScrollHTMLElement> = {
 }
 
 const tabStore = useTabStore()
-const { tabsList, activeRouteName } = storeToRefs(tabStore)
+const { tabsList } = storeToRefs(tabStore)
 
 function renderOptions(tab: App.Tab, index: number): DropdownOption[] {
   return [
@@ -259,7 +256,7 @@ function setItemRef(el: HTMLElement | null, path: string) {
 
 function scrollIntoView() {
   nextTick(() => {
-    const element = tabRefs.value[activeRouteName.value]
+    const element = tabRefs.value[route.fullPath]
     if (!element) return
     element.scrollIntoView({
       behavior: 'smooth',
@@ -270,9 +267,13 @@ function scrollIntoView() {
 
 const debouncedScrollIntoView = useDebounceFn(scrollIntoView, 400)
 
-watch(activeRouteName, () => debouncedScrollIntoView(), {
-  immediate: true,
-})
+watch(
+  () => route.fullPath,
+  () => debouncedScrollIntoView(),
+  {
+    immediate: true,
+  },
+)
 
 const { width } = useWindowSize()
 function handleJump(path: string) {
