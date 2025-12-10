@@ -4,7 +4,6 @@ import { useRouterHook } from '@/hooks/router'
 import { useAuthStore } from '@/stores'
 import router from '@/router'
 
-const APIFOX_TOKEN = import.meta.env.VITE_APIFOX_TOKEN
 function showErrorMessage(message: string) {
   window.$message.error(message)
 }
@@ -21,8 +20,6 @@ class HttpClient extends BaseHttpClient {
         if (authStore.user.token) {
           config.headers.Authorization = `Bearer ${authStore.user.token}`
         }
-
-        config.headers.apifoxToken = APIFOX_TOKEN
 
         return config
       },
