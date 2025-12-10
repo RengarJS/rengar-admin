@@ -1,4 +1,4 @@
-FROM nginx:1.29.4
+FROM docker.1ms.run/library/nginx:1.27.5-alpine
 
 COPY ./dist /data
 
