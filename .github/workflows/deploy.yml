@@ -35,6 +35,7 @@ jobs:
       - name: Save Docker image
         run: |
           docker save rengar-admin | gzip > rengar-admin.tar.gz
+          ls -lh rengar-admin.tar.gz
 
       - name: Transfer image to server
         uses: appleboy/scp-action@v0.1.7
@@ -44,7 +45,9 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: 'rengar-admin.tar.gz'
           target: '/tmp/'
-          debug: true
+          timeout: 5m
+          strip_components: 0
+          overwrite: true
 
       - name: Deploy on server
         uses: appleboy/ssh-action@v0.1.7
@@ -52,9 +55,9 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          debug: true
           script: |
             cd /tmp
+            ls -la rengar-admin.tar.gz
             docker load -i rengar-admin.tar.gz
             docker stop rengar-admin-app || true
             docker rm rengar-admin-app || true
