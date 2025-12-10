@@ -1,0 +1,36 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual deployment'
+        required: false
+        default: 'Manual trigger'
+
+jobs:
+  deploy:
+    name: Deploy Rengar Admin Doc
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test SSH connection to server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: root
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: echo "✅ SSH connection successful!"
+
+      - name: Trigger deployment on server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: root
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            echo "🚀 Starting deployment..."
+            cd /projects/RengarJS/rengar-admin || { echo "❌ Project path not found"; exit 1; }
+            ./deploy.sh
+            echo "✅ Deployment finished!"
