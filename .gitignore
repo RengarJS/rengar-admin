@@ -31,3 +31,4 @@ coverage
 .eslintcache
 Dockerfile
 nginx
+deploy.sh
