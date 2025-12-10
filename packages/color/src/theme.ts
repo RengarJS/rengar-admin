@@ -1,4 +1,4 @@
-import { appConfig } from '../../../src/config/app'
+import { userConfig } from '../../../src/config/app'
 
 import { getColors } from 'theme-colors'
 
@@ -8,7 +8,7 @@ export function generateTailwindColorByColor(color: string): ThemeColorItem {
   return colors
 }
 export const themeColor: ThemeColor = {
-  primary: generateTailwindColorByColor(appConfig.theme.primaryColor),
+  primary: generateTailwindColorByColor(userConfig.primaryColor),
   slate: {
     DEFAULT: '#64748b',
     50: '#f8fafc',

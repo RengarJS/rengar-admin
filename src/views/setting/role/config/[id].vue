@@ -17,9 +17,9 @@
           :pattern="pattern"
           label-field="name"
           key-field="id"
-          
-          
-           checkable cascade block-line 
+          checkable
+          cascade
+          block-line
           :show-irrelevant-nodes="true"
         />
       </NCard>

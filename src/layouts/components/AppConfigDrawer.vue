@@ -8,7 +8,7 @@
           <NGridItem>
             <div
               class="flex flex-col cursor-pointer items-center gap-4 rounded p-2"
-              :class="[appStore.layoutMode === 'aside' ? ' border border-primary' : '']"
+              :class="[userConfig.layoutMode === 'aside' ? ' border border-primary' : '']"
               @click="handleChangeLayout('aside')"
             >
               <div class="h-[80px] w-full flex gap-2">
@@ -24,7 +24,7 @@
           <NGridItem>
             <div
               class="flex flex-col cursor-pointer items-center gap-4 rounded p-2"
-              :class="[appStore.layoutMode === 'top' ? ' border border-primary' : '']"
+              :class="[userConfig.layoutMode === 'top' ? ' border border-primary' : '']"
               @click="handleChangeLayout('top')"
             >
               <div class="h-[80px] w-full flex flex-col gap-2">
@@ -38,7 +38,7 @@
           <NGridItem>
             <div
               class="flex flex-col cursor-pointer items-center gap-4 rounded p-2"
-              :class="[appStore.layoutMode === 'top-aside' ? ' border border-primary' : '']"
+              :class="[userConfig.layoutMode === 'top-aside' ? ' border border-primary' : '']"
               @click="handleChangeLayout('top-aside')"
             >
               <div class="h-[80px] w-full flex gap-2">
@@ -68,49 +68,49 @@
         <NSpace vertical :size="20">
           <div class="flex items-center justify-between">
             <div>头部高度</div>
-            <NInputNumber v-model:value="appStore.config.headerHeight" :precision="0" />
+            <NInputNumber v-model:value="userConfig.headerHeight" :precision="0" />
           </div>
           <div class="flex items-center justify-between">
             <div>标签栏高度</div>
-            <NInputNumber v-model:value="appStore.config.tabHeight" :precision="0" />
+            <NInputNumber v-model:value="userConfig.tabHeight" :precision="0" />
           </div>
           <div class="flex items-center justify-between">
             <div>侧边栏宽度</div>
-            <NInputNumber v-model:value="appStore.config.asideWidth" :precision="0" />
+            <NInputNumber v-model:value="userConfig.asideWidth" :precision="0" />
           </div>
 
           <div class="flex items-center justify-between">
             <div>底部高度</div>
-            <NInputNumber v-model:value="appStore.config.footerHeight" :precision="0" />
+            <NInputNumber v-model:value="userConfig.footerHeight" :precision="0" />
           </div>
 
           <div class="flex items-center justify-between">
             <div>间隙</div>
-            <NInputNumber v-model:value="appStore.config.gap" :precision="0" />
+            <NInputNumber v-model:value="userConfig.gap" :precision="0" />
           </div>
 
           <div class="flex items-center justify-between">
             <div>显示面包屑</div>
-            <NSwitch v-model:value="appStore.config.showBreadcrumb" />
+            <NSwitch v-model:value="userConfig.showBreadcrumb" />
           </div>
 
           <div class="flex items-center justify-between">
             <div>显示标签栏</div>
-            <NSwitch v-model:value="appStore.config.showTabs" />
+            <NSwitch v-model:value="userConfig.showTabs" />
           </div>
 
           <div class="flex items-center justify-between">
             <div>显示底部</div>
-            <NSwitch v-model:value="appStore.config.showFooter" />
+            <NSwitch v-model:value="userConfig.showFooter" />
           </div>
 
           <div class="flex items-center justify-between">
             <div>头部反转</div>
-            <NSwitch v-model:value="appStore.config.invertedHeader" />
+            <NSwitch v-model:value="userConfig.invertedHeader" />
           </div>
           <div class="flex items-center justify-between">
             <div>侧边栏反转</div>
-            <NSwitch v-model:value="appStore.config.invertedAside" />
+            <NSwitch v-model:value="userConfig.invertedAside" />
           </div>
         </NSpace>
       </div>
@@ -136,6 +136,8 @@ const show = defineModel<boolean>('show', {
 
 const appStore = useAppStore()
 
+const { userConfig } = storeToRefs(appStore)
+
 function handleChangeLayout(layoutMode: App.LayoutMode) {
   appStore.layoutModeChangeAction(layoutMode)
 }
@@ -148,31 +150,26 @@ const { copy } = useClipboard()
 
 function handleCopy() {
   const copyStr = `
-const appConfig: App.BaseConfig = {
-  layout: {
-    layoutMode: '${appStore.layoutMode}',
-    asideWidth: ${appStore.config.asideWidth},
-    headerHeight: ${appStore.config.headerHeight},
-    footerHeight: ${appStore.config.footerHeight},
-    tabHeight: ${appStore.config.tabHeight},
-    gap: ${appStore.config.gap},
-    showTabs: ${appStore.config.showTabs},
-    showBreadcrumb: ${appStore.config.showBreadcrumb},
-    showFooter: ${appStore.config.showFooter},
-    invertedHeader: ${appStore.config.invertedHeader},
-    invertedAside: ${appStore.config.invertedAside}
-
-  },
-  theme: {
-    primaryColor: '${appStore.themeOverrides.common!.primaryColor!}',
-  }
+const userConfig: App.UserConfig = {
+  version: ${userConfig.value.version + 1},
+  layoutMode: '${userConfig.value.layoutMode}',
+  asideWidth: ${userConfig.value.asideWidth},
+  headerHeight: ${userConfig.value.headerHeight},
+  footerHeight: ${userConfig.value.footerHeight},
+  tabHeight: ${userConfig.value.tabHeight},
+  gap: ${userConfig.value.gap},
+  showTabs: ${userConfig.value.showTabs},
+  showBreadcrumb: ${userConfig.value.showBreadcrumb},
+  showFooter: ${userConfig.value.showFooter},
+  invertedHeader: ${userConfig.value.invertedHeader},
+  invertedAside: ${userConfig.value.invertedAside}
 }
   `
   copy(copyStr.trim())
 
   window.$dialog.success({
     title: '复制成功',
-    content: '请手动粘贴到 src/config/modules/app.ts 中，覆盖appConfig',
+    content: '请手动粘贴到 src/config/modules/app.ts 中，覆盖userConfig',
     positiveText: '我知道了',
   })
 }

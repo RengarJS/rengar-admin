@@ -15,5 +15,7 @@ declare module 'vue-router' {
     order?: number
     href?: string
     fixedInTab?: boolean
+    showBack?: boolean
+    multipleTab?: boolean
   }
 }

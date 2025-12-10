@@ -569,7 +569,7 @@ const removeTodo = (index: number) => {
 // 更新任务状态
 const updateTodoStatus = (index: number) => {
   const todo = todos.value[index]
-  if (todo.completed) {
+  if (todo?.completed) {
     window.$message.success(`任务「${todo.text}」已完成`)
   }
 }

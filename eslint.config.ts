@@ -7,16 +7,15 @@ import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescri
 
 // 导入 Prettier 的跳过格式化配置
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
-// import autoImport from './.eslintrc-auto-import.json'
-// 使用 `defineConfigWithVueTs` 函数定义 ESLint 配置
+
+// ✅ 新增：导入 eslint-plugin-prettier
+import pluginPrettier from 'eslint-plugin-prettier'
 
 import unocss from '@unocss/eslint-config/flat'
 
 export default defineConfigWithVueTs(
   {
-    // 配置名称
     name: 'app/files-to-lint',
-    // 需要检查的文件类型
     files: ['**/*.{ts,tsx,vue}'],
   },
   globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/lib/**']),
@@ -25,7 +24,7 @@ export default defineConfigWithVueTs(
   pluginVue.configs['flat/essential'],
   // 使用 Vue 和 TypeScript 的推荐配置
   vueTsConfigs.recommended,
-  // 跳过 Prettier 的格式化配置
+  // 跳过 Prettier 的格式化冲突规则
   skipFormatting,
   unocss,
 
@@ -40,18 +39,28 @@ export default defineConfigWithVueTs(
     },
   },
 
+  // ✅ 新增：注册 prettier 插件并启用规则
+  {
+    name: 'app/prettier',
+    plugins: {
+      // 注册插件：名称 'prettier' 对应 pluginPrettier 模块
+      prettier: pluginPrettier,
+    },
+    rules: {
+      'prettier/prettier': 'error',
+    },
+  },
+
   // 自定义规则
   {
     name: 'app/files-custom-rules',
     rules: {
-      // 配置 .vue 文件中组件名称的单词数量
       'vue/multi-word-component-names': [
-        'error',
+        'warn',
         {
           ignores: ['index', 'App', 'Register', '[id]', '[url]'],
         },
       ],
-      // 配置 .vue 文件中组件名称的大小写
       'vue/component-name-in-template-casing': [
         'error',
         'PascalCase',
@@ -59,14 +68,12 @@ export default defineConfigWithVueTs(
           registeredComponentsOnly: false,
         },
       ],
-      // 配置 .vue 文件中 <template>、<script> 和 <style> 标签的顺序
       'vue/block-order': [
         'error',
         {
           order: ['template', 'script', 'style'],
         },
       ],
-      // 配置 .vue 文件中 <script> 标签的 lang 属性</script>
       'vue/block-lang': [
         'error',
         {
@@ -75,8 +82,6 @@ export default defineConfigWithVueTs(
           },
         },
       ],
-
-      // any类型
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },

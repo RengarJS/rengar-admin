@@ -1,39 +1,50 @@
 <template>
-  <div class="h-full flex items-center gap-3">
+  <div class="h-full flex items-center">
+    <div class="back-wrapper h-full" :class="{ 'back-show': showBack, 'back-hide': !showBack }">
+      <div
+        v-if="showBack"
+        class="back-container h-full flex-center-x cursor-pointer gap-2 px-3 hover:bg-gray-100 dark:hover:bg-gray-800"
+        style="border-right: solid 1px var(--n-border-color)"
+        @click="handleBack"
+      >
+        <SvgIcon icon="material-symbols:arrow-back-ios-new"></SvgIcon>
+        <div>返回</div>
+      </div>
+    </div>
     <VueDraggable
       v-model="tabsList"
       target=".sort-target"
       handle=".handle"
-      class="scrollbar-hide min-w-0 flex-1 overflow-x-auto"
+      class="scrollbar-hide mx-3 min-w-0 flex-1 overflow-x-auto"
       v-dragscroll
     >
       <TransitionGroup
         type="transition"
         tag="div"
         name="fade"
-        class="sort-target h-full w-max flex select-none gap-4 px-4 pt-2 text-sm"
+        class="sort-target h-full w-max flex select-none gap-4 px-4 pt-1 text-sm"
       >
         <div
           v-for="(item, index) in tabsList"
-          :key="item.name"
-          class="tab-item px-3 py-1.5"
+          :key="item.fullPath"
+          class="tab-item px-3 py-1"
           :class="[
-            item.name === activeRouteName ? 'text-primary dark:text-white bg-primary-100 dark:bg-primary-700' : '',
+            item.fullPath === route.fullPath ? 'text-primary dark:text-white bg-primary-100 dark:bg-primary-700' : '',
           ]"
-          :ref="(el) => setItemRef(el as HTMLElement, item.name)"
-          @click="handleJump(item.path)"
-          @contextmenu.prevent="handleRightClick(item.name)"
+          :ref="(el) => setItemRef(el as HTMLElement, item.fullPath)"
+          @click="handleJump(item.fullPath)"
+          @contextmenu.prevent="handleRightClick(item.fullPath)"
         >
           <NDropdown
             trigger="manual"
             :options="renderOptions(item, index)"
-            :show="dropdownVisible[item.name]"
+            :show="dropdownVisible[item.fullPath]"
             :on-clickoutside="handleCloseDropdown"
             @select="(key) => handleSelect(key, item)"
           >
             <div
               class="flex items-center gap-2 rounded-lg px-3 py-1"
-              :class="[item.name === activeRouteName ? '' : 'hover:bg-zinc-100 dark:hover:bg-zinc-700']"
+              :class="[item.fullPath === route.fullPath ? '' : 'hover:bg-zinc-100 dark:hover:bg-zinc-700']"
             >
               <SvgIcon
                 class="handle cursor-move"
@@ -54,7 +65,7 @@
       </TransitionGroup>
     </VueDraggable>
 
-    <div class="flex items-center gap-4 pr-4 text-lg">
+    <div class="h-full flex items-center gap-4 px-4 text-lg" style="border-left: solid 1px var(--n-border-color)">
       <NTooltip placement="bottom">
         <template #trigger>
           <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="appStore.refreshRouterView">
@@ -84,6 +95,13 @@ import SvgIcon from '@/components/SvgIcon/index.vue'
 
 import type { DropdownOption } from 'naive-ui'
 import type { Directive } from 'vue'
+
+const route = useRoute()
+const router = useRouter()
+const showBack = computed(() => Boolean(route.meta.showBack))
+function handleBack() {
+  router.back()
+}
 
 interface DragScrollHTMLElement extends HTMLElement {
   _dragscroll?: {
@@ -157,8 +175,7 @@ const vDragscroll: Directive<DragScrollHTMLElement> = {
 }
 
 const tabStore = useTabStore()
-const { tabsList, activeRouteName } = storeToRefs(tabStore)
-const router = useRouter()
+const { tabsList } = storeToRefs(tabStore)
 
 function renderOptions(tab: App.Tab, index: number): DropdownOption[] {
   return [
@@ -239,7 +256,7 @@ function setItemRef(el: HTMLElement | null, path: string) {
 
 function scrollIntoView() {
   nextTick(() => {
-    const element = tabRefs.value[activeRouteName.value]
+    const element = tabRefs.value[route.fullPath]
     if (!element) return
     element.scrollIntoView({
       behavior: 'smooth',
@@ -250,9 +267,13 @@ function scrollIntoView() {
 
 const debouncedScrollIntoView = useDebounceFn(scrollIntoView, 400)
 
-watch(activeRouteName, () => debouncedScrollIntoView(), {
-  immediate: true,
-})
+watch(
+  () => route.fullPath,
+  () => debouncedScrollIntoView(),
+  {
+    immediate: true,
+  },
+)
 
 const { width } = useWindowSize()
 function handleJump(path: string) {
@@ -314,5 +335,24 @@ const { isFullscreen, toggle } = useFullscreen(layoutContentRef)
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
   /* Chrome, Safari and Opera */
+}
+
+.back-wrapper {
+  width: 0;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.back-show {
+  width: 75px;
+}
+
+.back-hide {
+  width: 0;
+}
+
+.back-container {
+  width: 75px;
 }
 </style>

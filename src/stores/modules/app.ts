@@ -1,35 +1,48 @@
 import { useMediaQuery } from '@vueuse/core'
 import { useOsTheme } from 'naive-ui'
-import { appConfig, bgColor } from '@/config/app'
+import { userConfig as customConfig, bgColor } from '@/config/app'
 import { themeColor } from '@rengar-admin/color'
 import { injectTailwindCssVarToGlobal } from '@/utils/theme'
 
 import type { GlobalThemeOverrides } from 'naive-ui'
-import { omit } from 'es-toolkit'
 
 export const useAppStore = defineStore(
   'app',
   () => {
-    const layoutMode = ref<App.LayoutMode>('aside')
-    const showAsideMode = computed(() => layoutMode.value === 'aside')
-    const showTopMode = computed(() => layoutMode.value === 'top')
-    const showTopAsideMode = computed(() => layoutMode.value === 'top-aside')
-    function layoutModeChangeAction(mode: App.LayoutMode) {
-      layoutMode.value = mode
-    }
-
     const isPc = useMediaQuery('(min-width: 1025px)')
     const isPad = useMediaQuery('(min-width: 768px) and (max-width: 1024px)')
     const isMobile = useMediaQuery('(max-width: 767px)')
 
-    const config = reactive<App.LayoutConfig>({
-      ...omit(appConfig.layout, ['layoutMode']),
+    const userConfig = reactive<App.UserConfig>({
+      ...customConfig,
+    })
+
+    const systemConfig = reactive<App.Config>({
       asideCollapse: isPad.value,
       asideCollapseWidth: 64,
     })
 
+    function layoutModeChangeAction(mode: App.LayoutMode) {
+      userConfig.layoutMode = mode
+    }
+
+    function compareLayoutConfig() {
+      if (userConfig.version === customConfig.version) return
+      for (const key in customConfig) {
+        if ((userConfig as Recordable)[key] !== (customConfig as Recordable)[key]) {
+          ;(userConfig as Recordable)[key] = (customConfig as Recordable)[key]
+        }
+      }
+    }
+
+    function resetUserConfig() {
+      for (const key in customConfig) {
+        ;(userConfig as Recordable)[key] = (customConfig as Recordable)[key]
+      }
+    }
+
     function toggleAsideCollapse() {
-      config.asideCollapse = !config.asideCollapse
+      systemConfig.asideCollapse = !systemConfig.asideCollapse
     }
 
     const showConfigDrawer = ref(false)
@@ -58,12 +71,12 @@ export const useAppStore = defineStore(
     const osTheme = useOsTheme()
 
     // 切换主题按钮的模式
-    const themoMode = ref<App.ThemeMode>('auto')
+    const themeMode = ref<App.Theme>('auto')
 
     // 应用当前主题
     const theme = computed(() => {
-      if (themoMode.value === 'light') return 'light'
-      if (themoMode.value === 'dark') return 'dark'
+      if (themeMode.value === 'light') return 'light'
+      if (themeMode.value === 'dark') return 'dark'
       return osTheme.value || 'light'
     })
 
@@ -85,7 +98,7 @@ export const useAppStore = defineStore(
 
     // 监听系统主题变化，当处于auto模式时触发过渡动画
     watch(osTheme, () => {
-      if (themoMode.value === 'auto') {
+      if (themeMode.value === 'auto') {
         triggerThemeTransition()
       }
     })
@@ -139,31 +152,27 @@ export const useAppStore = defineStore(
     }
 
     function toggleTheme(event: MouseEvent) {
-      if (themoMode.value === 'auto') {
-        themoMode.value = 'light'
-      } else if (themoMode.value === 'light') {
-        themoMode.value = 'dark'
+      if (themeMode.value === 'auto') {
+        themeMode.value = 'light'
+      } else if (themeMode.value === 'light') {
+        themeMode.value = 'dark'
       } else {
-        themoMode.value = 'auto'
+        themeMode.value = 'auto'
       }
 
       triggerThemeTransition(event)
     }
 
     function resetLayoutAndTheme() {
-      layoutMode.value = appConfig.layout.layoutMode
-      Object.assign(config, omit(appConfig.layout, ['layoutMode']))
-      injectTailwindCssVarToGlobal(appConfig.theme.primaryColor, 'primary')
+      resetUserConfig()
+      injectTailwindCssVarToGlobal(userConfig.primaryColor, 'primary')
     }
 
     return {
-      config,
+      userConfig,
+      systemConfig,
       showConfigDrawer,
       showMenuDrawer,
-      layoutMode,
-      showAsideMode,
-      showTopMode,
-      showTopAsideMode,
       isPc,
       isMobile,
       isPad,
@@ -176,17 +185,18 @@ export const useAppStore = defineStore(
       setLayoutContentRef,
       refreshRouterView,
       themeOverrides,
-      themoMode,
+      themeMode,
       theme,
       toggleTheme,
       resetLayoutAndTheme,
+      compareLayoutConfig,
     }
   },
 
   {
     persist: {
       storage: localStorage,
-      pick: ['layoutMode', 'themoMode', 'themeOverrides', 'config'],
+      pick: ['userConfig', 'themeOverrides'],
       afterHydrate(ctx) {
         injectTailwindCssVarToGlobal(ctx.store.themeOverrides.common.primaryColor, 'primary')
       },

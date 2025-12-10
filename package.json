@@ -11,13 +11,12 @@
     "build:test": "vite build --mode test",
     "preview": "vite preview",
     "type-check": "vue-tsc --build",
-    "lint": "eslint . --fix",
-    "format": "prettier --write .",
+    "lint": "eslint --cache . --fix",
+    "format": "prettier --write --cache .",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*.{ts,tsx,vue}": [
-      "prettier --write",
       "eslint --fix"
     ]
   },
@@ -39,8 +38,8 @@
   },
   "devDependencies": {
     "@iconify/json": "^2.2.376",
-    "@iconify/utils": "^2.3.0",
-    "@iconify/vue": "^4.3.0",
+    "@iconify/utils": "^3.1.0",
+    "@iconify/vue": "^5.0.0",
     "@rengar-admin/color": "workspace:^",
     "@rengar-admin/unocss": "workspace:^",
     "@rengar-admin/vite-plugin-version": "workspace:^",
@@ -57,6 +56,7 @@
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.8.1",
     "eslint": "^9.39.1",
+    "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-vue": "~10.5.1",
     "husky": "^9.1.7",
     "jiti": "^2.6.1",

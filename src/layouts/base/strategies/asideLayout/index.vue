@@ -2,50 +2,50 @@
   <NLayout embedded has-sider style="height: 100vh">
     <NLayoutSider
       v-if="isPc"
-      :inverted="config.invertedAside"
-      :width="config.asideWidth"
+      :inverted="userConfig.invertedAside"
+      :width="userConfig.asideWidth"
       bordered
       :style="{
         zIndex: 2,
       }"
-      :collapsed="config.asideCollapse"
-      :collapsed-width="config.asideCollapseWidth"
+      :collapsed="systemConfig.asideCollapse"
+      :collapsed-width="systemConfig.asideCollapseWidth"
     >
       <NLayout has-sider inverted position="absolute">
         <NLayoutHeader
-          :inverted="config.invertedAside"
+          :inverted="userConfig.invertedAside"
           :style="{
-            height: numberToPx(config.headerHeight),
+            height: numberToPx(userConfig.headerHeight),
           }"
         >
-          <SysLogo :show-title="!config.asideCollapse" />
+          <SysLogo :show-title="!systemConfig.asideCollapse" />
         </NLayoutHeader>
         <NLayoutSider
           bordered
-          :inverted="config.invertedAside"
+          :inverted="userConfig.invertedAside"
           width="100%"
           :native-scrollbar="false"
           position="absolute"
           :style="{
-            top: numberToPx(config.headerHeight),
+            top: numberToPx(userConfig.headerHeight),
             bottom: 0,
           }"
         >
           <SysMenu
-            :inverted="config.invertedAside"
+            :inverted="userConfig.invertedAside"
             v-model:active="menuStore.activeMenu"
             :data="menuStore.menuRoutes"
-            :collapsed="config.asideCollapse"
+            :collapsed="systemConfig.asideCollapse"
           />
         </NLayoutSider>
       </NLayout>
     </NLayoutSider>
     <NLayout>
       <NLayoutHeader
-        :inverted="config.invertedHeader"
+        :inverted="userConfig.invertedHeader"
         bordered
         :style="{
-          height: numberToPx(config.headerHeight),
+          height: numberToPx(userConfig.headerHeight),
         }"
       >
         <AppHeader :show-logo="!isPc" :show-aside-control="showAsideControl">
@@ -53,10 +53,10 @@
         </AppHeader>
       </NLayoutHeader>
       <NLayoutHeader
-        v-if="config.showTabs"
+        v-if="userConfig.showTabs"
         bordered
         :style="{
-          height: numberToPx(config.tabHeight),
+          height: numberToPx(userConfig.tabHeight),
         }"
       >
         <AppTabs />
@@ -74,11 +74,11 @@
         <AppMain v-if="showRouterView" />
       </NLayoutContent>
       <NLayoutFooter
-        v-if="config.showFooter"
+        v-if="userConfig.showFooter"
         bordered
         position="absolute"
         :style="{
-          height: numberToPx(config.footerHeight),
+          height: numberToPx(userConfig.footerHeight),
         }"
       >
         <AppFooter />
@@ -106,19 +106,20 @@ import SysMenu from '@/layouts/components/common/SysMenu.vue'
 const menuStore = useMenuStore()
 
 const appStore = useAppStore()
-const { config, showConfigDrawer, isMobile, showMenuDrawer, showRouterView, isPc } = storeToRefs(appStore)
+const { userConfig, systemConfig, showConfigDrawer, isMobile, showMenuDrawer, showRouterView, isPc } =
+  storeToRefs(appStore)
 
 const layoutContentStyle = computed(() => {
   const style = {
-    top: `calc(${numberToPx(config.value.headerHeight)} + ${config.value.showTabs ? numberToPx(config.value.tabHeight) : '0px'})`,
-    bottom: config.value.showFooter ? numberToPx(config.value.footerHeight) : '0px',
-    padding: numberToPx(config.value.gap),
+    top: `calc(${numberToPx(userConfig.value.headerHeight)} + ${userConfig.value.showTabs ? numberToPx(userConfig.value.tabHeight) : '0px'})`,
+    bottom: userConfig.value.showFooter ? numberToPx(userConfig.value.footerHeight) : '0px',
+    padding: numberToPx(userConfig.value.gap),
   }
   return style
 })
 
 const showAppBreadcrumb = computed(() => {
-  if (!config.value.showBreadcrumb) return false
+  if (!userConfig.value.showBreadcrumb) return false
   if (isMobile.value) return false
   return true
 })
