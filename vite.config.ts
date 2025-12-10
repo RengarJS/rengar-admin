@@ -30,12 +30,6 @@ export default defineConfig(({ mode }) => {
     build: {
       chunkSizeWarningLimit: 1500,
       rollupOptions: {
-        // 此input配置文件用于解决部署github pages刷新404问题，实际开发中可直接删除
-        input: {
-          main: 'index.html',
-          404: '404.html',
-        },
-
         output: {
           manualChunks: {
             vue: ['vue', 'vue-router', 'pinia'],

@@ -28,5 +28,6 @@ coverage
 *.tsbuildinfo
 
 
-# ESLint cache
 .eslintcache
+Dockerfile
+nginx
