@@ -76,8 +76,8 @@ import TopWave from './components/TopWave.vue'
 const title = import.meta.env.VITE_APP_TITLE
 
 const formData = reactive({
-  username: 'admin',
-  password: 'admin2025',
+  username: 'preview001',
+  password: 'rengaradmin2025',
   captchaId: 0,
   captchaCode: '',
 })

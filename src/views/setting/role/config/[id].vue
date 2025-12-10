@@ -86,12 +86,14 @@ getMenuTree()
 
 // ====== 保存逻辑：直接提交当前 checkedKeys（含父子）======
 async function handleSave() {
+  // console.log(checkedKeys.value)
+  // console.log(treeRef.value?.getIndeterminateData())
   saveLoading.value = true
-
+  const halfIds = treeRef.value!.getIndeterminateData().keys as number[]
   const [err] = await to(
     roleConfigApi({
       id,
-      menuIds: checkedKeys.value,
+      menuIds: [...new Set([...unref(checkedKeys), ...halfIds])],
     }),
   )
 
