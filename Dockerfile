@@ -1,4 +1,4 @@
-FROM docker.1ms.run/library/nginx:1.27.5-alpine
+FROM nginx:alpine
 
 COPY ./dist /data
 
@@ -9,4 +9,4 @@ ADD nginx/nginx.conf /etc/nginx/conf.d/
 
 EXPOSE 8080
 
-RUN /bin/bash -c 'echo init ok'
+RUN echo "init ok"
