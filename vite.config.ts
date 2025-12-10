@@ -11,6 +11,13 @@ export default defineConfig(({ mode }) => {
     server: {
       port: Number(viteEnv.VITE_APP_PORT),
       host: true,
+      proxy: {
+        '/api': {
+          target: 'https://www.rengar.site/api',
+          changeOrigin: true, // 必开，解决跨域
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
     },
 
     plugins: setupVitePlugins(),
