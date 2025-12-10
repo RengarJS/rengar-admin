@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
-          
+
       - name: Install pnpm
         run: npm install -g pnpm
 
@@ -44,6 +44,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: 'rengar-admin.tar.gz'
           target: '/tmp/'
+          debug: true
 
       - name: Deploy on server
         uses: appleboy/ssh-action@v0.1.7
@@ -51,6 +52,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
+          debug: true
           script: |
             cd /tmp
             docker load -i rengar-admin.tar.gz
