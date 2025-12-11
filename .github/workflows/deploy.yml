@@ -31,6 +31,6 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             echo "🚀 Starting deployment..."
-            cd /projects/RengarJS/rengar-admin || { echo "❌ Project path not found"; exit 1; }
+            cd ${{ secrets.PROJECT_PATH }} || { echo "❌ Project path not found"; exit 1; }
             ./deploy.sh
             echo "✅ Deployment finished!"
