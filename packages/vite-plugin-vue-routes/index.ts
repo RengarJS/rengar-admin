@@ -21,6 +21,7 @@ export function vitePluginRoutes(option: Option): Plugin {
   let routerMap = new Map<string, RouterMap>()
 
   function generateFiles() {
+    console.log('监听到文件变化，重新生成路由...')
     routerMap.clear()
     routerMap = parseExitsRouteFile(outputPath)
     const routes = generateRoutesTree(viewsDir, viewsDir)
@@ -37,7 +38,6 @@ export function vitePluginRoutes(option: Option): Plugin {
 
   const watcher = fs.watch(viewsDir, { recursive: true }, (eventType) => {
     if (eventType === 'rename') {
-      console.log('监听到文件变化，重新生成路由...')
       debouncedGenerateRoutes()
     }
   })
