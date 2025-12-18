@@ -1,5 +1,4 @@
 <template>
-  <!-- 外层布局，包含全宽头部和下方内容区域 -->
   <NLayout style="height: 100vh">
     <NLayoutHeader
       bordered
@@ -29,11 +28,13 @@
       }"
     >
       <NLayoutSider
+        show-trigger
         v-if="showAppAside"
         bordered
         :inverted="userConfig.invertedAside"
         :native-scrollbar="false"
         :width="userConfig.asideWidth"
+        collapse-mode="width"
         :collapsed="systemConfig.asideCollapse"
         :collapsed-width="systemConfig.asideCollapseWidth"
       >
