@@ -25,6 +25,7 @@
       position="absolute"
       :style="{
         top: numberToPx(userConfig.headerHeight),
+        bottom: 0,
       }"
     >
       <NLayoutSider
@@ -33,11 +34,6 @@
         :inverted="userConfig.invertedAside"
         :native-scrollbar="false"
         :width="userConfig.asideWidth"
-        position="absolute"
-        :style="{
-          left: 0,
-          bottom: 0,
-        }"
         :collapsed="systemConfig.asideCollapse"
         :collapsed-width="systemConfig.asideCollapseWidth"
       >

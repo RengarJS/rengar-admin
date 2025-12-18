@@ -4,9 +4,8 @@
     :mode
     :options="menus"
     :collapsed
-    :collapsed-width="64"
+    :collapsed-width="appStore.systemConfig.asideCollapseWidth"
     :children-field="childrenField"
-    responsive
     :indent="20"
     @update:value="handleValueChange"
   ></NMenu>
@@ -16,6 +15,8 @@
 import { type MenuOption } from 'naive-ui'
 import { RouterLink, type RouteRecordRaw } from 'vue-router'
 import SvgIcon from '@/components/SvgIcon/index.vue'
+import { useAppStore } from '@/stores'
+const appStore = useAppStore()
 
 const emit = defineEmits<{
   change: [val: RouteRecordName]
