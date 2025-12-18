@@ -118,37 +118,48 @@ export const useAppStore = defineStore(
 
     // 切换主题时触发过渡动画
     function triggerThemeTransition(event?: MouseEvent) {
-      if (!document.startViewTransition) {
+      const isAppearanceTransition =
+        document.startViewTransition() && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+      if (!isAppearanceTransition || !event) {
         setDetaultTheme()
         return
       }
-      const transition = document.startViewTransition(() => {
+
+      const x = event.clientX
+      const y = event.clientY
+      const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
+
+      const transition = document.startViewTransition(async () => {
         setDetaultTheme()
+        await nextTick()
       })
 
-      transition.ready.then(() => {
-        const { clientX, clientY } = event || { clientX: innerWidth / 2, clientY: innerHeight / 2 }
+      transition.ready
+        .then(() => {
+          const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`]
 
-        const radius = Math.hypot(Math.max(clientX, innerWidth - clientX), Math.max(clientY, innerHeight - clientY))
+          const isDark = document.documentElement.classList.contains('dark')
 
-        const clipPath = [
-          `circle(0px at ${clientX}px ${clientY}px)`,
-          `circle(${radius}px at ${clientX}px ${clientY}px)`,
-        ]
+          const animate = document.documentElement.animate(
+            {
+              clipPath: isDark ? [...clipPath].reverse() : clipPath,
+            },
+            {
+              duration: 450,
+              easing: 'ease-in',
+              pseudoElement: isDark ? '::view-transition-old(root)' : '::view-transition-new(root)',
+            },
+          )
 
-        const isDark = document.documentElement.classList.contains('dark')
-
-        document.documentElement.animate(
-          {
-            clipPath: isDark ? clipPath.reverse() : clipPath,
-          },
-          {
-            duration: 450,
-            easing: 'ease-in',
-            pseudoElement: isDark ? '::view-transition-old(root)' : '::view-transition-new(root)',
-          },
-        )
-      })
+          animate.onfinish = () => {
+            transition.skipTransition()
+          }
+        })
+        .catch(() => {
+          // 忽略可能的中断错误，确保主题正确设置
+          setDetaultTheme()
+        })
     }
 
     function toggleTheme(event: MouseEvent) {
