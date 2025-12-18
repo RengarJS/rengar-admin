@@ -7,6 +7,7 @@
     :collapsed-width="appStore.systemConfig.asideCollapseWidth"
     :children-field="childrenField"
     :indent="20"
+    responsive
     @update:value="handleValueChange"
   ></NMenu>
 </template>
