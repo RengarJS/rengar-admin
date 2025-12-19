@@ -1,6 +1,10 @@
 <template>
   <RouterView v-slot="{ Component }">
-    <Transition :name="appStore.userConfig.transitionName" mode="out-in" appear>
+    <Transition
+      :name="appStore.userConfig.transitionName === 'none' ? undefined : appStore.userConfig.transitionName"
+      mode="out-in"
+      appear
+    >
       <KeepAlive :include="keepAliveStore.keepAliveList">
         <component :is="Component" />
       </KeepAlive>

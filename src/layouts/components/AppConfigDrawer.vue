@@ -160,6 +160,7 @@ const transitionOptions = [
   { label: '从上滑入', value: 'slide-up' },
   { label: '从下滑入', value: 'slide-down' },
   { label: '缩放淡入', value: 'scale' },
+  { label: '无动画', value: 'none' },
 ] as const
 
 function handleChangePrimaryColor(color: string) {
