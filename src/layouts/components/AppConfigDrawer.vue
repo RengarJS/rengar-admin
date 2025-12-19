@@ -55,6 +55,11 @@
       </div>
 
       <div>
+        <NDivider>路由动画</NDivider>
+        <div>222</div>
+      </div>
+
+      <div>
         <NDivider>主题色</NDivider>
         <NColorPicker
           v-model:value="appStore.themeOverrides.common!.primaryColor"
@@ -141,6 +146,15 @@ const { userConfig } = storeToRefs(appStore)
 function handleChangeLayout(layoutMode: App.LayoutMode) {
   appStore.layoutModeChangeAction(layoutMode)
 }
+
+// const transitionOptions:Array<Recordable<>> = [
+//   { label: '淡入淡出', value: 'fade' },
+//   { label: '从左滑入', value: 'slide-left' },
+//   { label: '从右滑入', value: 'slide-right' },
+//   { label: '从上滑入', value: 'slide-up' },
+//   { label: '从下滑入', value: 'slide-down' },
+//   { label: '缩放淡入', value: 'scale' },
+// ] as const
 
 function handleChangePrimaryColor(color: string) {
   injectTailwindCssVarToGlobal(color, 'primary')

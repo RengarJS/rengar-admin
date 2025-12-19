@@ -71,7 +71,7 @@
         :style="layoutContentStyle"
         :ref="(el) => el && appStore.setLayoutContentRef(el as HTMLElement)"
       >
-        <AppMain v-if="showRouterView" />
+        <AppRouterView v-if="showRouterView" />
       </NLayoutContent>
       <NLayoutFooter
         v-if="userConfig.showFooter"
@@ -96,7 +96,7 @@ import { numberToPx } from '@/utils/tools'
 import AppFooter from '@/layouts/components/AppFooter.vue'
 import AppTabs from '@/layouts/components/AppTabs.vue'
 import AppHeader from '@/layouts/components/AppHeader.vue'
-import AppMain from '@/layouts/components/AppMain.vue'
+import AppRouterView from '@/layouts/components/AppRouterView.vue'
 import AppConfigDrawer from '@/layouts/components/AppConfigDrawer.vue'
 import AppMobieDrawer from '@/layouts/components/AppMobieDrawer.vue'
 import AppBreadcrumb from '@/layouts/components/AppBreadcrumb.vue'

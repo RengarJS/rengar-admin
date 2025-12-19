@@ -3,7 +3,7 @@ import { useOsTheme } from 'naive-ui'
 import { userConfig as customConfig, bgColor } from '@/config/app'
 import { themeColor } from '@rengar-admin/color'
 import { injectTailwindCssVarToGlobal } from '@/utils/theme'
-
+import { cloneDeep } from 'es-toolkit'
 import type { GlobalThemeOverrides } from 'naive-ui'
 
 export const useAppStore = defineStore(
@@ -13,9 +13,7 @@ export const useAppStore = defineStore(
     const isPad = useMediaQuery('(min-width: 768px) and (max-width: 1024px)')
     const isMobile = useMediaQuery('(max-width: 767px)')
 
-    const userConfig = reactive<App.UserConfig>({
-      ...customConfig,
-    })
+    const userConfig = reactive<App.UserConfig>(cloneDeep(customConfig))
 
     const systemConfig = reactive<App.Config>({
       asideCollapse: isPad.value,

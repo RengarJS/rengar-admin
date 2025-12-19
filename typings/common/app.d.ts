@@ -4,6 +4,8 @@ declare global {
   namespace App {
     type Theme = 'light' | 'dark' | 'auto'
     type LayoutMode = 'aside' | 'top' | 'top-aside'
+    type TransitionName = 'fade' | 'slide-left' | 'slide-right' | 'slide-up' | 'slide-down' | 'scale' | 'none'
+
     interface UserConfig {
       version: number
       asideWidth: number
@@ -18,6 +20,7 @@ declare global {
       invertedAside: boolean
       layoutMode: LayoutMode
       primaryColor: string
+      transitionName: TransitionName
     }
 
     interface Config {

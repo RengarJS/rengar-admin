@@ -1,9 +1,9 @@
 <template>
-  <RouterViewContent />
+  <AppRouterView />
 </template>
 
 <script setup lang="ts">
-import RouterViewContent from '../components/common/RouterViewContent.vue'
+import AppRouterView from '../components/AppRouterView.vue'
 </script>
 
 <style scoped></style>
