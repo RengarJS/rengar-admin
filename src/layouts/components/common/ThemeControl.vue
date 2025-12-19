@@ -7,7 +7,9 @@
         <SvgIcon v-else icon="material-symbols:hdr-auto"></SvgIcon>
       </div>
     </template>
-    <span>主题</span>
+    <span v-if="appStore.themeMode === 'light'">浅色</span>
+    <span v-else-if="appStore.themeMode === 'dark'">深色</span>
+    <span v-else>跟随系统</span>
   </NTooltip>
 </template>
 
