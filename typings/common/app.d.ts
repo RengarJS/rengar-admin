@@ -21,6 +21,7 @@ declare global {
       layoutMode: LayoutMode
       primaryColor: string
       transitionName: TransitionName
+      grayMode: boolean
     }
 
     interface Config {

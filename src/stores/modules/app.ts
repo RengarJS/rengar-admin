@@ -20,6 +20,21 @@ export const useAppStore = defineStore(
       asideCollapseWidth: 64,
     })
 
+    // 灰色模式
+    watch(
+      () => userConfig.grayMode,
+      (val) => {
+        if (val) {
+          document.documentElement.style.filter = 'grayscale(100%)'
+        } else {
+          document.documentElement.style.filter = ''
+        }
+      },
+      {
+        immediate: true,
+      },
+    )
+
     function layoutModeChangeAction(mode: App.LayoutMode) {
       userConfig.layoutMode = mode
     }

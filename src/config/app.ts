@@ -13,6 +13,7 @@ const userConfig: App.UserConfig = {
   invertedAside: false,
   primaryColor: '#8B5CF6',
   transitionName: 'slide-left',
+  grayMode: false,
 }
 
 export const bgColor = '#f8fafc'

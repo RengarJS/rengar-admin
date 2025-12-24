@@ -123,6 +123,11 @@
             <div>侧边栏反转</div>
             <NSwitch v-model:value="userConfig.invertedAside" />
           </div>
+
+          <div class="flex items-center justify-between">
+            <div>灰色模式</div>
+            <NSwitch v-model:value="userConfig.grayMode" />
+          </div>
         </NSpace>
       </div>
 
