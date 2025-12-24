@@ -4,6 +4,14 @@ import { useRouterHook } from '@/hooks/router'
 import { useAuthStore } from '@/stores'
 import router from '@/router'
 
+declare module 'axios' {
+  interface AxiosRequestConfig {
+    meta?: {
+      routerFullPath?: string
+    }
+  }
+}
+
 function showErrorMessage(message: string) {
   window.$message.error(message)
 }
@@ -20,7 +28,8 @@ class HttpClient extends BaseHttpClient {
         if (authStore.user.token) {
           config.headers.Authorization = `Bearer ${authStore.user.token}`
         }
-
+        config.meta = config.meta || {}
+        config.meta.routerFullPath = router.currentRoute.value.fullPath
         return config
       },
       (error) => {
@@ -29,13 +38,13 @@ class HttpClient extends BaseHttpClient {
     )
   }
 
-  private handleUnauthorized(message: string = '未授权，请重新登录') {
+  private handleUnauthorized(message: string = '未授权，请重新登录', path?: string) {
     const { routerReplaceToLogin } = useRouterHook(false)
     this.cancel()
     showErrorMessage(message)
     const authStore = useAuthStore()
     authStore.reset()
-    routerReplaceToLogin(router.currentRoute.value.fullPath)
+    routerReplaceToLogin(path)
     return Promise.reject(new Error(message))
   }
 
@@ -45,7 +54,7 @@ class HttpClient extends BaseHttpClient {
         if (response.status === 200 && response.data.code === '000000') {
           return response.data.data
         } else if (response.data.code === '401') {
-          return this.handleUnauthorized()
+          return this.handleUnauthorized(undefined, response.config.meta?.routerFullPath)
         } else {
           showErrorMessage(response.data.message || '请求失败')
           return Promise.reject(new Error(response.data.message || '请求失败'))
@@ -53,7 +62,7 @@ class HttpClient extends BaseHttpClient {
       },
       (error) => {
         if (error.response?.status === 401) {
-          return this.handleUnauthorized()
+          return this.handleUnauthorized(undefined, error.config.meta?.routerFullPath)
         }
         showErrorMessage(error?.response?.data?.message || '请求失败')
         return Promise.reject(error)
