@@ -1,19 +1,12 @@
-import BaseHttpClient from '@rengar-admin/axios'
+// @/services/HttpClient.ts 或你的路径
+import BaseHttpClient from '@rengar-admin/axios' // 👈 注意路径按你项目调整
 import type { AxiosRequestConfig } from 'axios'
 import { useRouterHook } from '@/hooks/router'
 import { useAuthStore } from '@/stores'
 import router from '@/router'
 
-declare module 'axios' {
-  interface AxiosRequestConfig {
-    meta?: {
-      routerFullPath?: string
-    }
-  }
-}
-
 function showErrorMessage(message: string) {
-  window.$message.error(message)
+  window.$message?.error?.(message) // 加可选链更安全
 }
 
 class HttpClient extends BaseHttpClient {
@@ -28,6 +21,7 @@ class HttpClient extends BaseHttpClient {
         if (authStore.user.token) {
           config.headers.Authorization = `Bearer ${authStore.user.token}`
         }
+        // ✅ 记录发起请求时的路由路径
         config.meta = config.meta || {}
         config.meta.routerFullPath = router.currentRoute.value.fullPath
         return config
@@ -40,7 +34,8 @@ class HttpClient extends BaseHttpClient {
 
   private handleUnauthorized(message: string = '未授权，请重新登录', path?: string) {
     const { routerReplaceToLogin } = useRouterHook(false)
-    this.cancel()
+    // ✅ 关键：取消所有请求，避免后续 401 弹窗或跳转
+    this.cancelAll()
     showErrorMessage(message)
     const authStore = useAuthStore()
     authStore.reset()
@@ -62,7 +57,7 @@ class HttpClient extends BaseHttpClient {
       },
       (error) => {
         if (error.response?.status === 401) {
-          return this.handleUnauthorized(undefined, error.config.meta?.routerFullPath)
+          return this.handleUnauthorized(undefined, error.config?.meta?.routerFullPath)
         }
         showErrorMessage(error?.response?.data?.message || '请求失败')
         return Promise.reject(error)

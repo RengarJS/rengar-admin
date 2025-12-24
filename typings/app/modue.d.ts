@@ -7,3 +7,11 @@ declare module 'vue' {
     }
   }
 }
+
+declare module 'axios' {
+  interface AxiosRequestConfig {
+    meta?: {
+      routerFullPath?: string
+    }
+  }
+}

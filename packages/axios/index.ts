@@ -1,56 +1,75 @@
-import axios from 'axios'
-import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 
 abstract class BaseHttpClient {
   protected instance: AxiosInstance
-  protected requestInterceptor: number
-  protected responseInterceptor: number
-  protected abortController: AbortController | null = null
+  protected requestInterceptor!: number
+  protected responseInterceptor!: number
+  private abortControllers: AbortController[] = []
 
   constructor(config: AxiosRequestConfig) {
     this.instance = axios.create({
       ...config,
     })
+
     this.requestInterceptor = this.initializeRequestInterceptor()
     this.responseInterceptor = this.initializeResponseInterceptor()
   }
 
-  public cancel() {
-    if (this.abortController) {
-      this.abortController.abort()
-      this.abortController = null
-    }
+  /**
+   * 取消所有正在进行的请求
+   */
+  public cancelAll() {
+    this.abortControllers.forEach((ac) => {
+      if (!ac.signal.aborted) {
+        ac.abort()
+      }
+    })
+    this.abortControllers = []
   }
 
-  protected abstract initializeRequestInterceptor(): number
-  protected abstract initializeResponseInterceptor(): number
-
+  /**
+   * 创建并记录 AbortController，返回 signal
+   */
   private createAbortController() {
-    this.abortController = new AbortController()
+    const controller = new AbortController()
+    this.abortControllers.push(controller)
+    return controller.signal
   }
 
+  /**
+   * 请求拦截器钩子（子类可覆盖）
+   */
+  protected initializeRequestInterceptor(): number {
+    return this.instance.interceptors.request.use(
+      (config) => config,
+      (error) => Promise.reject(error),
+    )
+  }
+
+  /**
+   * 响应拦截器钩子（子类可覆盖）
+   */
+  protected initializeResponseInterceptor(): number {
+    return this.instance.interceptors.response.use(
+      (response) => response,
+      (error) => Promise.reject(error),
+    )
+  }
+
+  // --- HTTP 方法 ---
   public async get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    this.createAbortController()
-    return this.instance.get<T>(url, {
-      ...config,
-      signal: this.abortController!.signal,
-    }) as Promise<T>
+    const signal = this.createAbortController()
+    return this.instance.get<T>(url, { ...config, signal }) as Promise<T>
   }
 
-  public async post<T = any>(url: string, data?: Recordable, config?: AxiosRequestConfig): Promise<T> {
-    this.createAbortController()
-    return this.instance.post<T>(url, data, {
-      ...config,
-      signal: this.abortController!.signal,
-    }) as Promise<T>
+  public async post<T = any>(url: string, data?: Record<string, any>, config?: AxiosRequestConfig): Promise<T> {
+    const signal = this.createAbortController()
+    return this.instance.post<T>(url, data, { ...config, signal }) as Promise<T>
   }
 
   public async request<T = any>(config: AxiosRequestConfig): Promise<T> {
-    this.createAbortController()
-    return this.instance.request<T>({
-      ...config,
-      signal: this.abortController!.signal,
-    }) as Promise<T>
+    const signal = this.createAbortController()
+    return this.instance.request<T>({ ...config, signal }) as Promise<T>
   }
 
   public async upload<T = any>(
@@ -59,7 +78,7 @@ abstract class BaseHttpClient {
     extraData?: Record<string, any>,
     config?: AxiosRequestConfig,
   ): Promise<T> {
-    this.createAbortController()
+    const signal = this.createAbortController()
     const formData = new FormData()
     formData.append('file', file)
     if (extraData) {
@@ -72,7 +91,7 @@ abstract class BaseHttpClient {
         'Content-Type': 'multipart/form-data',
       },
       ...config,
-      signal: this.abortController!.signal,
+      signal,
     }) as Promise<T>
   }
 }
