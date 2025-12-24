@@ -27,6 +27,7 @@ coverage
 
 *.tsbuildinfo
 
+typings/app/components.d.ts
 
 .eslintcache
 Dockerfile
