@@ -3,21 +3,17 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv } from 'vite'
 
 import { setupVitePlugins } from './build/plugins'
+import { createViteProxy } from './build/proxy'
 
 export default defineConfig(({ mode }) => {
+  console.log('mode:', mode)
   const viteEnv = loadEnv(mode, process.cwd(), '') as unknown as ImportMetaEnv
   return {
     base: viteEnv.VITE_BASE_URL, // 确保 base 配置正确
     server: {
       port: Number(viteEnv.VITE_APP_PORT),
       host: true,
-      proxy: {
-        '/api': {
-          target: 'https://www.rengar.site/api',
-          changeOrigin: true, // 必开，解决跨域
-          rewrite: (path) => path.replace(/^\/api/, ''),
-        },
-      },
+      proxy: createViteProxy(viteEnv, mode),
     },
 
     plugins: setupVitePlugins(),

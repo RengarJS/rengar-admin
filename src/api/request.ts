@@ -4,6 +4,7 @@ import type { AxiosRequestConfig } from 'axios'
 import { useRouterHook } from '@/hooks/router'
 import { useAuthStore } from '@/stores'
 import router from '@/router'
+import { getServiceBaseUrl } from '@/utils/service'
 
 function showErrorMessage(message: string) {
   window.$message?.error?.(message) // 加可选链更安全
@@ -67,7 +68,7 @@ class HttpClient extends BaseHttpClient {
 }
 
 const baseHttp = new HttpClient({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: getServiceBaseUrl('default', import.meta.env),
   timeout: 1000 * 10,
 })
 
