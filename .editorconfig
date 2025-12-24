@@ -1,5 +1,4 @@
 [*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue}]
-[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue}]
 # 文件字符集
 charset = utf-8
 # 缩进大小

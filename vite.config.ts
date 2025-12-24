@@ -6,7 +6,6 @@ import { setupVitePlugins } from './build/plugins'
 import { createViteProxy } from './build/proxy'
 
 export default defineConfig(({ mode }) => {
-  console.log('mode:', mode)
   const viteEnv = loadEnv(mode, process.cwd(), '') as unknown as ImportMetaEnv
   return {
     base: viteEnv.VITE_BASE_URL, // 确保 base 配置正确
