@@ -1,5 +1,4 @@
-// @/services/HttpClient.ts 或你的路径
-import BaseHttpClient from '@rengar-admin/axios' // 👈 注意路径按你项目调整
+import BaseHttpClient from '@rengar-admin/axios'
 import type { AxiosRequestConfig } from 'axios'
 import { useRouterHook } from '@/hooks/router'
 import { useAuthStore } from '@/stores'
@@ -7,7 +6,7 @@ import router from '@/router'
 import { getServiceBaseUrl } from '@/utils/service'
 
 function showErrorMessage(message: string) {
-  window.$message?.error?.(message) // 加可选链更安全
+  window.$message?.error?.(message)
 }
 
 class HttpClient extends BaseHttpClient {
