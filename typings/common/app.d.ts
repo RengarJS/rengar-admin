@@ -22,6 +22,7 @@ declare global {
       primaryColor: string
       transitionName: TransitionName
       grayMode: boolean
+      showWaterMark: boolean
     }
 
     interface Config {

@@ -14,6 +14,7 @@ const userConfig: App.UserConfig = {
   primaryColor: '#8B5CF6',
   transitionName: 'slide-left',
   grayMode: false,
+  showWaterMark: false,
 }
 
 export const bgColor = '#f8fafc'

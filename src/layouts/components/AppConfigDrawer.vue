@@ -125,6 +125,11 @@
           </div>
 
           <div class="flex items-center justify-between">
+            <div>全局水印</div>
+            <NSwitch v-model:value="userConfig.showWaterMark" />
+          </div>
+
+          <div class="flex items-center justify-between">
             <div>灰色模式</div>
             <NSwitch v-model:value="userConfig.grayMode" />
           </div>

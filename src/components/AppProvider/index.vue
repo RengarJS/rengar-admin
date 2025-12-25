@@ -9,6 +9,7 @@
         <NDialogProvider>
           <NLoadingBarProvider>
             <GlobalNaiveTool> </GlobalNaiveTool>
+            <AppWaterMark />
             <App></App>
             <NGlobalStyle></NGlobalStyle>
           </NLoadingBarProvider>
@@ -23,6 +24,7 @@ import { darkTheme, lightTheme, zhCN } from 'naive-ui'
 import { useAppStore } from '@/stores'
 import { createTextVNode } from 'vue'
 import App from '@/App.vue'
+import AppWaterMark from '@/layouts/components/AppWaterMark.vue'
 
 defineOptions({
   name: 'AppProvider',
