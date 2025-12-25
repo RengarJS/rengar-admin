@@ -28,7 +28,6 @@
       }"
     >
       <NLayoutSider
-        show-trigger
         v-if="showAppAside"
         bordered
         :inverted="userConfig.invertedAside"
@@ -85,6 +84,7 @@
 
     <AppConfigDrawer v-model:show="showConfigDrawer" />
     <AppMobieDrawer v-model:show="showMenuDrawer" />
+    <AppSearchModal v-model:show="showSearchModal" />
   </NLayout>
 </template>
 
@@ -98,9 +98,11 @@ import AppRouterView from '@/layouts/components/AppRouterView.vue'
 import AppConfigDrawer from '@/layouts/components/AppConfigDrawer.vue'
 import AppMobieDrawer from '@/layouts/components/AppMobieDrawer.vue'
 import SysMenu from '@/layouts/components/common/SysMenu.vue'
+import AppSearchModal from '@/layouts/components/AppSearchModal.vue'
 
 const appStore = useAppStore()
-const { userConfig, systemConfig, showConfigDrawer, showMenuDrawer, showRouterView, isPc } = storeToRefs(appStore)
+const { userConfig, systemConfig, showConfigDrawer, showMenuDrawer, showRouterView, isPc, showSearchModal } =
+  storeToRefs(appStore)
 
 const layoutContentStyle = computed(() => {
   const style = {

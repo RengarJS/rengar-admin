@@ -68,6 +68,11 @@ export const useAppStore = defineStore(
       showMenuDrawer.value = val
     }
 
+    const showSearchModal = ref(false)
+    function openSearchModal() {
+      showSearchModal.value = true
+    }
+
     const layoutContentRef = ref<HTMLElement>()
     function setLayoutContentRef(el: HTMLElement) {
       layoutContentRef.value = el
@@ -197,6 +202,8 @@ export const useAppStore = defineStore(
       systemConfig,
       showConfigDrawer,
       showMenuDrawer,
+      showSearchModal,
+      openSearchModal,
       isPc,
       isMobile,
       isPad,

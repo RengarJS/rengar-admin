@@ -7,6 +7,7 @@
       <slot></slot>
     </div>
     <div class="flex items-center gap-3 text-xl">
+      <SearchControl />
       <ThemeControl />
       <SettingControl />
       <ScreenControl />
@@ -25,6 +26,7 @@ import MobieMenuControl from './common/MobieMenuControl.vue'
 import ThemeControl from './common/ThemeControl.vue'
 import SettingControl from './common/SettingControl.vue'
 import ScreenControl from './common/ScreenControl.vue'
+import SearchControl from './common/SearchControl.vue'
 const appStore = useAppStore()
 const { isPc, isMobile } = storeToRefs(appStore)
 

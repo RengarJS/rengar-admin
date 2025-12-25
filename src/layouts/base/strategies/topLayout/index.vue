@@ -55,6 +55,7 @@
 
     <AppConfigDrawer v-model:show="showConfigDrawer" />
     <AppMobileDrawer v-model:show="showMenuDrawer" />
+    <AppSearchModal v-model:show="showSearchModal" />
   </NLayout>
 </template>
 
@@ -68,10 +69,11 @@ import AppRouterView from '@/layouts/components/AppRouterView.vue'
 import AppConfigDrawer from '@/layouts/components/AppConfigDrawer.vue'
 import AppMobileDrawer from '@/layouts/components/AppMobieDrawer.vue'
 import SysMenu from '@/layouts/components/common/SysMenu.vue'
+import AppSearchModal from '@/layouts/components/AppSearchModal.vue'
 
 const appStore = useAppStore()
 
-const { userConfig, showConfigDrawer, showMenuDrawer, showRouterView, isPc } = storeToRefs(appStore)
+const { userConfig, showConfigDrawer, showMenuDrawer, showRouterView, isPc, showSearchModal } = storeToRefs(appStore)
 
 const layoutContentStyle = computed(() => {
   const style = {

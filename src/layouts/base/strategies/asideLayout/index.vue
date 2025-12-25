@@ -87,6 +87,7 @@
 
     <AppConfigDrawer v-model:show="showConfigDrawer" />
     <AppMobieDrawer v-model:show="showMenuDrawer" />
+    <AppSearchModal v-model:show="showSearchModal" />
   </NLayout>
 </template>
 
@@ -102,11 +103,12 @@ import AppMobieDrawer from '@/layouts/components/AppMobieDrawer.vue'
 import AppBreadcrumb from '@/layouts/components/AppBreadcrumb.vue'
 import SysLogo from '@/layouts/components/common/SysLogo.vue'
 import SysMenu from '@/layouts/components/common/SysMenu.vue'
+import AppSearchModal from '@/layouts/components/AppSearchModal.vue'
 
 const menuStore = useMenuStore()
 
 const appStore = useAppStore()
-const { userConfig, systemConfig, showConfigDrawer, isMobile, showMenuDrawer, showRouterView, isPc } =
+const { userConfig, systemConfig, showConfigDrawer, isMobile, showMenuDrawer, showRouterView, isPc, showSearchModal } =
   storeToRefs(appStore)
 
 const layoutContentStyle = computed(() => {

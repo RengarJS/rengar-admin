@@ -1,11 +1,11 @@
 <template>
   <NTooltip placement="bottom">
     <template #trigger>
-      <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="appStore.toggleConfigDrawer">
-        <SvgIcon icon="clarity:settings-line"></SvgIcon>
+      <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="appStore.openSearchModal">
+        <SvgIcon icon="ri:search-line"></SvgIcon>
       </div>
     </template>
-    <span>系统配置</span>
+    <span>搜索</span>
   </NTooltip>
 </template>
 
