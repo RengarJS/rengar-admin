@@ -22,6 +22,7 @@ declare global {
       primaryColor: string
       transitionName: TransitionName
       grayMode: boolean
+      colorWeakMode: boolean
       showWaterMark: boolean
     }
 

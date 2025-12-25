@@ -20,19 +20,18 @@ export const useAppStore = defineStore(
       asideCollapseWidth: 64,
     })
 
-    // 灰色模式
+    // 灰色模式和色弱模式
     watch(
-      () => userConfig.grayMode,
-      (val) => {
-        if (val) {
-          document.documentElement.style.filter = 'grayscale(100%)'
-        } else {
-          document.documentElement.style.filter = ''
+      () => [userConfig.grayMode, userConfig.colorWeakMode],
+      ([grayMode, colorWeakMode]) => {
+        const filters = []
+        if (grayMode) filters.push('grayscale(100%)')
+        if (colorWeakMode) {
+          filters.push('invert(10%) hue-rotate(180deg) contrast(1.1)')
         }
+        document.documentElement.style.filter = filters.join(' ')
       },
-      {
-        immediate: true,
-      },
+      { immediate: true },
     )
 
     function layoutModeChangeAction(mode: App.LayoutMode) {

@@ -14,6 +14,7 @@ const userConfig: App.UserConfig = {
   primaryColor: '#8B5CF6',
   transitionName: 'slide-left',
   grayMode: false,
+  colorWeakMode: false,
   showWaterMark: false,
 }
 
