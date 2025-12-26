@@ -63,7 +63,6 @@ import { useMagicKeys, whenever } from '@vueuse/core'
 import type { RouteRecordRaw } from 'vue-router'
 import type { InputInst, NCard } from 'naive-ui'
 
-type SearchRouteItem = Pick<RouteRecordRaw, 'name' | 'path' | 'meta'>
 type CardInst = InstanceType<typeof NCard>
 
 const show = defineModel<boolean>('show', {
@@ -71,6 +70,8 @@ const show = defineModel<boolean>('show', {
 })
 
 const menuStore = useMenuStore()
+
+const { menuRoutes } = storeToRefs(menuStore)
 
 const searchContent = ref('')
 const activeIndex = ref(0) // 修改默认值为0，表示选中第一个
@@ -129,7 +130,7 @@ function handleEnter() {
   }
 }
 
-function handleClick(route: SearchRouteItem) {
+function handleClick(route: RouteRecordRaw) {
   routerPushByName(route.name as RouteRecordName)
   show.value = false
 }
@@ -138,13 +139,13 @@ function handleClick(route: SearchRouteItem) {
  * 递归遍路由（包括嵌套 children），扁平化筛选出 meta.title 包含关键词的项，排除没有component 的项
  * 并仅返回 { name, path, meta } 字段。
  */
-function flattenAndSearchRoutes(routes: RouteRecordRaw[], keyword: string): Array<SearchRouteItem> {
+function flattenAndSearchRoutes(routes: RouteRecordRaw[], keyword: string): Array<RouteRecordRaw> {
   if (!keyword.trim()) {
     return []
   }
 
   const lowerKeyword = keyword.toLowerCase()
-  const results: Array<SearchRouteItem> = []
+  const results: Array<RouteRecordRaw> = []
 
   function walk(items: RouteRecordRaw[]) {
     for (const item of items) {
@@ -155,11 +156,7 @@ function flattenAndSearchRoutes(routes: RouteRecordRaw[], keyword: string): Arra
         typeof item.meta.title === 'string' &&
         item.meta.title.toLowerCase().includes(lowerKeyword)
       ) {
-        results.push({
-          name: item.name,
-          path: item.path,
-          meta: { ...item.meta },
-        })
+        results.push(item)
       }
       if (item.children) {
         walk(item.children)
@@ -172,7 +169,7 @@ function flattenAndSearchRoutes(routes: RouteRecordRaw[], keyword: string): Arra
 }
 
 const searchRoutes = computed(() => {
-  const result = flattenAndSearchRoutes(menuStore.menuRoutes, searchContent.value)
+  const result = flattenAndSearchRoutes(menuRoutes.value, searchContent.value)
   if (result.length > 0) {
     activeIndex.value = 0
   } else {
