@@ -3,68 +3,105 @@ import { useAuthStore } from './auth'
 import { filterRoutes } from '@/router/utils'
 import type { RouteRecordRaw } from 'vue-router'
 
-export const useMenuStore = defineStore('menu', () => {
-  const authStore = useAuthStore()
-  const menuRoutes = ref<RouteRecordRaw[]>([])
-  const activeMenu = ref<RouteRecordName>()
-  function sortMenus(menus: RouteRecordRaw[]): RouteRecordRaw[] {
-    // 对当前层级的菜单进行排序
-    const sortedMenus = menus.sort((a, b) => {
-      const sortA = a.meta?.order || 0
-      const sortB = b.meta?.order || 0
-      return sortA - sortB
+export const useMenuStore = defineStore(
+  'menu',
+  () => {
+    const authStore = useAuthStore()
+    const menuRoutes = ref<RouteRecordRaw[]>([])
+    const activeMenu = ref<RouteRecordName>()
+    function sortMenus(menus: RouteRecordRaw[]): RouteRecordRaw[] {
+      // 对当前层级的菜单进行排序
+      const sortedMenus = menus.sort((a, b) => {
+        const sortA = a.meta?.order || 0
+        const sortB = b.meta?.order || 0
+        return sortA - sortB
+      })
+
+      // 递归处理子菜单
+      sortedMenus.forEach((menu) => {
+        if (menu.children) {
+          menu.children = sortMenus(menu.children)
+        }
+      })
+
+      return sortedMenus
+    }
+
+    function generateMenus() {
+      const roleMap = authStore.roleMap
+      const filterMenus = filterRoutes(routes, (route) => {
+        if (route.meta?.hideInMenu) return false
+        const roles = route.meta?.roles
+        if (Array.isArray(roles) && roles.length > 0) {
+          return roles.some((role) => roleMap.has(role))
+        }
+        if (typeof roles === 'string') {
+          return roleMap.has(roles)
+        }
+        return true
+      })
+      const menus = sortMenus(filterMenus)
+      menuRoutes.value = menus
+    }
+
+    const topActiveName = ref<RouteRecordName>()
+    const subMenuRoutes = computed(() => {
+      if (!topActiveName.value) return []
+      const menu = menuRoutes.value.find((menu) => menu.name === topActiveName.value)
+      if (!menu) return []
+      return menu.children || []
     })
 
-    // 递归处理子菜单
-    sortedMenus.forEach((menu) => {
-      if (menu.children) {
-        menu.children = sortMenus(menu.children)
+    const router = useRouter()
+
+    watch(
+      () => router.currentRoute.value,
+      (val) => {
+        activeMenu.value = val.meta.activeMenu ?? val.name
+        topActiveName.value = val.matched[0]?.name as RouteRecordName
+      },
+    )
+
+    const searchHistoryMenus = ref<RouteRecordRaw[]>([])
+    function addSearchHistoryMenu(route: RouteRecordRaw) {
+      const index = searchHistoryMenus.value.findIndex((item) => item.name === route.name)
+      if (index !== -1) {
+        searchHistoryMenus.value.splice(index, 1)
       }
-    })
-
-    return sortedMenus
-  }
-
-  function generateMenus() {
-    const roleMap = authStore.roleMap
-    const filterMenus = filterRoutes(routes, (route) => {
-      if (route.meta?.hideInMenu) return false
-      const roles = route.meta?.roles
-      if (Array.isArray(roles) && roles.length > 0) {
-        return roles.some((role) => roleMap.has(role))
+      searchHistoryMenus.value.unshift(route)
+      if (searchHistoryMenus.value.length > 10) {
+        searchHistoryMenus.value.pop()
       }
-      if (typeof roles === 'string') {
-        return roleMap.has(roles)
+    }
+
+    function clearSearchHistoryMenus() {
+      searchHistoryMenus.value = []
+    }
+
+    function removeSearchHistoryMenu(route: RouteRecordRaw) {
+      const index = searchHistoryMenus.value.findIndex((item) => item.name === route.name)
+      if (index !== -1) {
+        searchHistoryMenus.value.splice(index, 1)
       }
-      return true
-    })
-    const menus = sortMenus(filterMenus)
-    menuRoutes.value = menus
-  }
+    }
 
-  const topActiveName = ref<RouteRecordName>()
-  const subMenuRoutes = computed(() => {
-    if (!topActiveName.value) return []
-    const menu = menuRoutes.value.find((menu) => menu.name === topActiveName.value)
-    if (!menu) return []
-    return menu.children || []
-  })
+    return {
+      menuRoutes,
+      topActiveName,
+      subMenuRoutes,
+      activeMenu,
+      generateMenus,
 
-  const router = useRouter()
-
-  watch(
-    () => router.currentRoute.value,
-    (val) => {
-      activeMenu.value = val.meta.activeMenu ?? val.name
-      topActiveName.value = val.matched[0]?.name as RouteRecordName
+      searchHistoryMenus,
+      addSearchHistoryMenu,
+      clearSearchHistoryMenus,
+      removeSearchHistoryMenu,
+    }
+  },
+  {
+    persist: {
+      storage: localStorage,
+      pick: ['searchHistoryMenus'],
     },
-  )
-
-  return {
-    menuRoutes,
-    topActiveName,
-    subMenuRoutes,
-    activeMenu,
-    generateMenus,
-  }
-})
+  },
+)
