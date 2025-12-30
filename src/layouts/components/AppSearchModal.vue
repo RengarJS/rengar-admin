@@ -13,8 +13,9 @@
         size="large"
         v-model:value="searchContent"
         placeholder="搜索菜单页面"
-        @keypress.enter.prevent="handleEnter"
-        ref="inputRef"
+        @keypress.enter="handleEnter"
+        @keydown="handleKeyDown"
+        @blur="isComposing = false"
       ></NInput>
       <NEmpty v-if="!searchRoutes.length" description="暂无数据" class="mt-6"></NEmpty>
       <div v-else class="mt-6">
@@ -61,7 +62,7 @@ import { useMenuStore } from '@/stores'
 import { useRouterHook } from '@/hooks/router'
 import { useMagicKeys, whenever } from '@vueuse/core'
 import type { RouteRecordRaw } from 'vue-router'
-import type { InputInst, NCard } from 'naive-ui'
+import type { NCard } from 'naive-ui'
 
 type CardInst = InstanceType<typeof NCard>
 
@@ -75,10 +76,13 @@ const { menuRoutes } = storeToRefs(menuStore)
 
 const searchContent = ref('')
 const activeIndex = ref(0) // 修改默认值为0，表示选中第一个
-const cardRefs = ref<null[]>([])
-const inputRef = ref<InputInst | null>(null)
+const cardRefs = ref<CardInst[]>([])
 
-const modalRef = ref<HTMLElement | null>(null)
+let isComposing = false
+function handleKeyDown(e: KeyboardEvent) {
+  console.log(e.isComposing)
+  isComposing = e.isComposing
+}
 
 // 使用 VueUse 的 useMagicKeys
 const { ArrowUp, ArrowDown, Enter } = useMagicKeys({
@@ -92,12 +96,18 @@ const { ArrowUp, ArrowDown, Enter } = useMagicKeys({
 
 // 监听上下箭头键
 whenever(ArrowUp!, () => {
+  if (isComposing) {
+    return
+  }
   if (searchRoutes.value.length > 0) {
     activeIndex.value = (activeIndex.value - 1 + searchRoutes.value.length) % searchRoutes.value.length
   }
 })
 
 whenever(ArrowDown!, () => {
+  if (isComposing) {
+    return
+  }
   if (searchRoutes.value.length > 0) {
     activeIndex.value = (activeIndex.value + 1) % searchRoutes.value.length
   }
@@ -105,6 +115,9 @@ whenever(ArrowDown!, () => {
 
 // 监听 Enter 键
 whenever(Enter!, () => {
+  if (isComposing) {
+    return
+  }
   if (activeIndex.value >= 0 && searchRoutes.value[activeIndex.value]) {
     handleClick(searchRoutes.value[activeIndex.value]!)
   } else if (searchRoutes.value.length > 0) {
