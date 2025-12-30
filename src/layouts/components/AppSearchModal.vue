@@ -299,20 +299,22 @@ function computedContentClass(index: number) {
 
 watch(show, (value) => {
   if (!value) {
-    // 关闭弹框时重置所有状态
-    activeIndex.value = -1
     nextTick(() => {
+      // 关闭弹框时重置所有状态
+      activeIndex.value = -1
       searchContent.value = ''
     })
   } else {
-    // 打开弹框时，根据是否有搜索内容设置高亮项
-    if (searchContent.value && searchRoutes.value.length > 0) {
-      activeIndex.value = 0
-    } else if (!searchContent.value && searchHistoryMenus.value.length > 0) {
-      activeIndex.value = 0 // 默认高亮历史记录的第一项
-    } else {
-      activeIndex.value = -1
-    }
+    nextTick(() => {
+      // 打开弹框时，根据是否有搜索内容设置高亮项
+      if (searchContent.value && searchRoutes.value.length > 0) {
+        activeIndex.value = 0
+      } else if (!searchContent.value && searchHistoryMenus.value.length > 0) {
+        activeIndex.value = 0 // 默认高亮历史记录的第一项
+      } else {
+        activeIndex.value = -1
+      }
+    })
   }
 })
 
