@@ -11,7 +11,8 @@
     "cypress.config.*",
     "nightwatch.conf.*",
     "playwright.config.*",
-    "eslint.config.*"
+    "eslint.config.*",
+    "typings/app/app.d.ts"
   ],
   "compilerOptions": {
     "noEmit": true,

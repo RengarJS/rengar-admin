@@ -61,12 +61,140 @@ export function collectRouteNames(routes: TreeNode[]): string[] {
   return names
 }
 
-export function generateRouteNameType(names: string[]): string {
-  return `// 此文件由vite-plugin-routes自动生成，请勿手动修改
+// 从路径中提取参数信息
+function extractParamsFromPath(path: string) {
+  const params: { name: string; isOptional: boolean; isArray: boolean }[] = []
+  // 匹配 :param, :param+, :param* 等动态参数
+  const paramRegex = /:([a-zA-Z0-9_]+)(\+|\*)?/g
+  let match
+  while ((match = paramRegex.exec(path)) !== null) {
+    const paramName = match[1]
+    const modifier = match[2]
+    if (paramName) {
+      // 确保 paramName 不是 undefined
+      params.push({
+        name: paramName,
+        isOptional: modifier === '*',
+        isArray: modifier === '+',
+      })
+    }
+  }
+  return params
+}
 
-type RouteRecordName =
-  ${names.map((name) => `| '${name}'`).join('\n  ')}
-`
+export function generateRouteNameType(routes: TreeNode[]): string {
+  // 生成类型映射
+  let result = `// 此文件由vite-plugin-routes自动生成，请勿手动修改
+import type { RouteRecordInfo } from 'vue-router'
+export {}
+
+declare global {
+  interface RouteNamedMap {`
+
+  // 递归处理路由树，收集所有子路由名称
+  function collectChildNames(nodes: TreeNode[]): string[] {
+    const names: string[] = []
+    for (const node of nodes) {
+      names.push(node.name)
+      if (node.children && node.children.length > 0) {
+        names.push(...collectChildNames(node.children))
+      }
+    }
+    return names
+  }
+
+  // 递归处理路由树，生成所有层级的路由类型定义
+  function processRouteWithChildren(route: TreeNode, parentPath: string = ''): string {
+    let routeResult = ''
+
+    // 计算当前路由的完整路径
+    let fullPath = route.path
+    if (parentPath) {
+      // 如果父路径以/开头且当前路径不是以/开头，说明是相对路径，需要拼接
+      if (parentPath.startsWith('/') && !route.path.startsWith('/')) {
+        fullPath = `${parentPath}/${route.path}`
+      } else if (!parentPath.startsWith('/') && !route.path.startsWith('/')) {
+        // 如果两者都不以/开头，拼接后添加/
+        fullPath = `${parentPath}/${route.path}`
+      } else {
+        fullPath = route.path
+      }
+    }
+
+    // 为当前路由生成类型定义
+    // 提取路径参数
+    const params = extractParamsFromPath(fullPath) // 使用完整路径提取参数
+
+    // 生成原始参数类型（传递给 router.push 的参数）
+    let rawParamsType = 'Record<never, never>'
+    if (params.length > 0) {
+      const paramFields = params
+        .map((param) => {
+          if (param.isArray) {
+            return `      ${param.name}: string | number | (string | number)[]`
+          } else {
+            return `      ${param.name}: string | number`
+          }
+        })
+        .join(',\n')
+      rawParamsType = `{\n${paramFields}\n    }`
+    }
+
+    // 生成标准化参数类型（从 route 对象获取的参数）
+    let normalizedParamsType = 'Record<never, never>'
+    if (params.length > 0) {
+      const paramFields = params
+        .map((param) => {
+          if (param.isArray) {
+            return `      ${param.name}: string[]`
+          } else {
+            return `      ${param.name}: string`
+          }
+        })
+        .join(',\n')
+      normalizedParamsType = `{\n${paramFields}\n    }`
+    }
+
+    // 收集子路由名称
+    const childNames =
+      route.children && route.children.length > 0
+        ? collectChildNames(route.children)
+            .map((name) => `'${name}'`)
+            .join(' | ')
+        : 'never'
+
+    routeResult += `\n    // ${route.meta.title || route.name}\n`
+    routeResult += `    '${route.name}': RouteRecordInfo<\n`
+    routeResult += `      '${route.name}',\n`
+    routeResult += `      '${fullPath}',\n` // 使用完整路径
+    routeResult += `      ${rawParamsType},\n`
+    routeResult += `      ${normalizedParamsType},\n`
+    routeResult += `      ${childNames}\n`
+    routeResult += `    >`
+
+    // 如果有子路由，递归处理它们
+    if (route.children && route.children.length > 0) {
+      for (const child of route.children) {
+        routeResult += processRouteWithChildren(child, fullPath)
+      }
+    }
+
+    return routeResult
+  }
+
+  for (const route of routes) {
+    result += processRouteWithChildren(route)
+  }
+
+  result += '\n  }\n'
+
+  // 恢复原有的 RouteRecordName 类型定义格式
+  const routeNames = collectRouteNames(routes)
+  result += `\n  type RouteRecordName =\n    ${routeNames.map((name) => `| '${name}'`).join('\n    ')}\n`
+
+  result += '\n}\n'
+
+  return result
 }
 
 export function generateRouteString(routes: TreeNode[], routerMap: Map<string, RouterMap>): string {

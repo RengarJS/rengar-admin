@@ -35,7 +35,7 @@ import { ref } from 'vue'
 import type { TreeInst } from 'naive-ui'
 
 // ====== Props & Refs ======
-const route = useRoute()
+const route = useRoute<'setting-role-config'>()
 const id = Number(route.params.id)
 const checkedKeys = ref<number[]>([])
 const menuTree = ref<Api.Setting.MenuTree[]>([])

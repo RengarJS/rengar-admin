@@ -1,4 +1,5 @@
 import vueRouter from '@/router'
+import type { RouteLocationRaw } from 'vue-router'
 interface Option {
   params?: Recordable
   query?: Recordable
@@ -10,7 +11,7 @@ export function useRouterHook(setup = true) {
     router.push({
       name,
       ...option,
-    })
+    } as RouteLocationRaw)
   }
 
   function routerPushToHome() {
@@ -25,7 +26,7 @@ export function useRouterHook(setup = true) {
     router.replace({
       name,
       ...option,
-    })
+    } as RouteLocationRaw)
   }
   function routerReplaceToLogin(path?: string) {
     router.replace({
