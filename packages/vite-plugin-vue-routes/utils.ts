@@ -188,9 +188,8 @@ declare global {
 
   result += '\n  }\n'
 
-  // 恢复原有的 RouteRecordName 类型定义格式
-  const routeNames = collectRouteNames(routes)
-  result += `\n  type RouteRecordName =\n    ${routeNames.map((name) => `| '${name}'`).join('\n    ')}\n`
+  // 修改为使用 keyof 操作符，而不是手动循环生成联合类型
+  result += `\n  type RouteRecordName = keyof RouteNamedMap\n`
 
   result += '\n}\n'
 

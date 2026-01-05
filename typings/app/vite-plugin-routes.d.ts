@@ -153,30 +153,5 @@ declare global {
     'setting-user': RouteRecordInfo<'setting-user', '/setting/user', Record<never, never>, Record<never, never>, never>
   }
 
-  type RouteRecordName =
-    | '404'
-    | 'docs'
-    | 'docs-es-toolkit'
-    | 'docs-naive-ui'
-    | 'docs-naive-ui-components'
-    | 'docs-pinia'
-    | 'docs-pnpm'
-    | 'docs-rengar-admin'
-    | 'docs-unocss'
-    | 'docs-vite'
-    | 'docs-vue'
-    | 'docs-vueuse'
-    | 'example'
-    | 'example-href'
-    | 'example-keep-alive'
-    | 'home'
-    | 'login'
-    | 'setting'
-    | 'setting-menu'
-    | 'setting-permission'
-    | 'setting-permission-list'
-    | 'setting-role'
-    | 'setting-role-config'
-    | 'setting-role-list'
-    | 'setting-user'
+  type RouteRecordName = keyof RouteNamedMap
 }
