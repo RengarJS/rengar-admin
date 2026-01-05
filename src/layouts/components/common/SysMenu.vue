@@ -14,7 +14,7 @@
 
 <script setup lang="tsx">
 import { type MenuOption } from 'naive-ui'
-import { RouterLink, type RouteRecordRaw } from 'vue-router'
+import { RouterLink, type RouteLocationRaw, type RouteRecordRaw } from 'vue-router'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import { useAppStore } from '@/stores'
 const appStore = useAppStore()
@@ -52,7 +52,7 @@ function renderLabel(route: RouteRecordRaw) {
   }
 
   return !route.children ? (
-    <RouterLink to={{ name: route.name }}>{route.meta?.title}</RouterLink>
+    <RouterLink to={{ name: route.name } as RouteLocationRaw}>{route.meta?.title}</RouterLink>
   ) : (
     <span>{route.meta?.title}</span>
   )

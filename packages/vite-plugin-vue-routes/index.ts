@@ -2,13 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { execSync } from 'child_process'
 import { debounce } from 'es-toolkit'
-import {
-  generateRoutesTree,
-  generateRouteString,
-  generateRouteNameType,
-  collectRouteNames,
-  parseExitsRouteFile,
-} from './utils'
+import { generateRoutesTree, generateRouteString, generateRouteNameType, parseExitsRouteFile } from './utils'
 
 import type { Plugin } from 'vite'
 import type { Option, RouterMap } from './types'
@@ -20,18 +14,21 @@ export function vitePluginRoutes(option: Option): Plugin {
   const typesDir = path.resolve(root, typeDir)
   let routerMap = new Map<string, RouterMap>()
 
-  function generateFiles() {
-    console.log('监听到文件变化，重新生成路由...')
+  function generateFiles(isWatch = false) {
+    if (isWatch) {
+      console.log('监听到文件变化，重新生成路由...')
+    }
     routerMap.clear()
     routerMap = parseExitsRouteFile(outputPath)
     const routes = generateRoutesTree(viewsDir, viewsDir)
     const routeContent = generateRouteString(routes, routerMap)
     fs.writeFileSync(outputPath, routeContent, 'utf-8')
     // 生成路由名称类型定义
-    const routeNames = collectRouteNames(routes)
-    const typeContent = generateRouteNameType(routeNames)
+    const typeContent = generateRouteNameType(routes)
     fs.writeFileSync(typesDir, typeContent, 'utf-8')
     execSync(`npx prettier --write ${outputPath} ${typesDir}`)
+
+    console.log('\x1b[32mvite-plugin-vue-routes: 路由生成成功\x1b[0m')
   }
 
   const debouncedGenerateRoutes = debounce(generateFiles, 300)
