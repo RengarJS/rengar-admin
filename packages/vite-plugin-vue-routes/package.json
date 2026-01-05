@@ -1,6 +1,6 @@
 {
   "name": "@rengar-admin/vite-plugin-vue-routes",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "auto generate routes",
   "exports": {
     ".": {

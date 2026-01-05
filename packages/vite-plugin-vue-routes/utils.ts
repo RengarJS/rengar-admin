@@ -126,7 +126,7 @@ declare global {
     const params = extractParamsFromPath(fullPath) // 使用完整路径提取参数
 
     // 生成原始参数类型（传递给 router.push 的参数）
-    let rawParamsType = 'Record<never, never>'
+    let rawParamsType = 'Record<string, string | number>'
     if (params.length > 0) {
       const paramFields = params
         .map((param) => {
@@ -137,11 +137,11 @@ declare global {
           }
         })
         .join(',\n')
-      rawParamsType = `{\n${paramFields}\n    }`
+      rawParamsType = `{\n${paramFields}\n    } & ${rawParamsType}`
     }
 
     // 生成标准化参数类型（从 route 对象获取的参数）
-    let normalizedParamsType = 'Record<never, never>'
+    let normalizedParamsType = 'Record<string, string>'
     if (params.length > 0) {
       const paramFields = params
         .map((param) => {
@@ -152,7 +152,7 @@ declare global {
           }
         })
         .join(',\n')
-      normalizedParamsType = `{\n${paramFields}\n    }`
+      normalizedParamsType = `{\n${paramFields}\n    } & ${normalizedParamsType}`
     }
 
     // 收集子路由名称
