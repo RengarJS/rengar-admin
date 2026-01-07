@@ -165,8 +165,8 @@ export const useAppStore = defineStore(
               clipPath: isDark ? [...clipPath].reverse() : clipPath,
             },
             {
-              duration: 500,
-              easing: 'ease-in',
+              duration: 450,
+              easing: 'linear',
               pseudoElement: isDark ? '::view-transition-old(root)' : '::view-transition-new(root)',
             },
           )
@@ -181,15 +181,65 @@ export const useAppStore = defineStore(
     }
 
     function toggleTheme(event: MouseEvent) {
+      // 保存当前模式，用于动画完成后的状态更新
+      let newThemeMode: App.Theme
       if (themeMode.value === 'auto') {
-        themeMode.value = 'light'
+        newThemeMode = 'light'
       } else if (themeMode.value === 'light') {
-        themeMode.value = 'dark'
+        newThemeMode = 'dark'
       } else {
-        themeMode.value = 'auto'
+        newThemeMode = 'auto'
       }
 
-      triggerThemeTransition(event)
+      // 先触发动画，动画完成后再更新主题模式
+      const isAppearanceTransition =
+        'startViewTransition' in document && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+      if (!isAppearanceTransition) {
+        // 如果不支持过渡动画，直接更新主题模式
+        themeMode.value = newThemeMode
+        setDetaultTheme()
+        return
+      }
+
+      const x = event.clientX
+      const y = event.clientY
+      const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
+
+      const transition = document.startViewTransition(async () => {
+        // 在过渡中更新主题模式，这样图标会在动画过程中改变
+        // 实际的DOM变化会在动画期间发生
+        themeMode.value = newThemeMode
+        setDetaultTheme()
+        await nextTick()
+      })
+
+      transition.ready
+        .then(() => {
+          const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`]
+
+          const isDark = newThemeMode === 'dark' || (newThemeMode === 'auto' && osTheme.value === 'dark')
+
+          const animate = document.documentElement.animate(
+            {
+              clipPath: isDark ? [...clipPath].reverse() : clipPath,
+            },
+            {
+              duration: 450,
+              easing: 'ease-in',
+              pseudoElement: isDark ? '::view-transition-old(root)' : '::view-transition-new(root)',
+            },
+          )
+
+          animate.onfinish = () => {
+            transition.skipTransition()
+          }
+        })
+        .catch(() => {
+          // 忽略可能的中断错误，确保主题正确设置
+          themeMode.value = newThemeMode
+          setDetaultTheme()
+        })
     }
 
     function resetLayoutAndTheme() {

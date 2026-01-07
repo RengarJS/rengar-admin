@@ -2,9 +2,9 @@
   <NTooltip placement="bottom">
     <template #trigger>
       <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="appStore.toggleTheme">
-        <SvgIcon v-if="appStore.themeMode === 'light'" icon="line-md:sunny"></SvgIcon>
-        <SvgIcon v-else-if="appStore.themeMode === 'dark'" icon="line-md:moon-filled"></SvgIcon>
-        <SvgIcon v-else icon="material-symbols:hdr-auto"></SvgIcon>
+        <i v-if="appStore.themeMode === 'light'" class="i-material-symbols:light-mode-outline"></i>
+        <i v-else-if="appStore.themeMode === 'dark'" class="i-material-symbols:dark-mode-outline"></i>
+        <i v-else class="i-material-symbols:hdr-auto-outline"></i>
       </div>
     </template>
     <span v-if="appStore.themeMode === 'light'">浅色</span>
