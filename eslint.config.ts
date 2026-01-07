@@ -55,12 +55,9 @@ export default defineConfigWithVueTs(
   {
     name: 'app/files-custom-rules',
     rules: {
-      'vue/multi-word-component-names': [
-        'warn',
-        {
-          ignores: ['index', 'App', 'Register', '[id]', '[url]'],
-        },
-      ],
+      // 关闭.vue文件名多个单词校验
+      'vue/multi-word-component-names': 'off',
+      // 强制组件名称PascalCase风格
       'vue/component-name-in-template-casing': [
         'error',
         'PascalCase',
@@ -68,6 +65,7 @@ export default defineConfigWithVueTs(
           registeredComponentsOnly: false,
         },
       ],
+      // .vue文件各个模块顺序
       'vue/block-order': [
         'error',
         {
@@ -82,6 +80,8 @@ export default defineConfigWithVueTs(
           },
         },
       ],
+
+      // 关闭any类型校验
       '@typescript-eslint/no-explicit-any': 'off',
     },
   },
