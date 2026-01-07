@@ -116,6 +116,7 @@ export const useAppStore = defineStore(
     // 监听系统主题变化，当处于auto模式时触发过渡动画
     watch(osTheme, () => {
       if (themeMode.value === 'auto') {
+        // 直接调用 triggerThemeTransition，不需要事件参数，它会使用屏幕中心
         triggerThemeTransition()
       }
     })
@@ -136,15 +137,16 @@ export const useAppStore = defineStore(
     // 切换主题时触发过渡动画
     function triggerThemeTransition(event?: MouseEvent) {
       const isAppearanceTransition =
-        document.startViewTransition() && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        'startViewTransition' in document && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-      if (!isAppearanceTransition || !event) {
+      if (!isAppearanceTransition) {
         setDetaultTheme()
         return
       }
 
-      const x = event.clientX
-      const y = event.clientY
+      // 如果没有事件参数，使用屏幕中心作为动画起始点
+      const x = event ? event.clientX : window.innerWidth / 2
+      const y = event ? event.clientY : window.innerHeight / 2
       const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
 
       const transition = document.startViewTransition(async () => {
@@ -163,7 +165,7 @@ export const useAppStore = defineStore(
               clipPath: isDark ? [...clipPath].reverse() : clipPath,
             },
             {
-              duration: 450,
+              duration: 500,
               easing: 'ease-in',
               pseudoElement: isDark ? '::view-transition-old(root)' : '::view-transition-new(root)',
             },
@@ -174,7 +176,6 @@ export const useAppStore = defineStore(
           }
         })
         .catch(() => {
-          // 忽略可能的中断错误，确保主题正确设置
           setDetaultTheme()
         })
     }
