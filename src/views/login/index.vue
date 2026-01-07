@@ -1,19 +1,16 @@
 <template>
-  <div class="relative size-screen overflow-hidden bg-primary-100">
+  <div class="relative size-screen overflow-hidden bg-primary-100 dark:bg-primary-900">
     <NCard class="absolute-center z-1 w-400px" size="large" :bordered="false" round hoverable>
-      <div class="flex-center gap-4 text-primary">
+      <div class="flex-center text-2xl text-primary">
+        <ThemeControl />
+      </div>
+
+      <div class="mt-4 flex-center gap-4 text-primary">
         <SvgIcon local-icon="i-local-logo" class="text-6xl text-primary"></SvgIcon>
         <div class="text-3xl">{{ title }}</div>
       </div>
-      <NForm
-        :model="formData"
-        ref="formRef"
-        :rules
-        label-placement="left"
-        label-width="auto"
-        size="large"
-        class="mt-12"
-      >
+
+      <NForm :model="formData" ref="formRef" :rules label-placement="left" label-width="auto" size="large" class="mt-6">
         <NFormItem path="username">
           <NInput
             v-model:value="formData.username"
@@ -73,6 +70,7 @@ import { generateCaptchaApi } from '@/api/common/capcha'
 import type { FormInst, FormRules } from 'naive-ui'
 import BottomWave from './components/BottomWave.vue'
 import TopWave from './components/TopWave.vue'
+import ThemeControl from '@/layouts/components/common/ThemeControl.vue'
 const title = import.meta.env.VITE_APP_TITLE
 
 const formData = reactive({
