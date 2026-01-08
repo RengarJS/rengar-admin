@@ -1,0 +1,62 @@
+name: 🐞 错误报告
+about: 报告 Rengar Admin 的问题
+title: '[Bug] '
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢您抽出时间填写此错误报告！
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: 描述错误
+      description: 对错误的清晰而简明的描述。如果您打算为此问题提交 PR，请在描述中告诉我们。谢谢！
+      placeholder: 错误描述
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 复现此错误的清晰而简明的步骤。
+      placeholder: |
+        1. 应用魔法
+        2. 等待 3.1415 秒
+        3. 🧙🏽‍♂️
+    validations:
+      required: true
+  - type: input
+    id: reproduction
+    attributes:
+      label: 最小复现链接
+      description: |
+        请提供[最小复现](https://stackoverflow.com/help/minimal-reproducible-example)链接。
+        提供一个简化的 [Playground](https://play.pro-components.cn)、CodeSandbox 或 GitHub 仓库链接。
+        请不要随机填写链接。
+      placeholder: https://example.com/reproduction
+    validations:
+      required: false
+  - type: textarea
+    id: system-info
+    attributes:
+      label: 系统信息
+      description: |
+        在项目根目录运行以下命令并粘贴输出：
+        ```bash
+        npx envinfo --system --npmPackages 'vite,naive-ui,vue,unocss,eslint' --binaries --browsers
+        ```
+      render: shell
+      placeholder: 粘贴命令输出结果...
+    validations:
+      required: true
+  - type: checkboxes
+    id: checkboxes
+    attributes:
+      label: 验证
+      description: 在提交问题之前，请确保完成以下步骤
+      options:
+        - label: 阅读 [文档](https://www.rengar.site/doc/)。
+        - label: 检查是否已经存在[相同问题的问题](https://github.com/RengarJS/rengar-admin/issues)，以避免创建重复的问题。
+    validations:
+      required: true
