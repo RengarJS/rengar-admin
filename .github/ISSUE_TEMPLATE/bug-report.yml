@@ -1,6 +1,5 @@
 name: 🐞 错误报告
 about: 报告 Rengar Admin 的问题
-title: '[Bug] '
 labels: [bug]
 body:
   - type: markdown
