@@ -57,6 +57,6 @@ body:
       description: 在提交问题之前，请确保完成以下步骤
       options:
         - label: 阅读 [文档](https://www.rengar.site/doc/)。
-        - label: 检查是否已经存在[相同问题的问题](https://github.com/RengarJS/rengar-admin/issues)，以避免创建重复的问题。
-    validations:
-      required: true
+          required: true
+        - label: 检查是否已经存在请求相同功能的问题，以避免创建重复的问题。
+          required: true
