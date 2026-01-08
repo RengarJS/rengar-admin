@@ -32,7 +32,7 @@ body:
       description: 请提供[最小复现](https://stackoverflow.com/help/minimal-reproducible-example)链接。提供一个简化的 [Playground](https://play.pro-components.cn)/CodePen/CodeSandbox 或 GitHub 仓库链接。请不要随机填写链接。
       placeholder: 复现链接
     validations:
-      required: true
+      required: false
   - type: textarea
     id: system-info
     attributes:
