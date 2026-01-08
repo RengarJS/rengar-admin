@@ -1,6 +1,6 @@
 name: 🐞 错误报告
-about: 报告 Rengar Admin 的问题
-labels: [bug]
+description: 报告 naive-ui 的问题
+labels: [untriaged]
 body:
   - type: markdown
     attributes:
@@ -29,24 +29,28 @@ body:
     id: reproduction
     attributes:
       label: 最小复现链接
-      description: |
-        请提供[最小复现](https://stackoverflow.com/help/minimal-reproducible-example)链接。
-        提供一个简化的 [Playground](https://play.pro-components.cn)、CodeSandbox 或 GitHub 仓库链接。
-        请不要随机填写链接。
-      placeholder: https://example.com/reproduction
+      description: 请提供[最小复现](https://stackoverflow.com/help/minimal-reproducible-example)链接。提供一个简化的 [Playground](https://play.pro-components.cn)/CodePen/CodeSandbox 或 GitHub 仓库链接。请不要随机填写链接。
+      placeholder: 复现链接
     validations:
-      required: false
+      required: true
   - type: textarea
     id: system-info
     attributes:
       label: 系统信息
-      description: |
-        在项目根目录运行以下命令并粘贴输出：
-        ```bash
-        npx envinfo --system --npmPackages 'vite,naive-ui,vue,unocss,eslint' --binaries --browsers
-        ```
-      render: shell
-      placeholder: 粘贴命令输出结果...
+      description: "`npx envinfo --system --npmPackages 'naive-ui,vue' --binaries --browsers` 命令的输出"
+      render: Shell
+      placeholder: 系统信息，二进制文件，浏览器
+    validations:
+      required: true
+  - type: dropdown
+    id: package-manager
+    attributes:
+      label: 使用的包管理器
+      description: 选择所使用的包管理器
+      options:
+        - npm
+        - yarn
+        - pnpm
     validations:
       required: true
   - type: checkboxes
@@ -55,7 +59,13 @@ body:
       label: 验证
       description: 在提交问题之前，请确保完成以下步骤
       options:
-        - label: 阅读 [文档](https://www.rengar.site/doc/)。
+        - label: 阅读 [贡献指南](https://github.com/tusen-ai/naive-ui/blob/main/CONTRIBUTING.zh-CN.md)。
           required: true
-        - label: 检查是否已经存在请求相同功能的问题，以避免创建重复的问题。
+        - label: 阅读 [文档](https://www.naiveui.com/zh-CN/)。
+          required: true
+        - label: 检查是否已经存在[相同问题的问题](https://github.com/tusen-ai/naive-ui/issues)，以避免创建重复的问题。
+          required: true
+        - label: 确保这是一个具体的 bug。有关问题和答案，请打开 [GitHub 讨论](https://github.com/tusen-ai/naive-ui/discussions)。
+          required: true
+        - label: 提供的复现是[最小可复现的示例](https://stackoverflow.com/help/minimal-reproducible-example)。
           required: true
