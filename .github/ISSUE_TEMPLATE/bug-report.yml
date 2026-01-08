@@ -1,6 +1,6 @@
 name: 🐞 错误报告
-description: 报告 naive-ui 的问题
-labels: [untriaged]
+description: 报告 Rengar Admin 的问题
+labels: [bug]
 body:
   - type: markdown
     attributes:
@@ -37,7 +37,7 @@ body:
     id: system-info
     attributes:
       label: 系统信息
-      description: "`npx envinfo --system --npmPackages 'naive-ui,vue' --binaries --browsers` 命令的输出"
+      description: "`npx envinfo --system --npmPackages 'vite,pnpm,naive-ui,vue,eslint,unocss' --binaries --browsers` 命令的输出"
       render: Shell
       placeholder: 系统信息，二进制文件，浏览器
     validations:
@@ -59,13 +59,11 @@ body:
       label: 验证
       description: 在提交问题之前，请确保完成以下步骤
       options:
-        - label: 阅读 [贡献指南](https://github.com/tusen-ai/naive-ui/blob/main/CONTRIBUTING.zh-CN.md)。
+        - label: 阅读 [文档](https://www.rengar.site/doc/)。
           required: true
-        - label: 阅读 [文档](https://www.naiveui.com/zh-CN/)。
+        - label: 检查是否已经存在[相同问题的问题](https://github.com/RengarJS/rengar-admin/issues)，以避免创建重复的问题。
           required: true
-        - label: 检查是否已经存在[相同问题的问题](https://github.com/tusen-ai/naive-ui/issues)，以避免创建重复的问题。
-          required: true
-        - label: 确保这是一个具体的 bug。有关问题和答案，请打开 [GitHub 讨论](https://github.com/tusen-ai/naive-ui/discussions)。
+        - label: 确保这是一个具体的 bug。有关问题和答案，请打开 [GitHub 讨论](https://github.com/RengarJS/rengar-admin/discussions)。
           required: true
         - label: 提供的复现是[最小可复现的示例](https://stackoverflow.com/help/minimal-reproducible-example)。
           required: true
