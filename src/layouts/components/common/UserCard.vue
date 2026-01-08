@@ -2,7 +2,7 @@
   <NDropdown trigger="hover" :options="options" @select="handleSelect">
     <div class="flex cursor-pointer items-center gap-2 rounded-2xl px-2 py-1 hover:text-primary">
       <SvgIcon icon="line-md:account" class="text-xl"></SvgIcon>
-      <span class="max-w-[120px] truncate text-base">{{ authStore.user?.username }}</span>
+      <span v-if="!appStore.isMobile" class="max-w-[120px] truncate text-base">{{ authStore.user?.username }}</span>
     </div>
   </NDropdown>
 
@@ -10,12 +10,13 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores'
+import { useAuthStore, useAppStore } from '@/stores'
 import { to } from 'await-to-js'
 import { useRouterHook } from '@/hooks/router'
 import PasswordModal from './PasswordModal.vue'
 
 const authStore = useAuthStore()
+const appStore = useAppStore()
 
 const options = [
   {

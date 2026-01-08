@@ -1,5 +1,5 @@
 <template>
-  <NDrawer v-model:show="show" :width="400" :native-scrollbar="true" :auto-focus="false">
+  <NDrawer v-model:show="show" style="width: 100%; max-width: 400px" :native-scrollbar="true" :auto-focus="false">
     <NDrawerContent title="系统配置" :native-scrollbar="false" closable>
       <div>
         <NDivider>布局模式</NDivider>

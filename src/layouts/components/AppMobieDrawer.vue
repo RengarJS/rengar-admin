@@ -1,12 +1,5 @@
 <template>
-  <NDrawer
-    v-model:show="show"
-    :width="400"
-    :native-scrollbar="true"
-    :auto-focus="false"
-    placement="left"
-    style="width: 80%"
-  >
+  <NDrawer v-model:show="show" :native-scrollbar="true" :auto-focus="false" placement="left" style="width: 80%">
     <NDrawerContent title="系统菜单" :native-scrollbar="false" closable>
       <SysMenu v-model:active="menuStore.activeMenu" :data="menuStore.menuRoutes" @change="handleMenuChange" />
     </NDrawerContent>

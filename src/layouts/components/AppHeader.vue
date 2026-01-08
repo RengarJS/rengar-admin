@@ -1,5 +1,5 @@
 <template>
-  <header class="h-full flex items-center gap-4 px-4">
+  <header class="h-full w-full flex items-center gap-4 px-4">
     <SysLogo v-if="showLogo" :show-title="!isMobile" />
     <MobieMenuControl v-if="!isPc" />
     <AsideControl v-if="showAsideControl" />
