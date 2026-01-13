@@ -201,7 +201,7 @@ export const routes: RouteRecordRaw[] = [
             path: 'list',
             component: () => import('@/views/setting/permission/list/index.vue'),
             meta: {
-              title: 'setting_permission_list',
+              title: '权限列表',
               hideInMenu: true,
             },
           },

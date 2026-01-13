@@ -59,6 +59,8 @@
     </NCard>
     <TopWave />
     <BottomWave />
+
+    <FooterInfo />
   </div>
 </template>
 
@@ -71,6 +73,7 @@ import type { FormInst, FormRules } from 'naive-ui'
 import BottomWave from './components/BottomWave.vue'
 import TopWave from './components/TopWave.vue'
 import ThemeControl from '@/layouts/components/common/ThemeControl.vue'
+import FooterInfo from './components/FooterInfo.vue'
 const title = import.meta.env.VITE_APP_TITLE
 
 const formData = reactive({
