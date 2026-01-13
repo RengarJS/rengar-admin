@@ -1,5 +1,7 @@
 /** @type {import('prettier').Options} */
+import * as prettierPluginOxc from '@prettier/plugin-oxc'
 export default {
+  plugins: [prettierPluginOxc],
   // 在语句末尾添加分号
   semi: false,
   // 使用单引号而不是双引号
