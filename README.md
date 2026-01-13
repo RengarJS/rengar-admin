@@ -8,6 +8,18 @@
 
 [在线预览](https://rengarjs.github.io/rengar-admin/)
 
+## 特性
+
+- 完全免费：完全开源免费，遵循 MIT 开源协议，你可以自由使用、修改和分发
+- 维护积极：bug修复速度快，积极维护，不烂尾，有问题随时交流
+- 生产环境验证： 真实的后端部署（非mock接口），提供开源的后端，经过生产环境验证，确保稳定性和性能
+- 优雅的设计： 基于 Naive UI 精心打造，界面简洁美观，完美适配暗黑模式，代码简单易懂，无过度封装
+- 先进技术栈： 采用 Vue 3.5 + Vite 7 + TypeScript + Naive UI + Pinia + UnoCSS 等前沿技术
+- 智能路由： 创新的文件系统路由，根据目录结构自动生成路由配置，适配vue-router类型化路由
+- 页面缓存增强： 特殊的路由缓存方案，自动注入组件名称，轻松实现多级路由的 KeepAlive 功能
+- 类型安全： TypeScript 类型覆盖率 100%，配合 VS Code 享受智能提示，让代码更加健壮可靠
+- 响应式布局： 响应式布局，支持 PC、平板、手机等设备，适配多种屏幕尺寸
+
 ## 项目截图
 
 <img width="1836" height="1041" alt="Image" src="https://github.com/user-attachments/assets/34bfb161-9817-468e-aa5f-cc9a208a736f" />
