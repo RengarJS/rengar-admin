@@ -1,5 +1,5 @@
 <template>
-  <NLayout embedded has-sider style="height: 100vh">
+  <NLayout embedded has-sider style="height: 100vh; height: 100dvh">
     <NLayout>
       <NLayoutHeader
         :inverted="userConfig.invertedHeader"

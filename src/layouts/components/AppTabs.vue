@@ -66,7 +66,7 @@
     </VueDraggable>
 
     <div class="h-full flex items-center gap-4 px-4 text-lg" style="border-left: solid 1px var(--n-border-color)">
-      <NTooltip placement="bottom">
+      <NTooltip v-if="isPc" placement="bottom">
         <template #trigger>
           <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="appStore.refreshRouterView">
             <SvgIcon icon="ooui:reload"></SvgIcon>
@@ -74,8 +74,15 @@
         </template>
         <span>刷新</span>
       </NTooltip>
+      <div
+        v-else
+        class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary"
+        @click="appStore.refreshRouterView"
+      >
+        <SvgIcon icon="ooui:reload"></SvgIcon>
+      </div>
 
-      <NTooltip placement="bottom">
+      <NTooltip v-if="isPc" placement="bottom">
         <template #trigger>
           <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="toggle">
             <SvgIcon :icon="isFullscreen ? 'ooui:exit-fullscreen' : 'ooui:full-screen'"></SvgIcon>
@@ -99,6 +106,9 @@ import type { Directive } from 'vue'
 const route = useRoute()
 const router = useRouter()
 const showBack = computed(() => Boolean(route.meta.showBack))
+const appStore = useAppStore()
+const { layoutContentRef, isPc } = storeToRefs(appStore)
+const { isFullscreen, toggle } = useFullscreen(layoutContentRef)
 function handleBack() {
   router.back()
 }
@@ -280,10 +290,6 @@ function handleJump(path: string) {
   router.push(path)
 }
 watch(width, () => scrollIntoView())
-
-const appStore = useAppStore()
-const { layoutContentRef } = storeToRefs(appStore)
-const { isFullscreen, toggle } = useFullscreen(layoutContentRef)
 </script>
 <style scoped>
 .tab-item {

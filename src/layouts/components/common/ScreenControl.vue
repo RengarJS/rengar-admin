@@ -7,9 +7,6 @@
     </template>
     <span>{{ isFullscreen ? '退出全屏' : '全屏' }}</span>
   </NTooltip>
-  <div v-else class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="toggle">
-    <SvgIcon :icon="isFullscreen ? 'ooui:exit-fullscreen' : 'ooui:full-screen'"></SvgIcon>
-  </div>
 </template>
 
 <script setup lang="ts">

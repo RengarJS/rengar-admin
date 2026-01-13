@@ -116,11 +116,11 @@
           </div>
 
           <div class="flex items-center justify-between">
-            <div>头部反转</div>
+            <div>头部颜色反转</div>
             <NSwitch v-model:value="userConfig.invertedHeader" />
           </div>
           <div class="flex items-center justify-between">
-            <div>侧边栏反转</div>
+            <div>侧边栏颜色反转</div>
             <NSwitch v-model:value="userConfig.invertedAside" />
           </div>
 

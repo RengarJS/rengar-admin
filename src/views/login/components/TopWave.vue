@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute left-0 right-0 -top-[6%]">
+  <div class="-top-0 absolute left-0 right-0 md:-top-[6%]">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
       <path
         fill="var(--color-primary)"
