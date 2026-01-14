@@ -2,11 +2,20 @@
 [![Forks](https://img.shields.io/github/forks/RengarJS/rengar-admin.svg?style=social&label=Fork)](https://github.com/RengarJS/rengar-admin/network/members)
 [![License](https://img.shields.io/github/license/RengarJS/rengar-admin.svg?color=green)](https://github.com/RengarJS/rengar-admin/blob/main/LICENSE.txt)
 
-`rengar-admin`是一个基于`vue3.5`+`vite`+`naive-ui`+`typescript`的后台管理系统模板。开箱即用，完全免费。
+
 
 [项目文档](https://rengarjs.github.io/rengar-admin-doc/)
 
 [在线预览](https://rengarjs.github.io/rengar-admin/)
+
+
+> [!NOTE]
+> 如果您觉得 `Rengar-admin` 对您有所帮助，或者您喜欢我们的项目，请在 GitHub 上给我们一个 ⭐️。您的支持是我们持续改进和增加新功能的动力！感谢您的支持！
+
+
+## 简介
+`rengar-admin`是一个基于`vue3.5`+`vite`+`naive-ui`+`typescript`的后台管理系统模板。开箱即用，完全免费。
+
 
 ## 特性
 
@@ -19,6 +28,15 @@
 - 页面缓存增强： 特殊的路由缓存方案，自动注入组件名称，轻松实现多级路由的 KeepAlive 功能
 - 类型安全： TypeScript 类型覆盖率 100%，配合 VS Code 享受智能提示，让代码更加健壮可靠
 - 响应式布局： 响应式布局，支持 PC、平板、手机等设备，适配多种屏幕尺寸
+
+
+## 为什么选择rengar-admin
+
+目前市面上的很多后台模版存在臃肿、过渡封装问题，实际开发中可能并不需要那么多的功能，去改源码是一件很痛苦的事情。于是，决定自己实现一个轻量的后台模版，于是rengar-admin就诞生了。
+
+rengar-admin的初心是只提供后台模板的基本功能，如：登录、权限、菜单、路由、布局、标签页、面包屑、主题切换、移动端适配等。任何跟业务相关的功能需自行开发，而且也不会引入非必要的 npm 包。
+
+rengar一词来源于 lol 的英雄雷恩加尔的英文名称，以前很喜欢玩这个英雄。
 
 ## 项目截图
 
