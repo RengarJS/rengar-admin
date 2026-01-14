@@ -74,15 +74,23 @@
 
     <template #footer>
       <div class="flex items-center gap-2 text-gray">
-        <SvgIcon icon="ant-design:enter-outlined"></SvgIcon>
+        <div class="border-gary border rounded p-1">
+          <SvgIcon icon="ant-design:enter-outlined"></SvgIcon>
+        </div>
         <div class="mr-4">选择</div>
-        <SvgIcon icon="ant-design:arrow-up-outlined"></SvgIcon>
-        <SvgIcon icon="ant-design:arrow-down-outlined"></SvgIcon>
+        <div class="border-gary border rounded p-1">
+          <SvgIcon icon="ant-design:arrow-up-outlined"></SvgIcon>
+        </div>
+
+        <div class="border-gary border rounded p-1">
+          <SvgIcon icon="ant-design:arrow-down-outlined"></SvgIcon>
+        </div>
+
         <div class="mr-4">切换</div>
 
-        <SvgIcon icon="ant-design:delete-outlined"></SvgIcon>
+        <div class="border-gary border rounded p-1">Del</div>
         <div>删除</div>
-        <div class="ml-4">esc</div>
+        <div class="border-gary ml-4 border rounded p-1">Esc</div>
         <div>关闭</div>
       </div>
     </template>
