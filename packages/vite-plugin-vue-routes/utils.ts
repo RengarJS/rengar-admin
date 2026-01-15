@@ -1,45 +1,122 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import * as ts from 'typescript'
 
 import type { TreeNode, RouterMap } from './types'
 
 export function parseExitsRouteFile(filePath: string) {
   const file = fs.readFileSync(filePath, 'utf-8')
-  const routesRegex = /export\s+const\s+routes\s*:\s*RouteRecordRaw\[\]\s*=\s*(\[\s*{[\s\S]*?\n\])/
-  const match = routesRegex.exec(file)
+
+  // 使用 TypeScript 编译器 API 解析代码为 AST
+  const sourceFile = ts.createSourceFile(filePath, file, ts.ScriptTarget.Latest, true)
 
   const routerMap = new Map<string, RouterMap>()
+  let routes: TreeNode[] = []
 
-  if (match) {
-    // 替换动态导入函数为字符串
-    const routesString = match[1]!.replace(/\(\)\s*=>\s*import\(('[^']+'|"[^"]+")\)/g, '$1')
-    // 清理字符串中的换行符和多余空格
-    const cleanedString = routesString.replace(/\n/g, '').replace(/\s+/g, ' ')
-
-    // 使用 Function 构造函数将字符串转换为 JavaScript 对象
-    const routes = new Function(`return ${cleanedString};`)()
-
-    // 递归遍历路由配置并加入 routerMap
-    function traverseRoutes(routes: TreeNode[]) {
-      for (const route of routes) {
-        const { name, meta, redirect, children } = route
-
-        // 将当前路由节点加入 routerMap
-        routerMap.set(name, {
-          meta: meta,
-          redirect,
-        })
-
-        // 如果有子路由，递归处理
-        if (children && children.length > 0) {
-          traverseRoutes(children)
+  // 遍历 AST 找到 routes 变量定义
+  function findRoutesVariable(node: ts.Node): void {
+    if (ts.isVariableStatement(node)) {
+      for (const declaration of node.declarationList.declarations) {
+        if (ts.isIdentifier(declaration.name) && declaration.name.text === 'routes') {
+          if (declaration.initializer && ts.isArrayLiteralExpression(declaration.initializer)) {
+            // 解析路由数组
+            routes = parseArrayExpression(declaration.initializer)
+          }
         }
       }
     }
 
-    // 开始遍历
-    traverseRoutes(routes)
+    // 递归遍历子节点
+    ts.forEachChild(node, findRoutesVariable)
+  }
 
+  // 解析数组表达式
+  function parseArrayExpression(node: ts.ArrayLiteralExpression): any[] {
+    return node.elements.map((element) => parseExpression(element))
+  }
+
+  // 解析对象表达式
+  function parseObjectExpression(node: ts.ObjectLiteralExpression): any {
+    const obj: any = {}
+    for (const prop of node.properties) {
+      if (ts.isPropertyAssignment(prop)) {
+        const keyName = ts.isIdentifier(prop.name)
+          ? prop.name.text
+          : ts.isStringLiteral(prop.name)
+            ? prop.name.text
+            : ''
+        const value = parseExpression(prop.initializer)
+        if (keyName) {
+          obj[keyName] = value
+        }
+      }
+    }
+    return obj
+  }
+
+  // 解析表达式
+  function parseExpression(node: ts.Node): any {
+    if (ts.isStringLiteral(node)) {
+      return node.text
+    } else if (ts.isNumericLiteral(node)) {
+      return Number(node.text)
+    } else if (node.kind === ts.SyntaxKind.TrueKeyword) {
+      return true
+    } else if (node.kind === ts.SyntaxKind.FalseKeyword) {
+      return false
+    } else if (node.kind === ts.SyntaxKind.ArrayLiteralExpression) {
+      return parseArrayExpression(node as ts.ArrayLiteralExpression)
+    } else if (node.kind === ts.SyntaxKind.ObjectLiteralExpression) {
+      return parseObjectExpression(node as ts.ObjectLiteralExpression)
+    } else if (node.kind === ts.SyntaxKind.CallExpression) {
+      const callNode = node as ts.CallExpression
+      if (callNode.expression.kind === ts.SyntaxKind.Identifier) {
+        const idNode = callNode.expression as ts.Identifier
+        if (idNode.text === 'import') {
+          // 处理动态导入，返回导入路径字符串
+          const arg = callNode.arguments[0]
+          if (arg && arg.kind === ts.SyntaxKind.StringLiteral) {
+            return (arg as ts.StringLiteral).text
+          }
+          return ''
+        }
+      }
+    } else if (node.kind === ts.SyntaxKind.ArrowFunction) {
+      // 忽略箭头函数（如动态导入函数）
+      return undefined
+    } else if (node.kind === ts.SyntaxKind.AsExpression) {
+      // 忽略类型断言
+      const asNode = node as ts.AsExpression
+      return parseExpression(asNode.expression)
+    } else if (node.kind === ts.SyntaxKind.Identifier) {
+      return (node as ts.Identifier).text
+    }
+    return undefined
+  }
+
+  // 递归遍历路由配置并加入 routerMap
+  function traverseRoutes(routes: TreeNode[]) {
+    for (const route of routes) {
+      const { name, meta, redirect, children } = route
+
+      // 将当前路由节点加入 routerMap
+      routerMap.set(name, {
+        meta: meta,
+        redirect,
+      })
+
+      // 如果有子路由，递归处理
+      if (children && children.length > 0) {
+        traverseRoutes(children)
+      }
+    }
+  }
+
+  // 开始遍历 AST
+  findRoutesVariable(sourceFile)
+
+  if (routes.length > 0) {
+    traverseRoutes(routes)
     return routerMap
   } else {
     throw new Error('Failed to parse routes')

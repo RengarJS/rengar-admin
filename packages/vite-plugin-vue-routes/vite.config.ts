@@ -11,7 +11,7 @@ export default defineConfig({
       fileName: () => 'index.js',
     },
     rollupOptions: {
-      external: ['vue', 'vue-router', 'node:fs', 'node:path', 'child_process'],
+      external: ['vue', 'vue-router', 'node:fs', 'node:path', 'child_process', 'typescript'],
     },
     outDir: 'lib',
   },
