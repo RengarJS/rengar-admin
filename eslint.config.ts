@@ -18,7 +18,7 @@ export default defineConfigWithVueTs(
     name: 'app/files-to-lint',
     files: ['**/*.{ts,tsx,vue}'],
   },
-  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**', 'packages/**/*.js', ''], 'Ignore Build Directory'),
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**', 'packages/**/*.js', '']),
 
   // 使用 Vue 的基本配置
   pluginVue.configs['flat/essential'],
