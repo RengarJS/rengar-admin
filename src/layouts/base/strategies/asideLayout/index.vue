@@ -1,5 +1,5 @@
 <template>
-  <NLayout embedded has-sider style="height: 100vh; height: 100dvh">
+  <NLayout embedded has-sider class="h-screen">
     <NLayoutSider
       v-if="isPc"
       :inverted="userConfig.invertedAside"

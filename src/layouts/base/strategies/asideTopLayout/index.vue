@@ -1,5 +1,5 @@
 <template>
-  <NLayout style="height: 100vh; height: 100dvh">
+  <NLayout class="h-screen">
     <NLayoutHeader
       bordered
       :inverted="userConfig.invertedHeader"

@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh; height: 100dvh" class="relative overflow-hidden bg-primary-100 dark:bg-primary-900">
+  <div class="relative overflow-hidden bg-primary-100 h-screen dark:bg-primary-900">
     <NCard class="absolute-center z-1 max-w-400px w-[90%]" size="large" :bordered="false" round hoverable>
       <div class="flex-center text-2xl text-primary">
         <ThemeControl />
