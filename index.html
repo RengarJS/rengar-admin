@@ -3,12 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 禁用移动端缩放 -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>%VITE_APP_TITLE%</title>
   </head>
   <body>
     <div id="app-loading"></div>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
+    <script>
+      // 禁用移动端缩放
+      window.onload = function () {
+        document.addEventListener('touchstart', function (event) {
+          if (event.touches.length > 1) {
+            event.preventDefault()
+          }
+        })
+        var lastTouchEnd = 0
+        document.addEventListener(
+          'touchend',
+          function (event) {
+            var now = new Date().getTime()
+            if (now - lastTouchEnd <= 300) {
+              event.preventDefault()
+            }
+            lastTouchEnd = now
+          },
+          false,
+        )
+        document.addEventListener('gesturestart', function (event) {
+          event.preventDefault()
+        })
+      }
+    </script>
   </body>
 </html>
