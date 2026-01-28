@@ -3,6 +3,7 @@
     :theme-overrides="appStore.themeOverrides"
     :theme="appStore.theme === 'light' ? lightTheme : darkTheme"
     :locale="zhCN"
+    :date-locale="dateZhCN"
   >
     <NMessageProvider>
       <NNotificationProvider>
@@ -20,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { darkTheme, lightTheme, zhCN } from 'naive-ui'
+import { darkTheme, lightTheme, zhCN, dateZhCN } from 'naive-ui'
 import { useAppStore } from '@/stores'
 import { createTextVNode } from 'vue'
 import App from '@/App.vue'
