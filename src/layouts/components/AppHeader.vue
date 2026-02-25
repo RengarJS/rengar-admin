@@ -7,6 +7,7 @@
       <slot></slot>
     </div>
     <div class="flex items-center gap-3 text-xl">
+      <GithubControl />
       <SearchControl />
       <ThemeControl />
       <SettingControl />
@@ -27,6 +28,7 @@ import ThemeControl from './common/ThemeControl.vue'
 import SettingControl from './common/SettingControl.vue'
 import ScreenControl from './common/ScreenControl.vue'
 import SearchControl from './common/SearchControl.vue'
+import GithubControl from './common/GithubControl.vue'
 const appStore = useAppStore()
 const { isPc, isMobile } = storeToRefs(appStore)
 
