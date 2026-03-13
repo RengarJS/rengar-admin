@@ -2,20 +2,16 @@
 [![Forks](https://img.shields.io/github/forks/RengarJS/rengar-admin.svg?style=social&label=Fork)](https://github.com/RengarJS/rengar-admin/network/members)
 [![License](https://img.shields.io/github/license/RengarJS/rengar-admin.svg?color=green)](https://github.com/RengarJS/rengar-admin/blob/main/LICENSE.txt)
 
+[项目文档](https://www.rengar.site/doc)
 
-
-[项目文档](https://rengarjs.github.io/rengar-admin-doc/)
-
-[在线预览](https://rengarjs.github.io/rengar-admin/)
-
+[在线预览](https://www.rengar.site)
 
 > [!NOTE]
 > 如果您觉得 `Rengar-admin` 对您有所帮助，或者您喜欢我们的项目，请在 GitHub 上给我们一个 ⭐️。您的支持是我们持续改进和增加新功能的动力！感谢您的支持！
 
-
 ## 简介
-`rengar-admin`是一个基于`vue3.5`+`vite`+`naive-ui`+`typescript`的后台管理系统模板。开箱即用，完全免费。
 
+`rengar-admin`是一个基于`vue3.5`+`vite`+`naive-ui`+`typescript`的后台管理系统模板。开箱即用，完全免费。
 
 ## 特性
 
@@ -28,7 +24,6 @@
 - 页面缓存增强： 特殊的路由缓存方案，自动注入组件名称，轻松实现多级路由的 KeepAlive 功能
 - 类型安全： TypeScript 类型覆盖率 100%，配合 VS Code 享受智能提示，让代码更加健壮可靠
 - 响应式布局： 响应式布局，支持 PC、平板、手机等设备，适配多种屏幕尺寸
-
 
 ## 为什么选择rengar-admin
 
