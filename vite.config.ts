@@ -24,11 +24,19 @@ export default defineConfig(({ mode }) => {
 
     build: {
       chunkSizeWarningLimit: 1500,
-      rollupOptions: {
+      rolldownOptions: {
         output: {
-          manualChunks: {
-            vue: ['vue', 'vue-router', 'pinia'],
-            'naive-ui': ['naive-ui'],
+          codeSplitting: {
+            groups: [
+              {
+                name: 'vue',
+                test: /node_modules[\\/](vue|vue-router|pinia)/,
+              },
+              {
+                name: 'naive-ui',
+                test: /node_modules[\\/]naive-ui/,
+              },
+            ],
           },
         },
       },
