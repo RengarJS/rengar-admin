@@ -3,7 +3,6 @@
   "include": ["typings/app/*.d.ts", "typings/common/*.d.ts", "src/**/*", "src/**/*.vue", "packages/**/*"],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
-    "lib": ["DOM"],
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "types": ["vite/client", "naive-ui/volar"],
     "paths": {
