@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.4.0] - 2026-03-20
+
+### ✨ Features
+
+- 添加`左侧双菜单`布局
+
+### 🐛 Bug Fixes
+
+- 修复`tsconfig.app.json`lib错误问题
+
 ## [2.1.0] - 2026-01-05
 
 ### ✨ Features
