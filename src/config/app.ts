@@ -16,6 +16,7 @@ const userConfig: App.UserConfig = {
   grayMode: false,
   colorWeakMode: false,
   showWaterMark: false,
+  fixedSubMenu: true,
 }
 
 export const bgColor = '#f8fafc'

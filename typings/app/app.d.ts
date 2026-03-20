@@ -3,7 +3,7 @@ export {}
 declare global {
   namespace App {
     type Theme = 'light' | 'dark' | 'auto'
-    type LayoutMode = 'aside' | 'top' | 'top-aside'
+    type LayoutMode = 'aside' | 'top' | 'top-aside' | 'aside-double'
     type TransitionName = 'fade' | 'slide-left' | 'slide-right' | 'slide-up' | 'slide-down' | 'scale' | 'none'
 
     interface UserConfig {
@@ -24,11 +24,13 @@ declare global {
       grayMode: boolean
       colorWeakMode: boolean
       showWaterMark: boolean
+      fixedSubMenu: boolean
     }
 
     interface Config {
       asideCollapse: boolean
       asideCollapseWidth: number
+      doubleFirstAideWidth: number
     }
 
     interface BaseLayoutConfig extends Omit<LayoutConfig, 'asideCollapse' | 'asideCollapseWidth'> {

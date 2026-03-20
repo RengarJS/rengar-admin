@@ -1,13 +1,12 @@
 <template>
   <NMenu
     v-model:value="value"
-    :mode
     :options="menus"
-    :collapsed
-    :collapsed-width="appStore.systemConfig.asideCollapseWidth"
-    :children-field="childrenField"
+    :inverted="appStore.userConfig.invertedAside"
     :indent="20"
     responsive
+    :collapsed
+    :collapsed-width="appStore.systemConfig.asideCollapseWidth"
     @update:value="handleValueChange"
   ></NMenu>
 </template>
@@ -23,16 +22,9 @@ const emit = defineEmits<{
   change: [val: RouteRecordName]
 }>()
 
-const {
-  childrenField = 'children',
-  mode = 'vertical',
-  data,
-  collapsed,
-} = defineProps<{
-  mode?: 'horizontal' | 'vertical'
+const { data } = defineProps<{
   data: RouteRecordRaw[]
   collapsed?: boolean
-  childrenField?: string
 }>()
 
 const value = defineModel<RouteRecordName>('active')

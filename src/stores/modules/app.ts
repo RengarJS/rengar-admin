@@ -18,6 +18,7 @@ export const useAppStore = defineStore(
     const systemConfig = reactive<App.Config>({
       asideCollapse: isPad.value,
       asideCollapseWidth: 64,
+      doubleFirstAideWidth: 90,
     })
 
     // 灰色模式和色弱模式
