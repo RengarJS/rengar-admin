@@ -78,7 +78,7 @@ export function presetRengarAdmin(): Preset {
         'absolute-full': 'absolute top-0 left-0 right-0 bottom-0',
       },
       {
-        'no-scrollbar': '[&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]',
+        'hidden-scrollbar': '[&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]',
       },
     ],
   }

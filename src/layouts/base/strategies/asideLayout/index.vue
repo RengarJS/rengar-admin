@@ -5,40 +5,28 @@
       :inverted="userConfig.invertedAside"
       :width="userConfig.asideWidth"
       bordered
-      :style="{
-        zIndex: 2,
-      }"
+      collapse-mode="width"
       :collapsed="systemConfig.asideCollapse"
       :collapsed-width="systemConfig.asideCollapseWidth"
     >
-      <NLayout has-sider inverted position="absolute">
-        <NLayoutHeader
-          :inverted="userConfig.invertedAside"
+      <div class="h-full w-full flex flex-col">
+        <div
           :style="{
             height: numberToPx(userConfig.headerHeight),
           }"
         >
           <SysLogo :show-title="!systemConfig.asideCollapse" />
-        </NLayoutHeader>
-        <NLayoutSider
-          bordered
-          :inverted="userConfig.invertedAside"
-          width="100%"
-          :native-scrollbar="false"
-          position="absolute"
-          :style="{
-            top: numberToPx(userConfig.headerHeight),
-            bottom: 0,
-          }"
-        >
+        </div>
+
+        <div class="hidden-scrollbar min-h-0 flex-1 overflow-y-auto">
           <SysMenu
             :inverted="userConfig.invertedAside"
             v-model:active="menuStore.activeMenu"
             :data="menuStore.menuRoutes"
             :collapsed="systemConfig.asideCollapse"
           />
-        </NLayoutSider>
-      </NLayout>
+        </div>
+      </div>
     </NLayoutSider>
     <NLayout>
       <NLayoutHeader

@@ -8,39 +8,29 @@
       :style="{
         zIndex: 2,
       }"
+      collapse-mode="width"
       :collapsed="systemConfig.asideCollapse"
       :collapsed-width="systemConfig.asideCollapseWidth"
       content-style="min-width: 0"
     >
-      <NLayout has-sider inverted position="absolute">
-        <NLayoutHeader
-          :inverted="userConfig.invertedAside"
+      <div class="h-full w-full flex flex-col">
+        <div
           :style="{
             height: numberToPx(userConfig.headerHeight),
-            width: numberToPx(appStore.systemConfig.doubleFirstAideWidth),
           }"
         >
           <SysLogo :show-title="false" />
-        </NLayoutHeader>
-        <NLayoutSider
-          bordered
-          :inverted="userConfig.invertedAside"
-          width="100%"
-          :native-scrollbar="false"
-          position="absolute"
-          :style="{
-            top: numberToPx(userConfig.headerHeight),
-            bottom: 0,
-          }"
-        >
+        </div>
+
+        <div class="hidden-scrollbar min-h-0 flex-1 overflow-y-auto">
           <SysMenu
             :inverted="userConfig.invertedAside"
             v-model:active="menuStore.topActiveName"
             :data="menuStore.menuRoutes"
             @change="handleFirstLevenChange"
           />
-        </NLayoutSider>
-      </NLayout>
+        </div>
+      </div>
     </NLayoutSider>
 
     <NLayoutSider
@@ -51,18 +41,18 @@
       :style="{
         zIndex: 2,
       }"
+      collapse-mode="width"
       :collapsed="systemConfig.asideCollapse"
       :collapsed-width="systemConfig.asideCollapseWidth"
       content-style="min-width: 0"
     >
-      <NLayout inverted has-sider position="absolute">
-        <NLayoutHeader
-          :inverted="userConfig.invertedAside"
+      <div class="h-full w-full flex flex-col">
+        <div
           :style="{
             height: numberToPx(userConfig.headerHeight),
           }"
         >
-          <div class="h-full flex items-center">
+          <div class="h-full flex items-center justify-between px-4">
             <SysLogo v-if="!systemConfig.asideCollapse" :show-logo="false" />
             <div class="px-2">
               <NTooltip placement="bottom">
@@ -79,25 +69,16 @@
               </NTooltip>
             </div>
           </div>
-        </NLayoutHeader>
-        <NLayoutSider
-          position="absolute"
-          :style="{
-            top: numberToPx(userConfig.headerHeight),
-            bottom: 0,
-          }"
-          bordered
-          :inverted="userConfig.invertedAside"
-          width="100%"
-          :native-scrollbar="false"
-        >
+        </div>
+
+        <div class="hidden-scrollbar min-h-0 flex-1 overflow-y-auto">
           <SysSubMenu
             :data="menuStore.subMenuRoutes"
             v-model:active="menuStore.activeMenu"
             :collapsed="appStore.systemConfig.asideCollapse"
           />
-        </NLayoutSider>
-      </NLayout>
+        </div>
+      </div>
     </NLayoutSider>
     <NLayout>
       <NLayoutHeader
@@ -161,7 +142,7 @@
             height: numberToPx(userConfig.headerHeight),
           }"
         >
-          <div class="h-full flex items-center">
+          <div class="h-full flex items-center justify-between px-4">
             <SysLogo :show-logo="false" />
             <div class="px-2">
               <NTooltip placement="bottom">
