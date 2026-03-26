@@ -3,7 +3,7 @@ import { globalIgnores } from 'eslint/config'
 import pluginVue from 'eslint-plugin-vue'
 
 // 导入 Vue 和 TypeScript 的 ESLint 配置
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import { defineConfigWithVueTs, vueTsConfigs, configureVueProject } from '@vue/eslint-config-typescript'
 
 // 导入 Prettier 的跳过格式化配置
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
@@ -12,6 +12,10 @@ import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 import pluginPrettier from 'eslint-plugin-prettier'
 
 import unocss from '@unocss/eslint-config/flat'
+
+configureVueProject({
+  scriptLangs: ['ts', 'tsx'],
+})
 
 export default defineConfigWithVueTs(
   {
@@ -27,17 +31,6 @@ export default defineConfigWithVueTs(
   // 跳过 Prettier 的格式化冲突规则
   skipFormatting,
   unocss,
-
-  // 配置 Vue 文件支持 JSX
-  {
-    languageOptions: {
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
-  },
 
   // ✅ 新增：注册 prettier 插件并启用规则
   {
@@ -70,14 +63,6 @@ export default defineConfigWithVueTs(
         'error',
         {
           order: ['template', 'script', 'style'],
-        },
-      ],
-      'vue/block-lang': [
-        'error',
-        {
-          script: {
-            lang: ['ts', 'tsx'],
-          },
         },
       ],
 

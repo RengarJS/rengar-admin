@@ -37,7 +37,7 @@
   </div>
 </template>
 
-<script setup lang="tsx">
+<script setup lang="ts">
 import { useMenuStore, useAppStore } from '@/stores'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import { type RouteRecordRaw } from 'vue-router'
