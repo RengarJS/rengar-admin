@@ -1,7 +1,7 @@
 import { baseHttp } from '@/api/request'
 
-export function rolePageListApi(data: Api.Commom.PageRequest) {
-  return baseHttp.request<Api.Commom.PageResponse<Api.Setting.Role>>({
+export function rolePageListApi(data: Api.Commom.PageDTO) {
+  return baseHttp.request<Api.Commom.PageVO<Api.Setting.Role>>({
     url: '/role/list/page',
     method: 'post',
     data,
@@ -38,7 +38,7 @@ export function roleDeleteApi(id: number) {
   })
 }
 
-export function roleConfigApi(data: Api.Setting.RoleConfigReq) {
+export function roleConfigApi(data: Api.Setting.RoleConfigDTO) {
   return baseHttp.request<boolean>({
     url: '/role/config',
     method: 'post',

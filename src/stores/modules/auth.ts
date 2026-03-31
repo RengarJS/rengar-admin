@@ -18,7 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
   function removeToken() {
     storage.removeItem(saveTokenKey)
   }
-  async function authLoginAction(params: Api.Auth.LoginParams) {
+  async function authLoginAction(params: Api.Auth.LoginDTO) {
     const [err, data] = await to(authLoginApi(params))
     if (err) return Promise.reject(err)
     user.value.token = data.token

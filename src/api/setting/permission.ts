@@ -1,7 +1,7 @@
 import { baseHttp } from '@/api/request'
 
-export function permissionPageListApi(data: Api.Commom.PageRequest) {
-  return baseHttp.request<Api.Commom.PageResponse<Api.Setting.Permission>>({
+export function permissionPageListApi(data: Api.Commom.PageDTO) {
+  return baseHttp.request<Api.Commom.PageVO<Api.Setting.Permission>>({
     url: '/permission/list/page',
     method: 'post',
     data,

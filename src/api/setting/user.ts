@@ -1,7 +1,7 @@
 import { baseHttp } from '@/api/request'
 
-export function userPageListApi(data: Api.Commom.PageRequest) {
-  return baseHttp.request<Api.Commom.PageResponse<Api.Setting.User>>({
+export function userPageListApi(data: Api.Commom.PageDTO) {
+  return baseHttp.request<Api.Commom.PageVO<Api.Setting.User>>({
     url: '/user/list/page',
     method: 'post',
     data,
@@ -39,7 +39,7 @@ export function userDeleteApi(id: number) {
   })
 }
 
-export function userPasswordApi(data: Api.Setting.PasswordParams) {
+export function userPasswordApi(data: Api.Setting.PasswordDTO) {
   return baseHttp.request<boolean>({
     url: '/user/password',
     method: 'post',

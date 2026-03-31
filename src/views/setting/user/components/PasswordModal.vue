@@ -35,7 +35,7 @@ const { record } = defineProps<{
   record?: Api.Setting.User
 }>()
 
-const formValue = ref<Api.Setting.PasswordParams>({
+const formValue = ref<Api.Setting.PasswordDTO>({
   id: 0,
   newPassword: '',
   confirmPassword: '',

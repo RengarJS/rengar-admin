@@ -4,14 +4,14 @@ declare global {
   namespace Api {
     namespace Commom {
       type EnableStatus = 0 | 1
-      interface PageResponse<T> {
+      interface PageVO<T> {
         current: number
         size: number
         pages: number
         total: number
         records: T[]
       }
-      interface PageRequest {
+      interface PageDTO {
         current: number
         size: number
         [key: string]: any
@@ -19,31 +19,31 @@ declare global {
     }
 
     namespace Captcha {
-      interface GenerateResponse {
+      interface GenerateVO {
         captchaId: number
         image: string
       }
     }
 
     namespace Auth {
-      interface LoginParams {
+      interface LoginDTO {
         username: string
         password: string
         captchaId: number
         captchaCode: string
       }
 
-      interface LoginResponse {
+      interface LoginVO {
         token: string
       }
 
-      interface DetailResponse {
+      interface DetailVO {
         username: string
         id: number
         codes: string[]
       }
 
-      interface PasswordParams {
+      interface PasswordDTO {
         oldPassword: string
         newPassword: string
       }
@@ -85,7 +85,7 @@ declare global {
         name: string
       }
 
-      interface RoleConfigReq {
+      interface RoleConfigDTO {
         id: number
         menuIds: number[]
       }
@@ -97,12 +97,7 @@ declare global {
         roleIds: number[]
       }
 
-      interface UserBindRoleReq {
-        id: number
-        roleIds: number[]
-      }
-
-      interface PasswordParams {
+      interface PasswordDTO {
         id: number
         newPassword: string
         confirmPassword: string
