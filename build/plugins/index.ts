@@ -6,11 +6,13 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 import { setupUnocssPlugin } from './unocss'
 import { setupRouter } from './router'
-import { setupAutoImportPlugin } from './import'
+import { setupAutoImportPlugin } from './auto-import'
 import { setupInject } from './inject'
 import { setupVersion } from './version'
+import { setupIcon } from './icon'
 export function setupVitePlugins() {
   const plugins: PluginOption[] = [
+    setupIcon(),
     setupInject(),
     vue(),
     vueJsx(),

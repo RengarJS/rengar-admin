@@ -2,7 +2,8 @@
   <NTooltip v-if="appStore.isPc" placement="bottom">
     <template #trigger>
       <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="toggle">
-        <SvgIcon :icon="isFullscreen ? 'ooui:exit-fullscreen' : 'ooui:full-screen'"></SvgIcon>
+        <IOouiExitFullscreen v-if="isFullscreen"></IOouiExitFullscreen>
+        <IOouiFullScreen v-else></IOouiFullScreen>
       </div>
     </template>
     <span>{{ isFullscreen ? '退出全屏' : '全屏' }}</span>
