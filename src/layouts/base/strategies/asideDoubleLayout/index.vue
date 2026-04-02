@@ -58,11 +58,10 @@
               <NTooltip placement="bottom">
                 <template #trigger>
                   <div class="flex-center p-1">
-                    <SvgIcon
-                      icon="pixel:thumbtack-solid"
-                      class="cursor-pointer text-xl text-primary"
+                    <i
+                      class="i-pixel:thumbtack-solid cursor-pointer text-xl text-primary"
                       @click="toggleFixedSubMenu(false)"
-                    ></SvgIcon>
+                    ></i>
                   </div>
                 </template>
                 <span>取消固定</span>
@@ -148,11 +147,10 @@
               <NTooltip placement="bottom">
                 <template #trigger>
                   <div class="flex-center p-1">
-                    <SvgIcon
-                      icon="pixel:thumbtack"
-                      class="cursor-pointer text-xl text-primary"
+                    <i
+                      class="i-pixel:thumbtack cursor-pointer text-xl text-primary"
                       @click="toggleFixedSubMenu(true)"
-                    ></SvgIcon>
+                    ></i>
                   </div>
                 </template>
                 <span>固定</span>

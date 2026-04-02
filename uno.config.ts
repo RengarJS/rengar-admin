@@ -15,7 +15,6 @@ export default defineConfig({
     presetWind3,
     presetIcons({
       scale: 1,
-      extraProperties: {},
       warn: true,
       collections: {
         local: FileSystemIconLoader(svgFilePath) as CustomIconLoader,

@@ -36,14 +36,12 @@
           @click="handleClick(route)"
         >
           <div class="flex items-center gap-3 text-base">
-            <SvgIcon v-if="route.meta?.icon" :icon="route.meta?.icon"></SvgIcon>
-            <SvgIcon v-else-if="route.meta?.localIcon" :localIcon="route.meta?.localIcon"></SvgIcon>
-            <SvgIcon v-else icon="ic:baseline-menu"></SvgIcon>
+            <MenuIcon :meta="route.meta"></MenuIcon>
 
             <div>{{ route.meta?.title }}</div>
           </div>
 
-          <SvgIcon @click.stop="menuStore.removeSearchHistoryMenu(route)" icon="ant-design:close-outlined"></SvgIcon>
+          <div @click.stop="menuStore.removeSearchHistoryMenu(route)" class="i-ant-design:close-outlined"></div>
         </NCard>
       </div>
       <NEmpty v-if="!searchHistoryMenus.length && !searchRoutes.length" description="暂无数据" class="mt-6"></NEmpty>
@@ -60,14 +58,12 @@
           @click="handleClick(route)"
         >
           <div class="flex items-center gap-3 text-base">
-            <SvgIcon v-if="route.meta?.icon" :icon="route.meta?.icon"></SvgIcon>
-            <SvgIcon v-else-if="route.meta?.localIcon" :localIcon="route.meta?.localIcon"></SvgIcon>
-            <SvgIcon v-else icon="ic:baseline-menu"></SvgIcon>
+            <MenuIcon :meta="route.meta"></MenuIcon>
 
             <div>{{ route.meta?.title }}</div>
           </div>
 
-          <SvgIcon icon="ant-design:enter-outlined"></SvgIcon>
+          <div class="i-ant-design:enter-outlined"></div>
         </NCard>
       </div>
     </div>
@@ -75,15 +71,15 @@
     <template #footer>
       <div class="flex items-center gap-2 text-gray">
         <div class="border-gary border rounded p-1">
-          <SvgIcon icon="ant-design:enter-outlined"></SvgIcon>
+          <div class="i-ant-design:enter-outlined"></div>
         </div>
         <div class="mr-4">选择</div>
         <div class="border-gary border rounded p-1">
-          <SvgIcon icon="ant-design:arrow-up-outlined"></SvgIcon>
+          <div class="i-ant-design:arrow-up-outlined"></div>
         </div>
 
         <div class="border-gary border rounded p-1">
-          <SvgIcon icon="ant-design:arrow-down-outlined"></SvgIcon>
+          <div class="i-ant-design:arrow-down-outlined"></div>
         </div>
 
         <div class="mr-4">切换</div>

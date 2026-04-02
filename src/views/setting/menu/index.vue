@@ -56,11 +56,10 @@
             <NFormItem label="菜单code" path="code">
               <div class="w-full flex items-center gap-4">
                 <NInput v-model:value="formData.code" disabled placeholder="菜单code" class="flex-1" />
-                <SvgIcon
-                  icon="i-tabler:copy"
-                  class="cursor-pointer text-base text-primary"
+                <div
+                  class="i-tabler:copy cursor-pointer text-base text-primary"
                   @click="handleCopy(formData.code)"
-                ></SvgIcon>
+                ></div>
               </div>
             </NFormItem>
 

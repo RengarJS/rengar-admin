@@ -3,7 +3,7 @@ import { to as awaitTo } from 'await-to-js'
 import { useAuth } from '@/hooks/auth'
 import type { RouteLocationGeneric, Router } from 'vue-router'
 
-export function setupRouterGuard(router: Router) {
+export function setupGlobalRouterGuard(router: Router) {
   const authStore = useAuthStore()
   const menuStore = useMenuStore()
   const tabStore = useTabStore()

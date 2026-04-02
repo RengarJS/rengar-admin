@@ -7,7 +7,7 @@
         style="border-right: solid 1px var(--n-border-color)"
         @click="handleBack"
       >
-        <SvgIcon icon="material-symbols:arrow-back-ios-new"></SvgIcon>
+        <IMaterialSymbolsArrowBackIosNew></IMaterialSymbolsArrowBackIosNew>
         <div>返回</div>
       </div>
     </div>
@@ -46,13 +46,7 @@
               class="flex items-center gap-2 rounded-lg px-3 py-1"
               :class="[item.fullPath === route.fullPath ? '' : 'hover:bg-zinc-100 dark:hover:bg-zinc-700']"
             >
-              <SvgIcon
-                class="handle cursor-move"
-                v-if="item.icon || item.localIcon"
-                :icon="item.icon"
-                :local-icon="item.localIcon"
-              />
-              <SvgIcon class="handle cursor-move" v-else icon="ic:baseline-menu" />
+              <MenuIcon :meta="item" class="handle cursor-move"></MenuIcon>
               <div class="w-max-[60px] overflow-hidden whitespace-nowrap">{{ item.title }}</div>
               <div
                 v-if="!item.fixedInTab"
@@ -69,7 +63,7 @@
       <NTooltip v-if="isPc" placement="bottom">
         <template #trigger>
           <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="appStore.refreshRouterView">
-            <SvgIcon icon="ooui:reload"></SvgIcon>
+            <div class="i-ooui-reload"></div>
           </div>
         </template>
         <span>刷新</span>
@@ -79,13 +73,14 @@
         class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary"
         @click="appStore.refreshRouterView"
       >
-        <SvgIcon icon="ooui:reload"></SvgIcon>
+        <div class="i-ooui-reload"></div>
       </div>
 
       <NTooltip v-if="isPc" placement="bottom">
         <template #trigger>
           <div class="flex-center cursor-pointer rounded-sm p-1 hover:text-primary" @click="toggle">
-            <SvgIcon :icon="isFullscreen ? 'ooui:exit-fullscreen' : 'ooui:full-screen'"></SvgIcon>
+            <div v-if="isFullscreen" class="i-ooui-exit-fullscreen"></div>
+            <div v-else class="i-ooui-full-screen"></div>
           </div>
         </template>
         <span>内容全屏</span>
@@ -98,7 +93,6 @@
 import { useTabStore, useAppStore } from '@/stores'
 import { useWindowSize, useDebounceFn, useFullscreen } from '@vueuse/core'
 import { VueDraggable } from 'vue-draggable-plus'
-import SvgIcon from '@/components/SvgIcon/index.vue'
 
 import type { DropdownOption } from 'naive-ui'
 import type { Directive } from 'vue'
@@ -192,30 +186,30 @@ function renderOptions(tab: App.Tab, index: number): DropdownOption[] {
     {
       label: '关闭',
       key: 'closeCurrent',
-      icon: () => <SvgIcon icon="ant-design:close-outlined"> </SvgIcon>,
+      icon: () => <div class="i-ant-design:close-outlined"> </div>,
       disabled: Boolean(tab.fixedInTab),
     },
     {
       label: '关闭其它',
       key: 'closeOther',
-      icon: () => <SvgIcon icon="ant-design:column-width-outlined"> </SvgIcon>,
+      icon: () => <div class="i-ant-design:column-width-outlined"> </div>,
     },
     {
       label: '关闭左侧',
       key: 'closeLeft',
-      icon: () => <SvgIcon icon="mdi:format-horizontal-align-left"> </SvgIcon>,
+      icon: () => <div class="i-mdi:format-horizontal-align-left"> </div>,
       disabled: index === 0,
     },
     {
       label: '关闭右侧',
       key: 'closeRight',
-      icon: () => <SvgIcon icon="mdi:format-horizontal-align-right"> </SvgIcon>,
+      icon: () => <div class="i-mdi:format-horizontal-align-right"> </div>,
       disabled: index === tabsList.value.length - 1,
     },
     {
       label: '关闭所有',
       key: 'closeAll',
-      icon: () => <SvgIcon icon="ant-design:line-outlined"> </SvgIcon>,
+      icon: () => <div class="i-ant-design:line-outlined"> </div>,
     },
   ]
 }

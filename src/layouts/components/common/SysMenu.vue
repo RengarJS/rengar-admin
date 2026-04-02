@@ -15,8 +15,8 @@
 <script setup lang="tsx">
 import { type MenuOption } from 'naive-ui'
 import { RouterLink, type RouteLocationRaw, type RouteRecordRaw } from 'vue-router'
-import SvgIcon from '@/components/SvgIcon/index.vue'
 import { useAppStore } from '@/stores'
+
 const appStore = useAppStore()
 
 const emit = defineEmits<{
@@ -63,13 +63,7 @@ function generateMenus(routes: RouteRecordRaw[]): MenuOption[] {
       label: () => renderLabel(route),
       key: route.meta?.activeMenu || route.name,
       icon: () => {
-        if (route.meta?.icon) {
-          return <SvgIcon icon={route.meta?.icon}></SvgIcon>
-        } else if (route.meta?.localIcon) {
-          return <SvgIcon localIcon={route.meta?.localIcon}></SvgIcon>
-        } else {
-          return <SvgIcon icon="ic:baseline-menu"></SvgIcon>
-        }
+        return <MenuIcon meta={route.meta}></MenuIcon>
       },
       meta: route.meta,
     }

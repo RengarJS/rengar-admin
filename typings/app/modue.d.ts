@@ -25,7 +25,7 @@ declare module 'vue-router' {
     title: string
     layout?: Layout
     roles?: string | string[]
-    icon?: string
+    icon?: string | Component
     localIcon?: string
     keepAlive?: boolean
     hideInMenu?: boolean

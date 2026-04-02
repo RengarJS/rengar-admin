@@ -1,22 +1,25 @@
 <template>
-  <Icon v-if="icon" :icon="formatIcon" :="$attrs"></Icon>
+  <template v-if="icon">
+    <Icon v-if="typeof icon === 'string'" :icon="formatIcon(icon)" :="$attrs"></Icon>
+    <component v-else :is="icon" :="$attrs"></component>
+  </template>
   <div v-if="localIcon" :class="formatLocalIcon" :="$attrs"></div>
 </template>
 
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 const { icon, localIcon } = defineProps<{
-  icon?: string
+  icon?: string | Component
   localIcon?: string
 }>()
 
-const formatIcon = computed(() => {
-  if (!icon) return ''
-  if (icon.startsWith('i-')) {
-    return icon.slice(2)
+const formatIcon = (iconString: string) => {
+  if (!iconString) return ''
+  if (iconString.startsWith('i-')) {
+    return iconString.slice(2)
   }
-  return icon
-})
+  return iconString
+}
 
 const formatLocalIcon = computed(() => {
   if (!localIcon) return ''

@@ -9,9 +9,7 @@
           :class="getClass(item)"
           @click="handleClick(item)"
         >
-          <SvgIcon v-if="item.meta?.icon" :icon="item.meta?.icon" class="text-2xl"></SvgIcon>
-          <SvgIcon v-else-if="item.meta?.localIcon" :icon="item.meta?.localIcon" class="text-2xl"></SvgIcon>
-          <SvgIcon v-else icon="ic:baseline-menu" class="text-2xl" />
+          <MenuIcon :meta="item.meta" class="text-2xl"></MenuIcon>
 
           <div class="truncate">{{ item.meta?.title }}</div>
         </div>
@@ -25,9 +23,7 @@
               :class="[item.name === menuStore.topActiveName ? 'text-primary bg-primary-100' : 'hover:bg-zinc-100']"
               @click="handleClick(item)"
             >
-              <SvgIcon v-if="item.meta?.icon" :icon="item.meta?.icon" class="text-2xl"></SvgIcon>
-              <SvgIcon v-else-if="item.meta?.localIcon" :icon="item.meta?.localIcon" class="text-2xl"></SvgIcon>
-              <SvgIcon v-else icon="ic:baseline-menu" class="text-2xl" />
+              <MenuIcon :meta="item.meta" class="text-2xl"></MenuIcon>
             </div>
           </template>
           {{ item.meta?.title }}
@@ -39,7 +35,6 @@
 
 <script setup lang="ts">
 import { useMenuStore, useAppStore } from '@/stores'
-import SvgIcon from '@/components/SvgIcon/index.vue'
 import { type RouteRecordRaw } from 'vue-router'
 const menuStore = useMenuStore()
 const value = defineModel<RouteRecordName>('active')

@@ -152,7 +152,6 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('@/views/home/index.vue'),
     meta: {
       title: '首页',
-      icon: 'mingcute:home-2-line',
       fixedInTab: true,
     },
   },
@@ -172,7 +171,6 @@ export const routes: RouteRecordRaw[] = [
     meta: {
       title: '系统设置',
       order: 1,
-      icon: 'mingcute:settings-5-line',
       roles: 'menu0001',
     },
     children: [
