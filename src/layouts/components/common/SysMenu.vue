@@ -63,7 +63,7 @@ function generateMenus(routes: RouteRecordRaw[]): MenuOption[] {
       label: () => renderLabel(route),
       key: route.meta?.activeMenu || route.name,
       icon: () => {
-        return <MenuIcon meta={route.meta}></MenuIcon>
+        return <MenuIcon options={route.meta}></MenuIcon>
       },
       meta: route.meta,
     }

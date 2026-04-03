@@ -5,9 +5,7 @@ import HomeIcon from '~icons/mingcute/home-2-line'
 import SettingIcon from '~icons/mingcute/settings-5-line'
 
 interface ExtraConfig {
-  meta: {
-    icon: Component
-  }
+  icon: Component
 }
 
 export type ExtrarouteConfig = Partial<
@@ -17,15 +15,13 @@ export type ExtrarouteConfig = Partial<
   >
 >
 
+export const isExtra = 'isExtra'
+
 export const extraRoutesConfig: ExtrarouteConfig = {
   home: {
-    meta: {
-      icon: HomeIcon,
-    },
+    icon: HomeIcon,
   },
   setting: {
-    meta: {
-      icon: SettingIcon,
-    },
+    icon: SettingIcon,
   },
 }

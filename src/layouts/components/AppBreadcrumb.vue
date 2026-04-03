@@ -3,7 +3,7 @@
     <NBreadcrumbItem v-for="item in breadcrumb" :clickable="false" :key="item.name">
       <div class="flex items-center gap-1">
         <NIcon>
-          <MenuIcon :meta="item.meta"></MenuIcon>
+          <MenuIcon :options="item.meta"></MenuIcon>
         </NIcon>
         <span> {{ item.meta.title }}</span>
       </div>

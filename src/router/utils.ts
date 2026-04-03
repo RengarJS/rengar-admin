@@ -1,6 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 
-import type { ExtrarouteConfig } from './config'
+import { type ExtrarouteConfig, isExtra } from './config'
+import { cloneDeep } from 'es-toolkit'
 export function filterRoutes(
   routesTree: RouteRecordRaw[],
   callBack: (node: RouteRecordRaw) => boolean,
@@ -43,20 +44,21 @@ export function traverseRoutes(routesTree: RouteRecordRaw[], callBack: (route: R
   traverse(routesTree)
 }
 
-export function mergeRouteConfig(routes: RouteRecordRaw[], config: ExtrarouteConfig): RouteRecordRaw[] {
+export function mergeRouteConfig(routes: RouteRecordRaw[], extraconfig: ExtrarouteConfig): RouteRecordRaw[] {
+  const config = cloneDeep(extraconfig)
   const walk = (routes: RouteRecordRaw[]) => {
     routes.forEach((route) => {
       // 检查当前路由的 name 是否在 config 中存在
       if (Reflect.has(config, route.name as RouteRecordName)) {
-        const extraConfig = config[route.name as RouteRecordName]
+        const matchedConfig = config[route.name as RouteRecordName]
 
         // 合并meta
-        if (extraConfig?.meta && route.meta) {
-          Object.assign(route.meta, extraConfig.meta)
-          Reflect.deleteProperty(extraConfig, 'meta')
+        if (matchedConfig?.icon) {
+          route.meta!.icon = `${isExtra}${route.name as string}`
+          Reflect.deleteProperty(matchedConfig, 'icon')
         }
 
-        Object.assign(route, extraConfig)
+        Object.assign(route, matchedConfig)
       }
 
       // 如果有子路由，递归处理
@@ -65,7 +67,7 @@ export function mergeRouteConfig(routes: RouteRecordRaw[], config: ExtrarouteCon
       }
     })
   }
-
   walk(routes)
+
   return routes
 }

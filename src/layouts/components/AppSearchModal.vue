@@ -36,7 +36,7 @@
           @click="handleClick(route)"
         >
           <div class="flex items-center gap-3 text-base">
-            <MenuIcon :meta="route.meta"></MenuIcon>
+            <MenuIcon :options="route.meta"></MenuIcon>
 
             <div>{{ route.meta?.title }}</div>
           </div>
@@ -58,7 +58,7 @@
           @click="handleClick(route)"
         >
           <div class="flex items-center gap-3 text-base">
-            <MenuIcon :meta="route.meta"></MenuIcon>
+            <MenuIcon :options="route.meta"></MenuIcon>
 
             <div>{{ route.meta?.title }}</div>
           </div>

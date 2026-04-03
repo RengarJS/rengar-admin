@@ -9,7 +9,7 @@
           :class="getClass(item)"
           @click="handleClick(item)"
         >
-          <MenuIcon :meta="item.meta" class="text-2xl"></MenuIcon>
+          <MenuIcon :options="item.meta" class="text-2xl"></MenuIcon>
 
           <div class="truncate">{{ item.meta?.title }}</div>
         </div>
@@ -23,7 +23,7 @@
               :class="[item.name === menuStore.topActiveName ? 'text-primary bg-primary-100' : 'hover:bg-zinc-100']"
               @click="handleClick(item)"
             >
-              <MenuIcon :meta="item.meta" class="text-2xl"></MenuIcon>
+              <MenuIcon :options="item.meta" class="text-2xl"></MenuIcon>
             </div>
           </template>
           {{ item.meta?.title }}

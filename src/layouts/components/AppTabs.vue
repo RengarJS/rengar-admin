@@ -46,7 +46,7 @@
               class="flex items-center gap-2 rounded-lg px-3 py-1"
               :class="[item.fullPath === route.fullPath ? '' : 'hover:bg-zinc-100 dark:hover:bg-zinc-700']"
             >
-              <MenuIcon :meta="item" class="handle cursor-move"></MenuIcon>
+              <MenuIcon :options="item" class="handle cursor-move"></MenuIcon>
               <div class="w-max-[60px] overflow-hidden whitespace-nowrap">{{ item.title }}</div>
               <div
                 v-if="!item.fixedInTab"
@@ -93,7 +93,6 @@
 import { useTabStore, useAppStore } from '@/stores'
 import { useWindowSize, useDebounceFn, useFullscreen } from '@vueuse/core'
 import { VueDraggable } from 'vue-draggable-plus'
-
 import type { DropdownOption } from 'naive-ui'
 import type { Directive } from 'vue'
 
