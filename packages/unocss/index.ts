@@ -1,6 +1,8 @@
 import { themeColorCssVariables, unocssPrimaryColor } from '@rengar-admin/color'
 import type { Preset } from 'unocss'
 
+export { generateIconSafelist } from './utils'
+
 export function presetRengarAdmin(): Preset {
   const preset: Preset = {
     name: 'rengar-admin',

@@ -6,11 +6,11 @@
     }"
   >
     <div class="absolute-center">
-      <SvgIcon local-icon="i-local-loading" class="text-[60px]"></SvgIcon>
+      <div class="i-local-loading text-[60px]"></div>
     </div>
 
     <div class="absolute-center h-10 w-10">
-      <SvgIcon local-icon="i-local-logo" class="text-[40px]"></SvgIcon>
+      <div class="i-local-logo text-[40px]"></div>
     </div>
   </div>
 </template>
