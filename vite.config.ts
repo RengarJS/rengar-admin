@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
     server: {
       port: Number(viteEnv.VITE_APP_PORT),
       host: true,
-      proxy: createViteProxy(viteEnv, mode),
+      proxy: createViteProxy(viteEnv),
     },
 
     plugins: setupVitePlugins(),

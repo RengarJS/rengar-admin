@@ -1,8 +1,7 @@
 import { createServiceConfig } from '../../src/utils/service'
 import type { ProxyOptions } from 'vite'
-export function createViteProxy(env: ImportMetaEnv, mode: string): Record<string, ProxyOptions> | undefined {
-  if (mode !== 'development' || env.VITE_HTTP_PROXY !== 'Y') return undefined
-
+export function createViteProxy(env: ImportMetaEnv): Record<string, ProxyOptions> | undefined {
+  if (process.env.NODE_ENV !== 'development' || env.VITE_HTTP_PROXY !== 'Y') return undefined
   const serivceConfigs = createServiceConfig(env)
 
   const proxy: Record<string, ProxyOptions> = {}
