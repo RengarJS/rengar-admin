@@ -289,6 +289,7 @@ watch(width, () => scrollIntoView())
   margin: 0 -16px;
   overflow: hidden;
   cursor: pointer;
+  position: relative;
   -webkit-mask-image:
     url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M100 100C44.772 100 0 55.228 0 0v100h100z' fill='%23F8EAE7'/%3E%3C/svg%3E"),
     url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 100c55.228 0 100-44.772 100-100v100H0z' fill='%23F8EAE7'/%3E%3C/svg%3E"),
@@ -308,20 +309,67 @@ watch(width, () => scrollIntoView())
   background: var(--color-primary-100);
 }
 
-.fade-move,
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+/* tab 动画 */
+.sort-target {
+  position: relative;
 }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: scaleX(0.1);
+/*
+ * 其他tab补位动画
+ * Vue TransitionGroup FLIP 动画依赖这个
+ */
+.fade-move {
+  transition: transform 0.3s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
+/*
+ * 新tab进入
+ */
+.fade-enter-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+/*
+ * 删除tab
+ */
 .fade-leave-active {
   position: absolute;
+  z-index: -1;
+  pointer-events: none;
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+/*
+ * 进入前状态
+ */
+.fade-enter-from {
+  opacity: 0;
+
+  /*
+   * 从右侧展开
+   */
+  transform: translateX(20px) scaleX(0.8);
+
+  transform-origin: right center;
+}
+
+/*
+ * 删除后状态
+ */
+.fade-leave-to {
+  opacity: 0;
+
+  /*
+   * 从右往左收缩
+   */
+  transform: scaleX(0);
+
+  transform-origin: right center;
 }
 
 .scrollbar-hide {
