@@ -3,3 +3,6 @@ packages:
   - 'packages/*'
   # 排除测试目录中的包
   - '!**/test/**'
+allowBuilds:
+  esbuild: true
+  vue-demi: true
