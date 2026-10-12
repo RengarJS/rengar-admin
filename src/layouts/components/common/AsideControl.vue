@@ -1,7 +1,7 @@
 <template>
   <NTooltip placement="bottom">
     <template #trigger>
-      <div class="flex-center p-1 hover:bg-primary-100">
+      <div class="flex-center p-1 hover:bg-primary-100 dark:hover:bg-primary-700">
         <ILineMdMenuUnfoldLeft
           v-if="!appStore.systemConfig.asideCollapse"
           icon="i-line-md:menu-unfold-left"
